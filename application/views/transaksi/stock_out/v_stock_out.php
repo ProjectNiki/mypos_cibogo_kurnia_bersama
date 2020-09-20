@@ -7,7 +7,7 @@
 			</a>
 		</li>
 		<li>
-			Transaksi
+
 		</li>
 		<li class="active">
 			Stock Out
