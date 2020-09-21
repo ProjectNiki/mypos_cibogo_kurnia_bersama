@@ -50,12 +50,18 @@ class Stock_in extends CI_Controller
 		$stock_id 	= $this->uri->segment(3);
 		$items_id 	= $this->uri->segment(4);
 
+		$qty_stock 		= $this->Items_m->get($items_id)->row()->qty_items;
 		$qty_stock_in 	= $this->Stock_in_m->get($stock_id)->row()->qty_stock_in;
 
 		$data     	= [
 			'qty_stock_in'     	=> $qty_stock_in,
 			'items_id'   		=> $items_id
 		];
+
+		if ($qty_stock <= $qty_stock_in) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"><strong>Dangger!</strong> Data gagal dihapus karena jumlah Qty Items kurang dari 0 </div>');
+			redirect('stock_in');
+		}
 
 		$this->Stock_in_m->del_stock_in_item($data);
 		$this->Stock_in_m->del_stock_in($stock_id);

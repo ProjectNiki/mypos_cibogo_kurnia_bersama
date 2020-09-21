@@ -132,7 +132,7 @@
 						</ul>
 					</li>
 					<!--  -->
-					<li class="treeview <?= $this->uri->segment(1) == 'stock_out' || $this->uri->segment(1) == 'stock_in' ? 'active' : null ?>">
+					<li class="treeview <?= $this->uri->segment(1) == 'pembayaran' || $this->uri->segment(1) == 'stock_out' || $this->uri->segment(1) == 'stock_in' ? 'active' : null ?>">
 						<a href="#">
 							<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
 							<span class="pull-right-container">
@@ -140,8 +140,8 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li>
-								<a href="">
+							<li <?= $this->uri->segment(1) == 'pembayaran' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('pembayaran') ?>">
 									<i class="fa fa-circle-o"></i> Pembayaran
 								</a>
 							</li>

@@ -62,6 +62,8 @@ class Items extends CI_Controller
 
 	public function del($id)
 	{
+		$this->Items_m->del_stock_in($id);
+		$this->Items_m->del_stock_out($id);
 		$this->Items_m->del($id);
 
 		$error = $this->db->error();

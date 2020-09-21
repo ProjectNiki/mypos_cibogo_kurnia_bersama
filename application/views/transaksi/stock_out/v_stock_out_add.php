@@ -71,13 +71,13 @@
 						<label for="qty_stock_out">Qty <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_stock_out') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="Qty Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
+							<input type="number" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="Qty Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
 						</div>
 						<?= form_error('qty_stock_out', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<!--  -->
 						<div class="form-group <?= form_error('detail') == TRUE ? 'has-error' : null ?>">
-							<label for="">Detail</label>
+							<label for="">Detail <i class="text-danger">*</i></label>
 							<textarea name="detail" id="detail" cols="30" rows="4" class="form-control" placeholder="Detail Product Name" autocomplete="off"></textarea>
 							<?= form_error('detail', '<div class="text-danger">', '</div>'); ?>
 						</div>
@@ -145,4 +145,20 @@
 			$('#exampleModal').modal('hide');
 		});
 	});
+</script>
+
+<script>
+	$(document).on('keyup mouseup', '#qty_stock_out', function() {
+		var qty_show = $('#qty_items').val();
+		var qty_input = $('#qty_stock_out').val();
+
+		count = qty_show - qty_input;
+
+		if (count < 0) {
+			alert('Qty Stock Out tidak boleh melebihi Initial Stock');
+			$(':input[type="submit"]').prop('disabled', true);
+		} else {
+			$(':input[type="submit"]').prop('disabled', false);
+		}
+	})
 </script>

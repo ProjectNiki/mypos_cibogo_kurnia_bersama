@@ -71,13 +71,13 @@
 						<label for="qty_stock_in">Qty <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_stock_in') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Qty" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
+							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Qty" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
 						</div>
 						<?= form_error('qty_stock_in', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<!--  -->
 						<div class="form-group <?= form_error('detail') == TRUE ? 'has-error' : null ?>">
-							<label for="">Detail</label>
+							<label for="">Detail <i class="text-danger">*</i></label>
 							<textarea name="detail" id="detail" cols="30" rows="4" class="form-control" placeholder="Detail Product Name" autocomplete="off"></textarea>
 							<?= form_error('detail', '<div class="text-danger">', '</div>'); ?>
 						</div>

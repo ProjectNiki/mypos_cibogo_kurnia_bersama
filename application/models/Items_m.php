@@ -12,7 +12,7 @@ class Items_m extends CI_Model
 		$this->db->join('categories', 'categories.categories_id = items.categories_id');
 		$this->db->join('sub_categories', 'sub_categories.sub_categories_id = items.sub_categories_id');
 		if ($id != NULL) {
-			$this->db->where('items_id');
+			$this->db->where('items_id', $id);
 		}
 		$post = $this->db->get();
 		return $post;
@@ -37,6 +37,18 @@ class Items_m extends CI_Model
 		$params['user_created']      	= $this->session->userdata('user_id');
 
 		$this->db->insert('items', $params);
+	}
+
+	public function del_stock_in($id)
+	{
+		$this->db->where('items_id', $id);
+		$this->db->delete('stock_in');
+	}
+
+	public function del_stock_out($id)
+	{
+		$this->db->where('items_id', $id);
+		$this->db->delete('stock_out');
 	}
 
 	public function del($id)
