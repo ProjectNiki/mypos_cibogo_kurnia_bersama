@@ -8,18 +8,27 @@ class Pembayaran extends CI_Controller
 	{
 		parent::__construct();
 		check_not_login();
-		// $this->load->model(['Pembayaran_m', 'Items_m', 'Customers_m']);
-		$this->load->model(['Customers_m']);
+		$this->load->model(['Customers_m', 'Items_m', 'Pembayaran_m']);
 	}
 
 	public function index()
 	{
-		// $item = $this->item_m->get()->result();
-		// $cart = $this->sales_m->get_cart();
-		$customers = $this->Customers_m->get()->result();
+		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran');
+	}
+
+	public function add()
+	{
+		$customers 	= $this->Customers_m->get()->result();
+		$items		= $this->Items_m->get()->result();
+		$cart 		= $this->Pembayaran_m->get_cart();
+
 
 		$data = [
 			'customers' => $customers,
+			'items'		=> $items,
+			'cart'      => $cart,
+			'invoice'   => $this->Pembayaran_m->invoice_no(),
+			'dp'		=> $this->Pembayaran_m->down_payment()
 		];
 
 		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran_add', $data);
@@ -27,23 +36,25 @@ class Pembayaran extends CI_Controller
 
 	public function v_cart_data()
 	{
-		$cart = $this->sales_m->get_cart();
+		$cart = $this->Pembayaran_m->get_cart();
 		$data['cart'] = $cart;
-		$this->load->view('transaksi/sales/v_cart_data', $data);
+		$this->load->view('transaksi/pembayaran/v_cart_data', $data);
 	}
 
 	public function process()
 	{
 		$post = $this->input->post(NULL, TRUE);
 
+		// Memasukan data sementara ke cart
 		if (isset($_POST['add_cart'])) {
 
-			$item_id    = $this->input->post('item_id');
-			$check_cart = $this->sales_m->get_cart(['cart.item_id' => $item_id]);
+			$items_id    	= $this->input->post('items_id');
+			$check_cart 	= $this->Pembayaran_m->get_cart(['cart.items_id' => $items_id]);
+
 			if ($check_cart->num_rows() > 0) {
-				$this->sales_m->update_cart_qty($post);
+				$this->Pembayaran_m->update_cart_qty($post);
 			} else {
-				$this->sales_m->add_cart($post);
+				$this->Pembayaran_m->add_cart($post);
 			}
 
 			if ($this->db->affected_rows() > 0) {
@@ -53,23 +64,12 @@ class Pembayaran extends CI_Controller
 			}
 			echo json_encode($params);
 		}
-
-		if (isset($_POST['edit_cart'])) {
-
-			$this->sales_m->edit_cart($post);
-
-			if ($this->db->affected_rows() > 0) {
-				$params = array("success" => true);
-			} else {
-				$params = array("success" => false);
-			}
-			echo json_encode($params);
-		}
+		// Memasukan data sementara ke cart
 
 		if (isset($_POST['process_payment'])) {
 
-			$sale_id = $this->sales_m->add_sale($post);
-			$cart    = $this->sales_m->get_cart()->result();
+			$sale_id = $this->Pembayaran_m->add_sale($post);
+			$cart    = $this->Pembayaran_m->get_cart()->result();
 			$row     = [];
 			foreach ($cart as $c => $value) {
 				array_push($row, array(
@@ -82,8 +82,8 @@ class Pembayaran extends CI_Controller
 				));
 			}
 
-			$this->sales_m->add_sale_detail($row);
-			$this->sales_m->del_cart(['user_id' => $this->session->userdata('user_id')]);
+			$this->Pembayaran_m->add_sale_detail($row);
+			$this->Pembayaran_m->del_cart(['user_id' => $this->session->userdata('user_id')]);
 
 
 			if ($this->db->affected_rows() > 0) {
@@ -98,7 +98,8 @@ class Pembayaran extends CI_Controller
 	public function cart_del()
 	{
 		$cart_id = $this->input->post('cart_id');
-		$this->sales_m->del_cart(['cart_id' => $cart_id]);
+
+		$this->Pembayaran_m->del_cart(['cart_id' => $cart_id]);
 
 		if ($this->db->affected_rows() > 0) {
 			$params = array("success" => true);
@@ -106,15 +107,5 @@ class Pembayaran extends CI_Controller
 			$params = array("success" => false);
 		}
 		echo json_encode($params);
-	}
-
-	public function cetak($id)
-	{
-		$data = array(
-			'sales'        => $this->sales_m->get_sale($id)->row(),
-			'sales_detail' => $this->sales_m->get_sale_detail($id)->result()
-		);
-
-		$this->load->view('transaksi/sales/receipt_print', $data);
 	}
 }

@@ -76,10 +76,11 @@ date_default_timezone_set("Asia/Bangkok");
 							</td>
 							<td>
 								<div class="form-group input-group">
-									<input type="hidden" id="price">
-									<input type="hidden" id="stock">
-									<input type="hidden" id="item_id">
-									<input type="text" id="item_name" class="form-control" autofocus readonly>
+									<input type="hidden" id="harga_items">
+									<input type="hidden" id="qty_items">
+									<input type="hidden" id="items_id">
+									<input type="hidden" id="name_items">
+									<input type="text" id="items_key" class="form-control" autofocus readonly>
 									<span class="input-group-btn">
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 											<i class="fa fa-search"></i>
@@ -90,11 +91,11 @@ date_default_timezone_set("Asia/Bangkok");
 						</tr>
 						<tr>
 							<td style="vertical-align: top;">
-								<label for="Date">Qty</label>
+								<label for="qty">Qty</label>
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="number" name="qty" id="qty" value="1" min="1" class="form-control">
+									<input type="number" name="qty" id="qty" value="1" min="1" class="form-control" autocomplete="off">
 								</div>
 							</td>
 						</tr>
@@ -118,7 +119,7 @@ date_default_timezone_set("Asia/Bangkok");
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<h4>Invoice <b><span id="invoice"></span></b></h4>
+						<h4>Invoice <b><span id="invoice"><?= $invoice ?></span></b></h4>
 						<h1><b><span id="grand_total2" style="font-size: 50pt;">0</span></b></h1>
 					</div>
 					<small style="color: red;">* Grand Total </small>
@@ -129,7 +130,7 @@ date_default_timezone_set("Asia/Bangkok");
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<h4>DP <b><span id="dp"></span></b></h4>
+						<h4>DP <b><span id="dp"><?= $dp ?></span></b></h4>
 						<h1><b><span id="grand_total2" style="font-size: 50pt;">0</span></b></h1>
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>
@@ -147,7 +148,7 @@ date_default_timezone_set("Asia/Bangkok");
 							<tr>
 								<th class="text-center">#</th>
 								<th class="text-center">Product Item</th>
-								<th class="text-center">Price</th>
+								<th class="text-center">Price (Rp)</th>
 								<th class="text-center">Qty</th>
 								<th class="text-center">Discount Item</th>
 								<th class="text-center" style="width: 10%;">Total</th>
@@ -155,6 +156,7 @@ date_default_timezone_set("Asia/Bangkok");
 							</tr>
 						</thead>
 						<tbody id="cart_table">
+							<?php $this->view('transaksi/pembayaran/v_cart_data') ?>
 						</tbody>
 					</table>
 				</div>
@@ -282,6 +284,7 @@ date_default_timezone_set("Asia/Bangkok");
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
+							<th class="text-center">ID Items</th>
 							<th class="text-center">Nama Items</th>
 							<th class="text-center">Price (Rp)</th>
 							<th class="text-center">Stock</th>
@@ -289,7 +292,21 @@ date_default_timezone_set("Asia/Bangkok");
 						</tr>
 					</thead>
 					<tbody>
-
+						<?php $no = 1; ?>
+						<?php foreach ($items as $key => $data) { ?>
+							<tr>
+								<td><?= $no++ ?></td>
+								<td><?= $data->items_key ?></td>
+								<td><?= $data->name_items ?></td>
+								<td><?= indo_currency($data->harga_items) ?></td>
+								<td class="text-center"><?= $data->qty_items ?></td>
+								<td class="text-center">
+									<button class="btn btn-success btn-sm" id="select" data-items_key=<?= $data->items_key ?> data-name_items="<?= $data->name_items ?>" data-harga_items="<?= $data->harga_items ?>" data-items_id="<?= $data->items_id ?>" data-product="<?= $data->name_items ?>" data-item="<?= $data->items_id ?>" data-qty_items="<?= $data->qty_items ?>">
+										<i class="fa fa-check"></i>
+									</button>
+								</td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
@@ -343,3 +360,83 @@ date_default_timezone_set("Asia/Bangkok");
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$(document).on('click', '#select', function() {
+			$('#items_id').val($(this).data('items_id'));
+			$('#harga_items').val($(this).data('harga_items'));
+			$('#name_items').val($(this).data('name_items'));
+			$('#qty_items').val($(this).data('qty_items'));
+			$('#items_key').val($(this).data('items_key'));
+			$('#exampleModal').modal('hide');
+		});
+	});
+
+	$(document).on('click', '#add_cart', function() {
+		var items_id = $('#items_id').val()
+		var harga_items = $('#harga_items').val()
+		var qty_items = $('#qty_items').val()
+		var qty = $('#qty').val()
+
+		if (items_id == '') {
+			swal("Error!", "Product belum dipilih!", "error");
+			$('#items_id').focus();
+		} else if (qty_items < 1) {
+			swal("Error!", "Stock tidak mencukupi!", "error");
+			$('#items_id').val('')
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('pembayaran/process') ?>',
+				data: {
+					'add_cart': true,
+					'items_id': items_id,
+					'harga_items': harga_items,
+					'qty': qty
+				},
+				dataType: 'json',
+				success: function(result) {
+					if (result.success == true) {
+						$('#cart_table').load('<?= site_url('pembayaran/v_cart_data') ?>', function() {
+							swal("Success!", "Data ditambahkan ke cart!", "success");
+							calculate()
+						})
+						$('#name_items').val('');
+						$('#items_id').val('');
+						$('#qty').val(1);
+
+					} else {
+						swal("Error!", "Data Cart gagal disimpan!", "error");
+					}
+				}
+			})
+		}
+	});
+
+	$(document).on('click', '#del_cart', function() {
+		if (confirm('Apakah Yakin?')) {
+			var cart_id = $(this).data('cartid')
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('pembayaran/cart_del'); ?>',
+				dataType: 'json',
+				data: {
+					'cart_id': cart_id
+				},
+				success: function(result) {
+					if (result.success == true) {
+						$('#cart_table').load('<?= site_url('pembayaran/v_cart_data') ?>', function() {
+							swal("Success!", "Data berhasil dihapus!", "success");
+							calculate()
+						})
+					} else {
+						swal("Success!", "Data gagal dihapus!", "success");
+					}
+				}
+			})
+		} else {
+			swal("Error!", "Data gagal dihapus!", "error");
+		}
+	})
+</script>

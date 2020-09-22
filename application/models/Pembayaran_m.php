@@ -2,12 +2,12 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Asia/Bangkok");
 
-class sales_m extends CI_Model
+class Pembayaran_m extends CI_Model
 {
 	public function invoice_no()
 	{
 		$sql    = "SELECT MAX(MID(invoice,9,4)) as invoice_no 
-                   FROM sales 
+                   FROM pembayaran 
                    WHERE MID(invoice,3,6) = DATE_FORMAT(CURDATE(), '%y%m%d')";
 
 		$query  = $this->db->query($sql);
@@ -22,14 +22,33 @@ class sales_m extends CI_Model
 		return $invoice;
 	}
 
+	public function down_payment()
+	{
+		$sql    = "SELECT MAX(MID(down_payment,9,4)) as down_payment_no 
+                   FROM pembayaran 
+                   WHERE MID(invoice,3,6) = DATE_FORMAT(CURDATE(), '%y%m%d')";
+
+		$query  = $this->db->query($sql);
+		if ($query->num_rows() > 0) {
+			$row = $query->row();
+			$n   = ((int)$row->down_payment_no) + 1;
+			$no  = sprintf("%'.04d", $n);
+		} else {
+			$no = "0001";
+		}
+		$invoice = "DP" . date('ymd') . $no;
+		return $invoice;
+	}
+
 	public function get_cart($id = null)
 	{
-		$this->db->select('*, item.item_name as item_name, cart.price as cart_price');
+		$this->db->select('*, items.name_items as name_items, cart.harga_items as cart_price');
 		$this->db->from('cart');
-		$this->db->join('item', 'item.item_id = cart.item_id');
+		$this->db->join('items', 'items.items_id = cart.items_id');
 		if ($id != NULL) {
 			$this->db->where($id);
 		}
+
 		$this->db->where('user_id', $this->session->userdata('user_id'));
 		$query = $this->db->get();
 		return $query;
@@ -46,13 +65,13 @@ class sales_m extends CI_Model
 		}
 
 		$params = array(
-			'cart_id'   => $cart_no,
-			'item_id'   => $post['item_id'],
-			'price'     => $post['price'],
-			'discount_item'   => 0,
-			'qty'       => $post['qty'],
-			'total'     => ($post['price'] * $post['qty']),
-			'user_id'   => $this->session->userdata('user_id')
+			'cart_id'   		=> $cart_no,
+			'items_id'   		=> $post['items_id'],
+			'harga_items'     	=> $post['harga_items'],
+			'discount_item'   	=> 0,
+			'qty'       		=> $post['qty'],
+			'total'     		=> ($post['harga_items'] * $post['qty']),
+			'user_id'   		=> $this->session->userdata('user_id')
 		);
 
 		$this->db->insert('cart', $params);
@@ -60,10 +79,10 @@ class sales_m extends CI_Model
 
 	public function update_cart_qty($post)
 	{
-		$sql = "UPDATE cart SET price = '$post[price]',
+		$sql = "UPDATE cart SET harga_items = '$post[harga_items]',
                 qty = qty + '$post[qty]',
-                total = '$post[price]' * qty
-                WHERE item_id = '$post[item_id]'";
+                total = '$post[harga_items]' * qty
+                WHERE items_id = '$post[items_id]'";
 
 		$this->db->query($sql);
 	}
@@ -75,19 +94,6 @@ class sales_m extends CI_Model
 		}
 
 		$this->db->delete('cart');
-	}
-
-	public function edit_cart($post)
-	{
-		$params = array(
-			'price' => $post['price'],
-			'qty' => $post['qty'],
-			'discount_item' => $post['discount'],
-			'total' => $post['total'],
-		);
-
-		$this->db->where('cart_id', $post['cart_id']);
-		$this->db->update('cart', $params);
 	}
 
 	public function add_sale($post)
