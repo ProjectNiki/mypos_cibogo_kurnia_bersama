@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
+$uniqid = uniqid();
 ?>
 
 <section class="content-header">
@@ -126,12 +127,13 @@ date_default_timezone_set("Asia/Bangkok");
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-3" id="key_dp_hide" style="display: none;">
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<h4>DP <b><span id="dp"><?= $dp ?></span></b></h4>
-						<h1><b><span id="grand_total2" style="font-size: 50pt;">0</span></b></h1>
+						<input type="hidden" name="down_payment" value="<?= date('Ymd') . '' . $uniqid ?>">
+						<h4>DP <b><span id="dp"><?= date('Ymd') . '' . $uniqid ?></span></b></h4>
+						<h1><b><span id="grand_total_dp" style="font-size: 50pt;">0</span></b></h1>
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>
 				</div>
@@ -150,7 +152,6 @@ date_default_timezone_set("Asia/Bangkok");
 								<th class="text-center">Product Item</th>
 								<th class="text-center">Price (Rp)</th>
 								<th class="text-center">Qty</th>
-								<th class="text-center">Discount Item</th>
 								<th class="text-center" style="width: 10%;">Total</th>
 								<th class="text-center" style="width: 15%;">Action</th>
 							</tr>
@@ -179,13 +180,13 @@ date_default_timezone_set("Asia/Bangkok");
 								</div>
 							</td>
 						</tr>
-						<tr>
+						<tr id="down_payment_hide" style="display: none;">
 							<td style="vertical-align: top;">
-								<label for="discount">Discount</label>
+								<label for="">Down Payment</label>
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="number" name="discount" id="discount" min="0" class="form-control" placeholder="Discount">
+									<input type="number" name="down_payment" id="down_payment" min="0" class="form-control" placeholder="Down Payment">
 								</div>
 							</td>
 						</tr>
@@ -239,14 +240,14 @@ date_default_timezone_set("Asia/Bangkok");
 					<table style="width: 100%;">
 						<tr>
 							<td style="vertical-align: top; width: 29%">
-								<label for="note">Status Pembayaran</label>
+								<label for="status">Pembayaran </label>
 							</td>
 							<td>
 								<div class="form-group">
-									<select name="note" id="note" class="form-control select2">
+									<select name="status" id="status" class="form-control select2">
 										<option value="">-- Pilih --</option>
 										<option value="1">Lunas</option>
-										<option value="0">Belum Lunas</option>
+										<option value="0">DP</option>
 									</select>
 								</div>
 							</td>
@@ -314,53 +315,6 @@ date_default_timezone_set("Asia/Bangkok");
 	</div>
 </div>
 
-
-<!-- Modal  Edit Product -->
-<div class="modal fade" id="modal-item-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="exampleModalLabel">Update Product Items</h4>
-			</div>
-			<div class="modal-body table-responsive">
-				<input type="hidden" id="cartid_item">
-				<div class="form-group">
-					<label for="product_item">Product Item</label>
-					<input type="text" name="product_item" id="product_item" class="form-control" readonly>
-				</div>
-				<div class="form-group">
-					<label for="price_item">Price</label>
-					<input type="number" name="price_item" id="price_item" min="0" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="qty_item">Qty</label>
-					<input type="number" name="qty_item" id="qty_item" min="1" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="total_before">Total Before Discount</label>
-					<input type="number" name="total_before" id="total_before" class="form-control" readonly>
-				</div>
-				<div class="form-group">
-					<label for="discount_item">Discount Per Item</label>
-					<input type="number" name="discount_item" id="discount_item" min="0" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="total_item">Total After Discount</label>
-					<input type="number" name="total_item" id="total_item" min="0" class="form-control" readonly>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="pull-right">
-					<button type="button" id="edit_cart" class="btn btn-success">
-						<i class="fa fa-plus"></i>
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 <script>
 	$(document).ready(function() {
 		$(document).on('click', '#select', function() {
@@ -371,72 +325,190 @@ date_default_timezone_set("Asia/Bangkok");
 			$('#items_key').val($(this).data('items_key'));
 			$('#exampleModal').modal('hide');
 		});
-	});
 
-	$(document).on('click', '#add_cart', function() {
-		var items_id = $('#items_id').val()
-		var harga_items = $('#harga_items').val()
-		var qty_items = $('#qty_items').val()
-		var qty = $('#qty').val()
 
-		if (items_id == '') {
-			swal("Error!", "Product belum dipilih!", "error");
-			$('#items_id').focus();
-		} else if (qty_items < 1) {
-			swal("Error!", "Stock tidak mencukupi!", "error");
-			$('#items_id').val('')
-		} else {
-			$.ajax({
-				type: 'POST',
-				url: '<?= site_url('pembayaran/process') ?>',
-				data: {
-					'add_cart': true,
-					'items_id': items_id,
-					'harga_items': harga_items,
-					'qty': qty
-				},
-				dataType: 'json',
-				success: function(result) {
-					if (result.success == true) {
-						$('#cart_table').load('<?= site_url('pembayaran/v_cart_data') ?>', function() {
-							swal("Success!", "Data ditambahkan ke cart!", "success");
-							calculate()
-						})
-						$('#name_items').val('');
-						$('#items_id').val('');
-						$('#qty').val(1);
+		$(document).on('click', '#add_cart', function() {
+			var items_id = $('#items_id').val()
+			var harga_items = $('#harga_items').val()
+			var qty_items = $('#qty_items').val()
+			var qty = $('#qty').val()
 
-					} else {
-						swal("Error!", "Data Cart gagal disimpan!", "error");
+			if (items_id == '') {
+				swal("Error!", "Product belum dipilih!", "error");
+				$('#items_id').focus();
+			} else if (qty_items < 1) {
+				swal("Error!", "Stock tidak mencukupi!", "error");
+				$('#items_id').val('')
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('pembayaran/process') ?>',
+					data: {
+						'add_cart': true,
+						'items_id': items_id,
+						'harga_items': harga_items,
+						'qty': qty
+					},
+					dataType: 'json',
+					success: function(result) {
+						if (result.success == true) {
+							$('#cart_table').load('<?= site_url('pembayaran/v_cart_data') ?>', function() {
+								swal("Success!", "Data ditambahkan ke cart!", "success");
+								calculate()
+							})
+							$('#name_items').val('');
+							$('#items_id').val('');
+							$('#qty').val(1);
+
+						} else {
+							swal("Error!", "Data Cart gagal disimpan!", "error");
+						}
 					}
-				}
-			})
-		}
-	});
+				})
+			}
+		});
 
-	$(document).on('click', '#del_cart', function() {
-		if (confirm('Apakah Yakin?')) {
-			var cart_id = $(this).data('cartid')
-			$.ajax({
-				type: 'POST',
-				url: '<?= site_url('pembayaran/cart_del'); ?>',
-				dataType: 'json',
-				data: {
-					'cart_id': cart_id
-				},
-				success: function(result) {
-					if (result.success == true) {
-						$('#cart_table').load('<?= site_url('pembayaran/v_cart_data') ?>', function() {
-							swal("Success!", "Data berhasil dihapus!", "success");
-							calculate()
-						})
-					} else {
-						swal("Success!", "Data gagal dihapus!", "success");
+		$(document).on('click', '#del_cart', function() {
+			if (confirm('Apakah Yakin?')) {
+				var cart_id = $(this).data('cartid')
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('pembayaran/cart_del'); ?>',
+					dataType: 'json',
+					data: {
+						'cart_id': cart_id
+					},
+					success: function(result) {
+						if (result.success == true) {
+							$('#cart_table').load('<?= site_url('pembayaran/v_cart_data') ?>', function() {
+								swal("Success!", "Data berhasil dihapus!", "success");
+								calculate()
+							})
+						} else {
+							swal("Success!", "Data gagal dihapus!", "success");
+						}
 					}
-				}
+				})
+			} else {
+				swal("Error!", "Data gagal dihapus!", "error");
+			}
+		})
+
+
+
+		function calculate() {
+			var subtotal = 0;
+
+			$('#cart_table tr').each(function() {
+				subtotal += parseInt($(this).find('#total').text())
 			})
-		} else {
-			swal("Error!", "Data gagal dihapus!", "error");
+
+			isNaN(subtotal) ? $('#sub_total').val(0) : $('#sub_total').val(subtotal)
+
+			var grand_total2 = subtotal
+
+			if (isNaN(grand_total2)) {
+				$('#grand_total2').text(0)
+			} else {
+				$('#grand_total2').text(grand_total2)
+			}
+
+			var down_payment = $('#down_payment').val()
+			var grand_total = subtotal - down_payment
+
+			if (isNaN(grand_total)) {
+				$('#grand_total').val(0)
+				$('#grand_total_dp').text(0)
+			} else {
+				$('#grand_total').val(grand_total)
+				$('#grand_total_dp').text(grand_total)
+			}
+
+
+			var cash = $('#cash').val();
+			cash != 0 ? $('#change').val(cash - grand_total) : $('#change').val(0);
+
 		}
-	})
+
+		$(document).on('keyup mouseup', '#down_payment, #cash', function() {
+			calculate();
+		})
+
+		$(document).ready(function() {
+			calculate()
+		})
+
+		// Proses payment
+		$(document).on('click', '#process_payment', function() {
+			var customers_id = $('#customers_id').val()
+			var subtotal = $('#sub_total').val()
+			var down_payment = $('#down_payment').val()
+			var grandtotal = $('#grand_total').val()
+			var cash = $('#cash').val()
+			var change = $('#change').val()
+			var status = $('#status').val()
+			var date = $('#date').val()
+
+			if (subtotal < 1) {
+				swal("Error!", "Belum Ada Product Item Yang Dipilih!", "error");
+			} else if (cash < 1) {
+				swal("Error!", "Jumlah Uang Cash Belum Diinput!", "error");
+				$('#cash').focus();
+			} else if (customers_id == '') {
+				swal("Error!", "Data Customers Belum Diinput!", "error");
+				$('#customers_id').focus();
+			} else if (status == '') {
+				swal("Error!", "Data Status Pembayaran Belum Diinput!", "error");
+				$('#customers_id').focus();
+			} else {
+				if (confirm('Yakin Proses transaksi Ini ?')) {
+					$.ajax({
+						type: 'POST',
+						url: '<?= site_url('pembayaran/process') ?>',
+						data: {
+							'process_payment': true,
+							'customers_id': customers_id,
+							'subtotal': subtotal,
+							'down_payment': down_payment,
+							'grandtotal': grandtotal,
+							'cash': cash,
+							'change': change,
+							'status': status,
+							'date': date
+						},
+						dataType: 'json',
+						success: function(result) {
+							if (result.success == true) {
+								alert('Data Behasil Disimpan');
+								ocation.href = '<?= site_url('pembayaran') ?>'
+								// window.location.reload();
+							} else {
+								swal("Error!", "Transaksi Gagal!", "error");
+							}
+							location.href = '<?= site_url('pembayaran') ?>'
+						}
+					})
+				}
+			}
+		});
+	});
+</script>
+
+<script>
+	$(document).ready(function() {
+		$("#key_dp_hide").hide();
+		$("#down_payment_hide").hide();
+
+
+
+		$('#status').on('change', function() {
+			if (this.value == '0') {
+				$("#key_dp_hide").show();
+				$("#down_payment_hide").show();
+			} else {
+				$("#down_payment_hide").hide();
+				$("#key_dp_hide").hide();
+			}
+		});
+	});
 </script>

@@ -202,7 +202,7 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="<?= base_url('assets') ?>/dist/js/sweetalert.js"></script>
 	<script src="<?= base_url('assets') ?>/bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="<?= base_url('assets') ?>/bower_components/select2/dist/js/select2.full.min.js"></script>
 	<script src="<?= base_url('assets') ?>/bower_components/select2/dist/js/select2.full.min.js"></script>

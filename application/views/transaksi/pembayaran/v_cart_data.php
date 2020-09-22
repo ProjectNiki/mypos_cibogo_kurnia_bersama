@@ -6,8 +6,7 @@
 			<td><?= $data->name_items ?></td>
 			<td><?= indo_currency($data->cart_price)  ?></td>
 			<td class="text-center"><?= $data->qty ?></td>
-			<td><?= indo_currency($data->discount_item) ?></td>
-			<td id="total"><?= indo_currency($data->total) ?></td>
+			<td id="total"><?= $data->total ?></td>
 			<td class="text-center">
 				<button data-cartid="<?= $data->cart_id ?>" class="btn btn-danger" id="del_cart">
 					<i class="fa fa-trash"></i>

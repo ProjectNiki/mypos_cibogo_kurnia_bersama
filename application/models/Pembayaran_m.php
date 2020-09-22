@@ -102,22 +102,22 @@ class Pembayaran_m extends CI_Model
 			'invoice' => $this->invoice_no(),
 			'customers_id' => $post['customers_id'],
 			'total_price' => $post['subtotal'],
-			'discount' => $post['discount'],
+			'down_payment' => $post['down_payment'],
 			'final_price' => $post['grandtotal'],
 			'cash' => $post['cash'],
 			'remaining' => $post['change'],
-			'note' => $post['note'],
+			'status' => $post['status'],
 			'date' => $post['date'],
 			'user_id' => $this->session->userdata('user_id')
 		);
 
-		$this->db->insert('sales', $params);
+		$this->db->insert('pembayaran', $params);
 		return $this->db->insert_id();
 	}
 
-	function add_sale_detail($params)
+	function add_pembayaran_detail($params)
 	{
-		$this->db->insert_batch('sales_detail', $params);
+		$this->db->insert_batch('pembayaran_detail', $params);
 	}
 
 	public function get_sale($id = null)

@@ -16,6 +16,17 @@ class Pembayaran extends CI_Controller
 		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran');
 	}
 
+	function generateRandomString($length = 10)
+	{
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
+
 	public function add()
 	{
 		$customers 	= $this->Customers_m->get()->result();
@@ -65,29 +76,27 @@ class Pembayaran extends CI_Controller
 			echo json_encode($params);
 		}
 		// Memasukan data sementara ke cart
-
 		if (isset($_POST['process_payment'])) {
 
-			$sale_id = $this->Pembayaran_m->add_sale($post);
+			$pembayaran_id = $this->Pembayaran_m->add_sale($post);
 			$cart    = $this->Pembayaran_m->get_cart()->result();
 			$row     = [];
 			foreach ($cart as $c => $value) {
 				array_push($row, array(
-					'sale_id' => $sale_id,
-					'item_id' => $value->item_id,
+					'pembayaran_id' => $pembayaran_id,
+					'items_id' => $value->items_id,
 					'price'   => $value->price,
 					'qty'     => $value->qty,
-					'discount_item' => $value->discount_item,
 					'total' => $value->total,
 				));
 			}
 
-			$this->Pembayaran_m->add_sale_detail($row);
+			$this->Pembayaran_m->add_pembayaran_detail($row);
 			$this->Pembayaran_m->del_cart(['user_id' => $this->session->userdata('user_id')]);
 
 
 			if ($this->db->affected_rows() > 0) {
-				$params = array("success" => true, "sale_id" => $sale_id);
+				$params = array("success" => true);
 			} else {
 				$params = array("success" => false);
 			}
