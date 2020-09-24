@@ -34,28 +34,39 @@
 						<th class="text-center">No Invoice</th>
 						<th class="text-center">Nama Customers</th>
 						<th class="text-center">PT. Customers</th>
-						<th class="text-center">Tgl Pembelian</th>
+						<th class="text-center">Tanggal Transaksi</th>
 						<th class="text-center">A/N</th>
+						<th class="text-center">Status Pembayaran</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td class="text-center"></td>
-						<td></td>
-						<td></td>
-						<td class="text-center"></td>
-						<td class="text-center"></td>
-						<td class="text-center">
-							<a href="" class="btn btn-success">
-								<i class="fa fa-plus"></i>
-							</a>
-							<a href="" class="btn btn-default">
-								<i class="fa fa-eye"></i>
-							</a>
-						</td>
-					</tr>
+					<?php $no = 1; ?>
+					<?php foreach ($row as $key => $data) { ?>
+						<tr>
+							<td class="text-center"><?= $no++	 ?></td>
+							<td class="text-center"><?= $data->invoice ?></td>
+							<td><?= $data->name_customers ?></td>
+							<td><?= $data->pt_customers ?></td>
+							<td class="text-center"><?= indo_date($data->date)  ?></td>
+							<td class="text-center"><?= $data->nama ?></td>
+							<td class="text-center">
+								<?php if ($data->status == 2) { ?>
+									<span class="btn btn-danger">Down Payment</span>
+								<?php } else { ?>
+									<span class="btn btn-success">Lunas</span>
+								<?php } ?>
+							</td>
+							<td class="text-center">
+								<a href="<?= site_url('pembayaran/down_payment/' . $data->pembayaran_id) ?>" class="btn btn-success">
+									<i class="fa fa-edit"></i>
+								</a>
+								<a href="<?= site_url('pembayaran/preview/' . $data->pembayaran_id) ?>" class="btn btn-default">
+									<i class="fa fa-eye"></i>
+								</a>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>

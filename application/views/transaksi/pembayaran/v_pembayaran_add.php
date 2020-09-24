@@ -131,7 +131,7 @@ $uniqid = uniqid();
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<input type="hidden" name="down_payment" value="<?= date('Ymd') . '' . $uniqid ?>">
+						<input type="hidden" id="down_payment_id" name="down_payment_id" value="<?= date('Ymd') . '' . $uniqid ?>">
 						<h4>DP <b><span id="dp"><?= date('Ymd') . '' . $uniqid ?></span></b></h4>
 						<h1><b><span id="grand_total_dp" style="font-size: 50pt;">0</span></b></h1>
 					</div>
@@ -190,45 +190,6 @@ $uniqid = uniqid();
 								</div>
 							</td>
 						</tr>
-						<tr>
-							<td style="vertical-align: top;">
-								<label for="grand_total">Grand Total</label>
-							</td>
-							<td>
-								<div class="form-group">
-									<input type="number" name="grand_total" id="grand_total" class="form-control" readonly>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<!--  -->
-		<div class="col-md-3">
-			<div class="box">
-				<div class="box-body">
-					<table style="width: 100%;">
-						<tr>
-							<td style="vertical-align: top; width: 29%">
-								<label for="cash">Cash</label>
-							</td>
-							<td>
-								<div class="form-group">
-									<input type="number" id="cash" min="0" class="form-control" placeholder="Cash">
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td style="vertical-align: top; width: 29%">
-								<label for="change">Change</label>
-							</td>
-							<td>
-								<div class="form-group">
-									<input type="number" id="change" value="0" min="0" class="form-control" readonly>
-								</div>
-							</td>
-						</tr>
 					</table>
 				</div>
 			</div>
@@ -247,8 +208,18 @@ $uniqid = uniqid();
 									<select name="status" id="status" class="form-control select2">
 										<option value="">-- Pilih --</option>
 										<option value="1">Lunas</option>
-										<option value="0">DP</option>
+										<option value="2">DP</option>
 									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 29%">
+								<label for="cash">Cash</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="number" id="cash" min="0" class="form-control" placeholder="Cash">
 								</div>
 							</td>
 						</tr>
@@ -426,7 +397,7 @@ $uniqid = uniqid();
 
 
 			var cash = $('#cash').val();
-			cash != 0 ? $('#change').val(cash - grand_total) : $('#change').val(0);
+			cash != 0 ? $('#change').val(cash - down_payment) : $('#change').val(0);
 
 		}
 
@@ -443,6 +414,7 @@ $uniqid = uniqid();
 			var customers_id = $('#customers_id').val()
 			var subtotal = $('#sub_total').val()
 			var down_payment = $('#down_payment').val()
+			var down_payment_id = $('#down_payment_id').val()
 			var grandtotal = $('#grand_total').val()
 			var cash = $('#cash').val()
 			var change = $('#change').val()
@@ -461,7 +433,7 @@ $uniqid = uniqid();
 				swal("Error!", "Data Status Pembayaran Belum Diinput!", "error");
 				$('#customers_id').focus();
 			} else {
-				if (confirm('Yakin Proses transaksi Ini ?')) {
+				if (confirm('Data akan disimpan, apakah yakin ?')) {
 					$.ajax({
 						type: 'POST',
 						url: '<?= site_url('pembayaran/process') ?>',
@@ -470,6 +442,7 @@ $uniqid = uniqid();
 							'customers_id': customers_id,
 							'subtotal': subtotal,
 							'down_payment': down_payment,
+							'down_payment_id': down_payment_id,
 							'grandtotal': grandtotal,
 							'cash': cash,
 							'change': change,
@@ -480,7 +453,7 @@ $uniqid = uniqid();
 						success: function(result) {
 							if (result.success == true) {
 								alert('Data Behasil Disimpan');
-								ocation.href = '<?= site_url('pembayaran') ?>'
+								location.href = '<?= site_url('pembayaran') ?>'
 								// window.location.reload();
 							} else {
 								swal("Error!", "Transaksi Gagal!", "error");
@@ -496,13 +469,11 @@ $uniqid = uniqid();
 
 <script>
 	$(document).ready(function() {
-		$("#key_dp_hide").hide();
-		$("#down_payment_hide").hide();
-
-
+		// $("#key_dp_hide").hide();
+		// $("#down_payment_hide").hide();
 
 		$('#status').on('change', function() {
-			if (this.value == '0') {
+			if (this.value == '2') {
 				$("#key_dp_hide").show();
 				$("#down_payment_hide").show();
 			} else {

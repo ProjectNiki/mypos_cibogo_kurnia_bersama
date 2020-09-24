@@ -4,6 +4,38 @@ date_default_timezone_set("Asia/Bangkok");
 
 class Pembayaran_m extends CI_Model
 {
+
+	public function get($id = NULL)
+	{
+		$this->db->select('*, pembayaran.created as created_dp');
+		$this->db->from('pembayaran');
+		$this->db->join('pembayaran_detail', 'pembayaran_detail.pembayaran_id = pembayaran.pembayaran_id');
+		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
+		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
+		$this->db->join('user', 'user.user_id = pembayaran.user_id');
+		if ($id != NULL) {
+			$this->db->where('pembayaran.pembayaran_id', $id);
+		}
+		$this->db->group_by('pembayaran.invoice');
+
+		$query = $this->db->get();
+		return $query;
+	}
+
+	public function sum_jumlah_transaksi($id = NULL)
+	{
+		$this->db->select('SUM(pembayaran_down_payment.down_payment) as result_dp');
+		$this->db->from('pembayaran_down_payment');
+		$this->db->join('pembayaran', 'pembayaran.invoice = pembayaran_down_payment.invoice');
+
+		if ($id != NULL) {
+			$this->db->where('pembayaran.pembayaran_id', $id);
+		}
+
+		$query = $this->db->get();
+		return $query;
+	}
+
 	public function invoice_no()
 	{
 		$sql    = "SELECT MAX(MID(invoice,9,4)) as invoice_no 
@@ -19,24 +51,6 @@ class Pembayaran_m extends CI_Model
 			$no = "0001";
 		}
 		$invoice = "MP" . date('ymd') . $no;
-		return $invoice;
-	}
-
-	public function down_payment()
-	{
-		$sql    = "SELECT MAX(MID(down_payment,9,4)) as down_payment_no 
-                   FROM pembayaran 
-                   WHERE MID(invoice,3,6) = DATE_FORMAT(CURDATE(), '%y%m%d')";
-
-		$query  = $this->db->query($sql);
-		if ($query->num_rows() > 0) {
-			$row = $query->row();
-			$n   = ((int)$row->down_payment_no) + 1;
-			$no  = sprintf("%'.04d", $n);
-		} else {
-			$no = "0001";
-		}
-		$invoice = "DP" . date('ymd') . $no;
 		return $invoice;
 	}
 
@@ -68,7 +82,6 @@ class Pembayaran_m extends CI_Model
 			'cart_id'   		=> $cart_no,
 			'items_id'   		=> $post['items_id'],
 			'harga_items'     	=> $post['harga_items'],
-			'discount_item'   	=> 0,
 			'qty'       		=> $post['qty'],
 			'total'     		=> ($post['harga_items'] * $post['qty']),
 			'user_id'   		=> $this->session->userdata('user_id')
@@ -96,16 +109,13 @@ class Pembayaran_m extends CI_Model
 		$this->db->delete('cart');
 	}
 
-	public function add_sale($post)
+	public function add_pembayaran($post)
 	{
 		$params = array(
 			'invoice' => $this->invoice_no(),
 			'customers_id' => $post['customers_id'],
 			'total_price' => $post['subtotal'],
-			'down_payment' => $post['down_payment'],
-			'final_price' => $post['grandtotal'],
 			'cash' => $post['cash'],
-			'remaining' => $post['change'],
 			'status' => $post['status'],
 			'date' => $post['date'],
 			'user_id' => $this->session->userdata('user_id')
@@ -113,6 +123,18 @@ class Pembayaran_m extends CI_Model
 
 		$this->db->insert('pembayaran', $params);
 		return $this->db->insert_id();
+	}
+
+	public function add_pembayaran_dp($post)
+	{
+		$params = array(
+			'invoice' => $this->invoice_no(),
+			'down_payment' => $post['down_payment'],
+			'down_payment_id' => $post['down_payment_id'],
+			'user_id' => $this->session->userdata('user_id')
+		);
+
+		$this->db->insert('pembayaran_down_payment', $params);
 	}
 
 	function add_pembayaran_detail($params)

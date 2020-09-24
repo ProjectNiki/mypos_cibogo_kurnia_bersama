@@ -164,7 +164,7 @@
 						</ul>
 					</li>
 
-					<li class="treeview">
+					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
 						<a href="#">
 							<i class="fa fa-line-chart"></i> <span>Laporan</span>
 							<span class="pull-right-container">
@@ -172,8 +172,8 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li>
-								<a href="">
+							<li <?= $this->uri->segment(1) == 'lap_invoice' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('lap_invoice') ?>">
 									<i class="fa fa-circle-o"></i> Invoice
 								</a>
 							</li>

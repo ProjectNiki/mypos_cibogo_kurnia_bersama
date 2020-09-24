@@ -13,18 +13,29 @@ class Pembayaran extends CI_Controller
 
 	public function index()
 	{
-		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran');
+		$data['row'] = $this->Pembayaran_m->get()->result();
+
+		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran', $data);
 	}
 
-	function generateRandomString($length = 10)
+	public function preview($id)
 	{
-		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$charactersLength = strlen($characters);
-		$randomString = '';
-		for ($i = 0; $i < $length; $i++) {
-			$randomString .= $characters[rand(0, $charactersLength - 1)];
-		}
-		return $randomString;
+		$pembayaran 		= $this->Pembayaran_m->get($id)->row();
+		$pembayaran_table 	= $this->Pembayaran_m->get($id)->result();
+		$result_dp			= $this->Pembayaran_m->sum_jumlah_transaksi($id)->result();
+
+		$data = [
+			'pembayaran' => $pembayaran,
+			'result'	 => $pembayaran_table,
+			'result_dp'	 => $result_dp
+		];
+
+		$this->template->load('v_template', 'transaksi/pembayaran/v_preview', $data);
+	}
+
+	public function down_payment()
+	{
+		$this->template->load('v_template', 'transaksi/pembayaran/v_down_payment');
 	}
 
 	public function add()
@@ -39,7 +50,6 @@ class Pembayaran extends CI_Controller
 			'items'		=> $items,
 			'cart'      => $cart,
 			'invoice'   => $this->Pembayaran_m->invoice_no(),
-			'dp'		=> $this->Pembayaran_m->down_payment()
 		];
 
 		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran_add', $data);
@@ -76,16 +86,24 @@ class Pembayaran extends CI_Controller
 			echo json_encode($params);
 		}
 		// Memasukan data sementara ke cart
+
+		// process payment
 		if (isset($_POST['process_payment'])) {
 
-			$pembayaran_id = $this->Pembayaran_m->add_sale($post);
+
+			if ($post['status'] == 2) {
+				$this->Pembayaran_m->add_pembayaran_dp($post);
+			}
+
+			$pembayaran_id = $this->Pembayaran_m->add_pembayaran($post);
+
 			$cart    = $this->Pembayaran_m->get_cart()->result();
 			$row     = [];
 			foreach ($cart as $c => $value) {
 				array_push($row, array(
 					'pembayaran_id' => $pembayaran_id,
 					'items_id' => $value->items_id,
-					'price'   => $value->price,
+					'harga_items'   => $value->harga_items,
 					'qty'     => $value->qty,
 					'total' => $value->total,
 				));
@@ -93,7 +111,6 @@ class Pembayaran extends CI_Controller
 
 			$this->Pembayaran_m->add_pembayaran_detail($row);
 			$this->Pembayaran_m->del_cart(['user_id' => $this->session->userdata('user_id')]);
-
 
 			if ($this->db->affected_rows() > 0) {
 				$params = array("success" => true);
