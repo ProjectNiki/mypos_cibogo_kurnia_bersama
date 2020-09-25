@@ -70,39 +70,7 @@ date_default_timezone_set("Asia/Bangkok");
 		<hr width="35%">
 	</div>
 	Print On : <?= date('Y-m-d H:i:s'); ?>
-	<table class="table table-bordered table-responsive" style="padding-top: 7px;">
-		<thead>
-			<tr>
-				<th class="text-center">#</th>
-				<th class="text-center">Nama Items</th>
-				<th class="text-center">Qty</th>
-				<th class="text-center">Price (Rp)</th>
-				<th class="text-center">Total</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php $no = 1; ?>
-			<?php foreach ($result as $key => $data) { ?>
-				<tr>
-					<td class="text-center"><?= $no++ ?></td>
-					<td><?= $data->name_items ?></td>
-					<td class="text-center"><?= $data->qty ?></td>
-					<td><?= indo_currency($data->harga_items) ?></td>
-					<td><?= indo_currency($data->qty * $data->harga_items) ?></td>
-				</tr>
-			<?php } ?>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="4" class="text-right">
-					<b>Grand Total</b>
-				</td>
-				<td colspan="1" style="text-align: left;">
-					<?= indo_currency($row->total_price) ?>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+
 </body>
 
 </html>
