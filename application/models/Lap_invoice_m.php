@@ -22,7 +22,7 @@ class Lap_invoice_m extends CI_Model
 
 	public function get_id($id = NULL)
 	{
-		$this->db->select('*, pembayaran.created as created_dp');
+		$this->db->select('*, pembayaran.created as create_invoice');
 		$this->db->from('pembayaran');
 		$this->db->join('pembayaran_detail', 'pembayaran_detail.pembayaran_id = pembayaran.pembayaran_id');
 		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
