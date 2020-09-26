@@ -10,7 +10,6 @@ class Pembayaran_m extends CI_Model
 		$this->db->select('*, pembayaran.created as created_dp');
 		$this->db->from('pembayaran');
 		$this->db->join('pembayaran_detail', 'pembayaran_detail.pembayaran_id = pembayaran.pembayaran_id');
-		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
 		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
 		$this->db->join('user', 'user.user_id = pembayaran.user_id');
 		if ($id != NULL) {
@@ -22,11 +21,14 @@ class Pembayaran_m extends CI_Model
 		return $query;
 	}
 
-	public function sum_jumlah_transaksi($id = NULL)
+	public function get_lunas($id = NULL)
 	{
-		$this->db->select('SUM(pembayaran_down_payment.down_payment) as result_dp');
-		$this->db->from('pembayaran_down_payment');
-		$this->db->join('pembayaran', 'pembayaran.invoice = pembayaran_down_payment.invoice');
+		$this->db->select('*, pembayaran.created as create_invoice, pembayaran_detail.harga_items as harga_pembayaran, pembayaran_detail.qty as pembayaran_qty');
+		$this->db->from('pembayaran');
+		$this->db->join('pembayaran_detail', 'pembayaran_detail.pembayaran_id = pembayaran.pembayaran_id');
+		$this->db->join('items', 'items.items_id = pembayaran_detail.items_id');
+		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
+		$this->db->join('user', 'user.user_id = pembayaran.user_id');
 
 		if ($id != NULL) {
 			$this->db->where('pembayaran.pembayaran_id', $id);
@@ -36,6 +38,50 @@ class Pembayaran_m extends CI_Model
 		return $query;
 	}
 
+	// Down Payment
+
+	public function get_dp($id = NULL)
+	{
+		$this->db->select('*, 
+							pembayaran.created as create_invoice,
+							pembayaran_down_payment.created as created_dp
+							');
+		$this->db->from('pembayaran');
+		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
+		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
+		$this->db->join('user', 'user.user_id = pembayaran.user_id');
+
+		if ($id != NULL) {
+			$this->db->where('pembayaran.pembayaran_id', $id);
+		}
+
+		$query = $this->db->get();
+		return $query;
+	}
+
+	public function get_sum_dp($id = NULL)
+	{
+		$this->db->select('SUM(pembayaran_down_payment.down_payment) as result_dp, pembayaran.total_price as total_price');
+		$this->db->from('pembayaran');
+		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
+
+		if ($id != NULL) {
+			$this->db->where('pembayaran.pembayaran_id', $id);
+		}
+
+		$query = $this->db->get();
+		return $query;
+	}
+
+	public function update_status_down_payment($id)
+	{
+		$params['lunas_down_payment'] = 1;
+
+		$this->db->where('pembayaran_id', $id);
+		$this->db->update('pembayaran', $params);
+	}
+
+	// 
 	public function invoice_no()
 	{
 		$sql    = "SELECT MAX(MID(invoice,9,4)) as invoice_no 
@@ -123,6 +169,18 @@ class Pembayaran_m extends CI_Model
 
 		$this->db->insert('pembayaran', $params);
 		return $this->db->insert_id();
+	}
+
+	public function add_pembayaran_sisa_dp($post)
+	{
+		$params = array(
+			'invoice' => $post['invoice'],
+			'down_payment' => $post['down_payment'],
+			'down_payment_id' => $post['down_payment_id'],
+			'user_id' => $this->session->userdata('user_id')
+		);
+
+		$this->db->insert('pembayaran_down_payment', $params);
 	}
 
 	public function add_pembayaran_dp($post)

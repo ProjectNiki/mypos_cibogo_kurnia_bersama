@@ -37,6 +37,7 @@
 						<th class="text-center">Tanggal Transaksi</th>
 						<th class="text-center">A/N</th>
 						<th class="text-center">Status Pembayaran</th>
+						<th class="text-center">Preview</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -58,12 +59,35 @@
 								<?php } ?>
 							</td>
 							<td class="text-center">
-								<a href="<?= site_url('pembayaran/down_payment/' . $data->pembayaran_id) ?>" class="btn btn-success">
-									<i class="fa fa-edit"></i>
-								</a>
-								<a href="<?= site_url('pembayaran/preview/' . $data->pembayaran_id) ?>" class="btn btn-default">
-									<i class="fa fa-eye"></i>
-								</a>
+								<?php if ($data->lunas_down_payment == 1) { ?>
+									<a href="<?= site_url('pembayaran/preview/' . $data->pembayaran_id . '/' . $data->status) ?>" class="btn btn-default">
+										<i class="fa fa-eye"></i>
+									</a>
+								<?php } else if ($data->status == 2) { ?>
+									<a href="<?= site_url('pembayaran/preview/' . $data->pembayaran_id . '/' . $data->status) ?>" class="btn btn-primary">
+										<i class="fa fa-eye"></i>
+									</a>
+								<?php } else { ?>
+									<a href="<?= site_url('pembayaran/preview/' . $data->pembayaran_id . '/' . $data->status) ?>" class="btn btn-default">
+										<i class="fa fa-eye"></i>
+									</a>
+								<?php } ?>
+
+							</td>
+							<td class="text-center">
+								<?php if ($data->status == 1) { ?>
+									<a href="#" class="btn btn-success" disabled='disabled' id='submitBtn'>
+										<i class="fa fa-edit"></i>
+									</a>
+								<?php } else if ($data->lunas_down_payment == 1) { ?>
+									<a href="#" class="btn btn-success" disabled='disabled' id='submitBtn'>
+										<i class="fa fa-edit"></i>
+									</a>
+								<?php } else { ?>
+									<a href="<?= site_url('pembayaran/down_payment/' . $data->pembayaran_id) ?>" class="btn btn-success">
+										<i class="fa fa-edit"></i>
+									</a>
+								<?php } ?>
 							</td>
 						</tr>
 					<?php } ?>
@@ -72,3 +96,7 @@
 		</div>
 	</div>
 </section>
+
+<script>
+	$('#submitBtn').prop('disabled', true);
+</script>

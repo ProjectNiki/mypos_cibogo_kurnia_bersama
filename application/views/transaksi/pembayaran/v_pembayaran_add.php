@@ -171,12 +171,23 @@ $uniqid = uniqid();
 				<div class="box-body">
 					<table style="width: 100%;">
 						<tr>
-							<td style="vertical-align: top; width: 30%">
-								<label for="sub_total">Sub Total</label>
+							<td>
+								<div class="form-group">
+									<input type="hidden" name="sub_total" id="sub_total" value="" class="form-control" readonly>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 29%">
+								<label for="status">Pembayaran </label>
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="number" name="sub_total" id="sub_total" value="" class="form-control" readonly>
+									<select name="status" id="status" class="form-control select2">
+										<option value="">-- Pilih --</option>
+										<option value="1">Lunas</option>
+										<option value="2">Down Payment</option>
+									</select>
 								</div>
 							</td>
 						</tr>
@@ -187,29 +198,6 @@ $uniqid = uniqid();
 							<td>
 								<div class="form-group">
 									<input type="number" name="down_payment" id="down_payment" min="0" class="form-control" placeholder="Down Payment">
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<!--  -->
-		<div class="col-md-3">
-			<div class="box">
-				<div class="box-body">
-					<table style="width: 100%;">
-						<tr>
-							<td style="vertical-align: top; width: 29%">
-								<label for="status">Pembayaran </label>
-							</td>
-							<td>
-								<div class="form-group">
-									<select name="status" id="status" class="form-control select2">
-										<option value="">-- Pilih --</option>
-										<option value="1">Lunas</option>
-										<option value="2">DP</option>
-									</select>
 								</div>
 							</td>
 						</tr>
@@ -330,6 +318,7 @@ $uniqid = uniqid();
 							$('#name_items').val('');
 							$('#items_id').val('');
 							$('#qty').val(1);
+							$('#items_key').val('');
 
 						} else {
 							swal("Error!", "Data Cart gagal disimpan!", "error");

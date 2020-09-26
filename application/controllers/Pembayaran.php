@@ -13,30 +13,87 @@ class Pembayaran extends CI_Controller
 
 	public function index()
 	{
-		$data['row'] = $this->Pembayaran_m->get()->result();
+		$result 	= $this->Pembayaran_m->get()->result();
+
+		$data =	[
+			'row' => $result,
+		];
 
 		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran', $data);
 	}
 
 	public function preview($id)
 	{
-		$pembayaran 		= $this->Pembayaran_m->get($id)->row();
-		$pembayaran_table 	= $this->Pembayaran_m->get($id)->result();
-		$result_dp			= $this->Pembayaran_m->sum_jumlah_transaksi($id)->result();
+		$uri 	= $this->uri->segment(4);
 
-		$data = [
-			'pembayaran' => $pembayaran,
-			'result'	 => $pembayaran_table,
-			'result_dp'	 => $result_dp
+		$row_lunas = $this->Pembayaran_m->get_lunas($id)->row();
+		$result_lunas = $this->Pembayaran_m->get_lunas($id)->result();
+
+		$data_lunas = [
+			'row' => $row_lunas,
+			'result' => $result_lunas,
+		];
+		// 
+		$row_dp = $this->Pembayaran_m->get_dp($id)->row();
+		$result_dp = $this->Pembayaran_m->get_dp($id)->result();
+		$get_sum_dp = $this->Pembayaran_m->get_sum_dp($id)->row();
+
+		$data_dp = [
+			'row' => $row_dp,
+			'result' => $result_dp,
+			'get_sum_dp' => $get_sum_dp
 		];
 
-		$this->template->load('v_template', 'transaksi/pembayaran/v_preview', $data);
+		if ($uri == 1) {
+			$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran_lunas', $data_lunas);
+		} else {
+			$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran_dp', $data_dp);
+		}
 	}
 
-	public function down_payment()
+	public function down_payment($id)
 	{
-		$this->template->load('v_template', 'transaksi/pembayaran/v_down_payment');
+		$row = $this->Pembayaran_m->get_lunas($id)->row();
+		$result = $this->Pembayaran_m->get_lunas($id)->result();
+		$row_dp = $this->Pembayaran_m->get_sum_dp($id)->row();
+
+		$data = [
+			'row' => $row,
+			'row_dp' => $row_dp,
+			'result' => $result
+		];
+
+		$this->template->load('v_template', 'transaksi/pembayaran/v_down_payment', $data);
 	}
+
+	public function process_dp()
+	{
+		$post = $this->input->post(NULL, TRUE);
+
+
+		if (isset($_POST['process_payment'])) {
+
+			$this->Pembayaran_m->add_pembayaran_sisa_dp($post);
+
+			if ($this->db->affected_rows() > 0) {
+				$params = array("success" => true);
+			} else {
+				$params = array("success" => false);
+			}
+			echo json_encode($params);
+		}
+	}
+
+	public function update_status_down_payment($id)
+	{
+		$this->Pembayaran_m->update_status_down_payment($id);
+
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"><strong>Success!</strong> Data berhasil dihapus </div>');
+			redirect('pembayaran');
+		}
+	}
+
 
 	public function add()
 	{
@@ -89,7 +146,6 @@ class Pembayaran extends CI_Controller
 
 		// process payment
 		if (isset($_POST['process_payment'])) {
-
 
 			if ($post['status'] == 2) {
 				$this->Pembayaran_m->add_pembayaran_dp($post);

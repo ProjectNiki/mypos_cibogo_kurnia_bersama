@@ -70,7 +70,57 @@ date_default_timezone_set("Asia/Bangkok");
 		<hr width="35%">
 	</div>
 	Print On : <?= date('Y-m-d H:i:s'); ?>
-
+	<table class="table table-bordered table-responsive">
+		<thead>
+			<tr>
+				<th class="text-center">#</th>
+				<th class="text-center">ID Down Payment</th>
+				<th class="text-center">Price (Rp)</th>
+				<th class="text-center">A/N</th>
+				<th class="text-center">Tanggal Dp</th>
+				<th class="text-center">Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php $no = 1; ?>
+			<?php foreach ($result as $key => $data) { ?>
+				<tr>
+					<td class="text-center"><?= $no++ ?></td>
+					<td class="text-center"><?= $data->down_payment_id ?></td>
+					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+					<td class="text-center"><?= $data->nama ?></td>
+					<td class="text-center"><?= $data->created_dp ?></td>
+					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+				</tr>
+			<?php } ?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5" class="text-right">
+					<b>Jumlah Terbayar</b>
+				</td>
+				<td colspan="1" class="text-left">
+					<?= indo_currency($get_sum_dp->result_dp) ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" class="text-right">
+					<b>Jumlah Transaksi</b>
+				</td>
+				<td colspan="1" class="text-left">
+					<?= indo_currency($get_sum_dp->total_price) ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" class="text-right">
+					<b>Sisa Pembayaran</b>
+				</td>
+				<td colspan="1" class="text-left">
+					<?= indo_currency($get_sum_dp->total_price - $get_sum_dp->result_dp) ?>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
 </body>
 
 </html>
