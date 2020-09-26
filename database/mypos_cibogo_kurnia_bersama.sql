@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Sep 2020 pada 11.48
+-- Waktu pembuatan: 26 Sep 2020 pada 14.59
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -20,6 +20,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `mypos_cibogo_kurnia_bersama`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_id` int(6) NOT NULL,
+  `items_id` int(6) DEFAULT NULL,
+  `harga_items` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -41,10 +56,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`categories_id`, `name_categories`, `created`, `updated`, `user_created`, `user_updated`) VALUES
-(2, 'Aksesoris', '2020-09-19 21:26:49', NULL, NULL, NULL),
-(3, 'Bahan', '2020-09-19 21:26:54', NULL, NULL, NULL),
-(4, 'Mesin', '2020-09-19 21:26:59', NULL, NULL, NULL),
-(5, 'Pakain Jadi', '2020-09-19 21:32:34', '2020-09-19 22:09:43', NULL, 1);
+(1, 'Pakain Jadi', '2020-09-26 19:58:02', NULL, 1, NULL),
+(2, 'Aksesoris', '2020-09-26 19:58:14', NULL, 1, NULL),
+(3, 'Bahan', '2020-09-26 19:58:19', NULL, 1, NULL),
+(4, 'Mesin', '2020-09-26 19:58:24', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -63,16 +78,9 @@ CREATE TABLE `customers` (
   `address_customers` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL,
-  `user_updated` int(11) DEFAULT NULL,
-  `user_created` int(11) DEFAULT NULL
+  `user_updated` int(1) DEFAULT NULL,
+  `user_created` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `customers`
---
-
-INSERT INTO `customers` (`customers_id`, `customers_key`, `pt_customers`, `name_customers`, `gander_customers`, `phone_customers`, `email_customers`, `address_customers`, `created`, `updated`, `user_updated`, `user_created`) VALUES
-(1, 'C_0001', 'PT. Bersama', 'Jordan', 1, '081214000096', 'jordan@gmail.com', 'Jakarta Selatan', '2020-09-19 18:21:29', NULL, NULL, 2147483647);
 
 -- --------------------------------------------------------
 
@@ -94,12 +102,65 @@ CREATE TABLE `items` (
   `user_updated` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `items`
+-- Struktur dari tabel `pembayaran`
 --
 
-INSERT INTO `items` (`items_id`, `items_key`, `name_items`, `categories_id`, `sub_categories_id`, `harga_items`, `qty_items`, `created`, `updated`, `user_created`, `user_updated`) VALUES
-(6, 'P_0001', 'Testing Barang', 2, 4, 3000, 100, '2020-09-22 01:11:48', NULL, 1, NULL);
+CREATE TABLE `pembayaran` (
+  `pembayaran_id` int(6) NOT NULL,
+  `invoice` varchar(50) DEFAULT NULL,
+  `customers_id` int(6) DEFAULT NULL,
+  `total_price` int(11) DEFAULT NULL,
+  `cash` int(11) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
+  `lunas_down_payment` int(1) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `created` datetime DEFAULT current_timestamp(),
+  `user_id` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pembayaran_detail`
+--
+
+CREATE TABLE `pembayaran_detail` (
+  `detail_id` int(6) NOT NULL,
+  `pembayaran_id` int(6) DEFAULT NULL,
+  `items_id` int(6) DEFAULT NULL,
+  `harga_items` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Trigger `pembayaran_detail`
+--
+DELIMITER $$
+CREATE TRIGGER `stock_min` AFTER INSERT ON `pembayaran_detail` FOR EACH ROW BEGIN 
+	UPDATE items SET qty_items = qty_items - NEW.qty 
+    WHERE items_id = NEW.items_id;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pembayaran_down_payment`
+--
+
+CREATE TABLE `pembayaran_down_payment` (
+  `pembayaran_dp_id` int(6) NOT NULL,
+  `invoice` varchar(50) DEFAULT NULL,
+  `down_payment_id` varchar(128) DEFAULT NULL,
+  `down_payment` int(128) DEFAULT NULL,
+  `created` datetime DEFAULT current_timestamp(),
+  `user_id` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -151,16 +212,6 @@ CREATE TABLE `sub_categories` (
   `user_updated` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `sub_categories`
---
-
-INSERT INTO `sub_categories` (`sub_categories_id`, `name_sub_categories`, `categories_id`, `created`, `updated`, `user_created`, `user_updated`) VALUES
-(4, 'Kancing', 2, '2020-09-20 20:53:24', NULL, 1, NULL),
-(5, 'Katun', 3, '2020-09-20 20:54:28', NULL, 1, NULL),
-(6, 'Jahit', 4, '2020-09-20 20:54:35', NULL, 1, NULL),
-(7, 'Baju Hype', 5, '2020-09-20 20:54:42', NULL, 1, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -184,11 +235,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `nama`, `email`, `password`, `is_active`, `level`, `in`, `log`, `ip`) VALUES
-(1, 'Dayat', 'dayat@gmail.com', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-21 23:56:49', '2020-09-20 19:05:53', '127.0.0.1');
+(1, 'Pak. Dayat', 'dayat@gmail.com', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 19:24:06', '2020-09-25 21:52:25', '127.0.0.1');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`);
 
 --
 -- Indeks untuk tabel `categories`
@@ -207,6 +264,24 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `items`
   ADD PRIMARY KEY (`items_id`);
+
+--
+-- Indeks untuk tabel `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD PRIMARY KEY (`pembayaran_id`);
+
+--
+-- Indeks untuk tabel `pembayaran_detail`
+--
+ALTER TABLE `pembayaran_detail`
+  ADD PRIMARY KEY (`detail_id`);
+
+--
+-- Indeks untuk tabel `pembayaran_down_payment`
+--
+ALTER TABLE `pembayaran_down_payment`
+  ADD PRIMARY KEY (`pembayaran_dp_id`);
 
 --
 -- Indeks untuk tabel `stock_in`
@@ -237,40 +312,64 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(6) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `categories_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `categories_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customers_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customers_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `items`
 --
 ALTER TABLE `items`
-  MODIFY `items_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `items_id` int(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  MODIFY `pembayaran_id` int(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembayaran_detail`
+--
+ALTER TABLE `pembayaran_detail`
+  MODIFY `detail_id` int(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembayaran_down_payment`
+--
+ALTER TABLE `pembayaran_down_payment`
+  MODIFY `pembayaran_dp_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
-  MODIFY `stock_in_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `stock_in_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
-  MODIFY `stock_out_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `stock_out_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `sub_categories_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `sub_categories_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`

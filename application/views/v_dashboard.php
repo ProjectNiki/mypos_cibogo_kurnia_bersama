@@ -10,9 +10,8 @@
 
 <section class="content">
 	<div class="box box-primary">
-		<div class="box-header">
-			<h4>Data Dashboard</h4>
+		<div class="box-body">
+			<h2>Welcome Back, <?= ucfirst($this->fungsi->user_login()->nama); ?></h2>
 		</div>
-
 	</div>
 </section>

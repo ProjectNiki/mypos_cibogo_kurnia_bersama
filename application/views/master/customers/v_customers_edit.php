@@ -33,6 +33,7 @@
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<form action="" method="POST">
+						<input type="hidden" name="customers_id" id="customers_id" value="<?= $row->customers_id ?>">
 						<label for="">ID Customers <i class="text-danger">*</i></label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-key"></i></span>

@@ -30,8 +30,8 @@
 
 		<header class="main-header">
 			<a href="<?= base_url('assets') ?>/index2.html" class="logo">
-				<span class="logo-mini"><b>A</b>LT</span>
-				<span class="logo-lg"><b>Admin</b>LTE</span>
+				<span class="logo-mini"><b>C</b>KB</span>
+				<span class="logo-lg"><b>My Pos</b></span>
 			</a>
 			<nav class="navbar navbar-static-top">
 				<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -46,14 +46,14 @@
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="<?= base_url('assets') ?>/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-								<span class="hidden-xs">Alexander Pierce</span>
+								<span class="hidden-xs"><?= ucfirst($this->fungsi->user_login()->nama); ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="user-header">
 									<img src="<?= base_url('assets') ?>/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 									<p>
-										Alexander Pierce - Web Developer
-										<small>Member since Nov. 2012</small>
+										<?= ucfirst($this->fungsi->user_login()->nama); ?>
+										<small><?= ucfirst($this->fungsi->user_login()->email); ?></small>
 									</p>
 								</li>
 								<li class="user-footer">
@@ -78,7 +78,7 @@
 						<img src="<?= base_url('assets') ?>/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>Alexander Pierce</p>
+						<p><?= ucfirst($this->fungsi->user_login()->nama); ?></p>
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
@@ -179,9 +179,6 @@
 							</li>
 						</ul>
 					</li>
-
-					<li class="header">Main User</li>
-					<li><a href="#"><i class="fa fa-user text-red"></i> <span>User</span></a></li>
 				</ul>
 			</section>
 		</aside>

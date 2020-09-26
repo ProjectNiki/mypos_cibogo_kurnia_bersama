@@ -31,6 +31,8 @@ class Customers_m extends CI_Model
 		$params['phone_customers']      = $post['phone_customers'];
 		$params['email_customers']      = $post['email_customers'];
 		$params['address_customers']    = $post['address_customers'];
+		$params['user_created']		 	= $this->session->userdata('user_id');
+
 
 		$this->db->insert('customers', $params);
 	}
@@ -39,10 +41,12 @@ class Customers_m extends CI_Model
 	public function edit($post)
 	{
 		$params['name_customers']       = $post['name_customers'];
+		$params['pt_customers']       	= $post['pt_customers'];
 		$params['gander_customers']     = $post['gander_customers'];
 		$params['phone_customers']      = $post['phone_customers'];
 		$params['address_customers']    = $post['address_customers'];
 		$params['updated']              = date('Y-m-d H:i:s');
+		$params['user_updated']		 	= $this->session->userdata('user_id');
 
 		$this->db->where('customers_id', $post['customers_id']);
 		$this->db->update('customers', $params);

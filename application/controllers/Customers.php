@@ -59,7 +59,7 @@ class Customers extends CI_Controller
 			'row' => $data
 		];
 
-		$this->form_validation->set_rules('customers_key', 'Customers Key', 'trim|required|is_unique[customers.customers_key]');
+		$this->form_validation->set_rules('customers_key', 'Customers Key', 'trim|required');
 		$this->form_validation->set_rules('pt_customers', 'PT Customers', 'trim|required');
 		$this->form_validation->set_rules('name_customers', 'Nama Customers', 'trim|required');
 		$this->form_validation->set_rules('gander_customers', 'Gander', 'trim|required');
@@ -71,7 +71,6 @@ class Customers extends CI_Controller
 			$this->template->load('v_template', 'master/customers/v_customers_edit', $array);
 		} else {
 			$post = $this->input->post(NULL, TRUE);
-
 			$this->Customers_m->edit($post);
 
 			if ($this->db->affected_rows() > 0) {

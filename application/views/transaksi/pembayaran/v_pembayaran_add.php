@@ -42,7 +42,7 @@ $uniqid = uniqid();
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" name="" id="" value="" class="form-control" readonly>
+									<input type="text" name="" id="" value="<?= ucfirst($this->fungsi->user_login()->nama); ?>" class="form-control" readonly>
 								</div>
 							</td>
 						</tr>

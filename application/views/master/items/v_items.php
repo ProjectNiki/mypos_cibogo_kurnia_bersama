@@ -52,9 +52,6 @@
 							<td class="text-center"><?= $data->qty_items ?></td>
 							<td><?= indo_currency($data->harga_items) ?></td>
 							<td class="text-center">
-								<a href="" class="btn btn-success">
-									<i class="fa fa-edit"></i>
-								</a>
 								<a href="<?= site_url('items/del/' . $data->items_id) ?>" class="btn btn-danger" onclick="return confirm('Apakah yakin ? Data <?= $data->name_items ?> akan dihapus secara permanen')">
 									<i class="fa fa-trash"></i>
 								</a>
