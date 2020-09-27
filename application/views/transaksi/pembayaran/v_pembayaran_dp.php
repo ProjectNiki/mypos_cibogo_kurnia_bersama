@@ -36,7 +36,7 @@
 						<u>
 							<h4>
 								<b>
-									Detail Customer
+									Customers
 								</b>
 							</h4>
 						</u>
@@ -45,7 +45,7 @@
 						<u>
 							<h4>
 								<b>
-									Detail Transaksi
+									Admin
 								</b>
 							</h4>
 						</u>
@@ -139,7 +139,7 @@
 			<br>
 			<?php if ($row->lunas_down_payment == 1) { ?>
 				<div class="text-center">
-					<input type='submit' value="Status Sudah Diupdate" id='submitBtn' style="width: 50%;" class='btn btn-success' disabled='disabled' />
+					<input type='submit' value="Tersimpan" id='submitBtn' style="width: 50%;" class='btn btn-success' disabled='disabled' />
 				</div>
 			<?php } else if ($get_sum_dp->total_price - $get_sum_dp->result_dp == 0) { ?>
 				<div class="text-center">
@@ -147,7 +147,7 @@
 				</div>
 			<?php } else { ?>
 				<div class="text-center">
-					<input type='submit' value="Update Status" id='submitBtn' style="width: 50%;" class='btn btn-danger' disabled='disabled' />
+					<input type='submit' value="Simpan" id='submitBtn' style="width: 50%;" class='btn btn-danger' disabled='disabled' />
 				</div>
 			<?php } ?>
 		</div>

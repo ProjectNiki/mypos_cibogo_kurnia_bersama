@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Edit Sub Categories <small>Sub Categories</small></h1>
+	<h1>Edit Sub Kategori <small>Sub Kategori</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('Dashboard') ?>">
@@ -10,7 +10,7 @@
 			Master
 		</li>
 		<li>
-			<a href="<?= site_url('sub_categories') ?>">Sub Categories</a>
+			<a href="<?= site_url('sub_categories') ?>">Sub Kategori</a>
 		</li>
 		<li class="active">
 			Edit
@@ -21,7 +21,7 @@
 	<div class="box box-success">
 		<div class="box-header">
 			<h4>
-				Edit Sub Categories
+				Edit Sub Kategori
 				<div class="pull-right">
 					<a href="<?= site_url('sub_categories') ?>" class="btn btn-warning">
 						<i class="fa fa-arrow-right"></i>
@@ -35,7 +35,7 @@
 					<form action="" method="POST">
 						<input type="hidden" name="sub_categories_id" value="<?= $row->sub_categories_id ?>">
 						<div class="form-group">
-							<label for="categories_id">Nama Categories <i class="text-danger">*</i></label>
+							<label for="categories_id">Kategori <i class="text-danger">*</i></label>
 							<select name="categories_id" id="categories_id" class="form-control select2" style="width: 100%;">
 								<option value="">-- Pilih --</option>
 								<?php $level = $this->input->post('categories_id') ?? $row->categories_id ?>
@@ -46,10 +46,10 @@
 							<?= form_error('categories_id', '<div class="text-danger">', '</div>'); ?>
 						</div>
 						<!--  -->
-						<label for="name_sub_categories">Nama Sub Categories <i class="text-danger">*</i></label>
+						<label for="name_sub_categories">Sub Kategori <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('name_sub_categories') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-tasks" aria-hidden="true"></i></span>
-							<input type="text" id="name_sub_categories" name="name_sub_categories" class="form-control" value="<?= $this->input->post('name_sub_categories') ?? $row->name_sub_categories ?>" placeholder="Nama Sub Categories" autocomplete="off">
+							<input type="text" id="name_sub_categories" name="name_sub_categories" class="form-control" value="<?= $this->input->post('name_sub_categories') ?? $row->name_sub_categories ?>" placeholder="Sub Kategori" autocomplete="off">
 						</div>
 						<?= form_error('name_sub_categories', '<div class="text-danger">', '</div>'); ?>
 						<br>

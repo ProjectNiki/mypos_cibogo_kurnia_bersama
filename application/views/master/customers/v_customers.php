@@ -34,11 +34,11 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">ID Customers</th>
-						<th class="text-center">Nama PT</th>
-						<th class="text-center">Nama Customers</th>
-						<th class="text-center">Jenis Kelamin</th>
-						<th class="text-center">Tlp</th>
-						<th class="text-center">Email</th>
+						<th class="text-center">Perusahaan</th>
+						<th class="text-center">Customers</th>
+						<th class="text-center">Gander</th>
+						<th class="text-center">Phone</th>
+						<th class="text-center">E-Mail</th>
 						<th class="text-center">Alamat</th>
 						<th class="text-center">Action</th>
 					</tr>

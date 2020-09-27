@@ -53,7 +53,7 @@
 						<?= form_error('name_items', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<div class="form-group">
-							<label for="categories_id">Nama Categories <i class="text-danger">*</i></label>
+							<label for="categories_id">Kategori <i class="text-danger">*</i></label>
 							<select name="categories_id" id="categories_id" class="form-control select2" style="width: 100%;">
 								<option value="">-- Pilih --</option>
 								<?php foreach ($categories as $key => $data) { ?>
@@ -64,7 +64,7 @@
 						</div>
 						<!--  -->
 						<div class="form-group">
-							<label for="sub_categories_id">Nama Sub Categories <i class="text-danger">*</i></label>
+							<label for="sub_categories_id">Sub Kategori <i class="text-danger">*</i></label>
 							<select name="sub_categories_id" id="sub_categories_id" class="form-control select2" style="width: 100%;">
 								<option value="">-- Pilih --</option>
 							</select>
@@ -74,7 +74,7 @@
 							<label for="harga_items">Harga <i class="text-danger">*</i></label>
 						</div>
 						<div class="input-group  <?= form_error('harga_items') == true ? 'has-error' : null ?>">
-							<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+							<span class="input-group-addon"><i class="fa fa-money"></i></span>
 							<input type="text" id="harga_items" name="harga_items" class="form-control" placeholder="Harga Items" value="<?= set_value('harga_items') ?>" autocomplete="off">
 						</div>
 						<?= form_error('harga_items', '<div class="text-danger">', '</div>'); ?>

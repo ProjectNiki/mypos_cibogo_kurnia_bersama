@@ -41,8 +41,8 @@ date_default_timezone_set("Asia/Bangkok");
 	<hr class="line-title">
 	<table style="width:100%">
 		<tr>
-			<th style="width:70%;"><u>Detail Customer</u></th>
-			<th style="width:30%"><u>Detail Transaksi</u></th>
+			<th style="width:70%;"><u>Customers</u></th>
+			<th style="width:30%"><u>Admin</u></th>
 		</tr>
 		<tr>
 			<td>

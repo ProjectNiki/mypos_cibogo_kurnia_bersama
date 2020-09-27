@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Add Categories <small>Categories</small></h1>
+	<h1>Add Kategori <small>Kategori</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('Dashboard') ?>">
@@ -10,7 +10,7 @@
 			Master
 		</li>
 		<li>
-			<a href="<?= site_url('categories') ?>">Categories</a>
+			<a href="<?= site_url('categories') ?>">Kategori</a>
 		</li>
 		<li class="active">
 			Add
@@ -21,7 +21,7 @@
 	<div class="box box-primary">
 		<div class="box-header">
 			<h4>
-				Add Categories
+				Add Kategori
 				<div class="pull-right">
 					<a href="<?= site_url('categories') ?>" class="btn btn-warning">
 						<i class="fa fa-arrow-right"></i>
@@ -33,10 +33,10 @@
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<form action="" method="POST">
-						<label for="name_categories">Nama Categories <i class="text-danger">*</i></label>
+						<label for="name_categories">Kategori <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('name_categories') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-server" aria-hidden="true"></i></span>
-							<input type="text" id="name_categories" name="name_categories" class="form-control" value="<?= set_value('name_categories') ?>" placeholder="Nama Categories" autofocus autocomplete="off">
+							<input type="text" id="name_categories" name="name_categories" class="form-control" value="<?= set_value('name_categories') ?>" placeholder="Kategori" autofocus autocomplete="off">
 						</div>
 						<?= form_error('name_categories', '<div class="text-danger">', '</div>'); ?>
 						<br>

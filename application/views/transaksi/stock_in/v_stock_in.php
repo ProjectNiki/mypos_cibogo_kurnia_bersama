@@ -36,7 +36,7 @@
 						<th class="text-center">Qty</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">Detail</th>
-						<th class="text-center">A/N</th>
+						<th class="text-center">Admin</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>

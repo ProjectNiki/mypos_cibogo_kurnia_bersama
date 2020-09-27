@@ -29,10 +29,10 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">No Invoice</th>
-						<th class="text-center">Nama Customers</th>
-						<th class="text-center">PT. Customers</th>
+						<th class="text-center">Customers</th>
+						<th class="text-center">Perusahaan</th>
 						<th class="text-center">Tanggal Transaksi</th>
-						<th class="text-center">A/N</th>
+						<th class="text-center">Admin</th>
 						<th class="text-center">Status Pembayaran</th>
 						<th class="text-center">Preview</th>
 						<th class="text-center">Cetak</th>
@@ -51,7 +51,7 @@
 								<td class="text-center"><?= $data->nama ?></td>
 								<td class="text-center">
 									<?php if ($data->status == 2) { ?>
-										<span class="btn btn-danger">Down Payment</span>
+										<span class="btn btn-primary">Down Payment</span>
 									<?php } else { ?>
 										<span class="btn btn-success">Lunas</span>
 									<?php } ?>

@@ -116,12 +116,12 @@
 							</li>
 							<li <?= $this->uri->segment(1) == 'categories' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('categories') ?>">
-									<i class="fa fa-circle-o"></i> Categories
+									<i class="fa fa-circle-o"></i> Kategori
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'sub_categories' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('sub_categories') ?>">
-									<i class="fa fa-circle-o"></i> Sub Categories
+									<i class="fa fa-circle-o"></i> Sub Kategori
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'items' ? 'class="active"' : null ?>>

@@ -34,8 +34,8 @@
 					<tr>
 						<th>#</th>
 						<th class="text-center">Nama Items</th>
-						<th class="text-center">Categories</th>
-						<th class="text-center">Sub Categories</th>
+						<th class="text-center">Kategori</th>
+						<th class="text-center">Sub Kategori</th>
 						<th class="text-center">Qty</th>
 						<th class="text-center">Harga (Rp)</th>
 						<th class="text-center">Actions</th>

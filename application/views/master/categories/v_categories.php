@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Data Categories <small>Categories</small></h1>
+	<h1>Data Kategori <small>Kategori</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('dashboard') ?>">
@@ -10,7 +10,7 @@
 			Master
 		</li>
 		<li class="active">
-			Categories
+			Kategori
 		</li>
 	</ol>
 </section>
@@ -19,7 +19,7 @@
 	<?= $this->session->flashdata('message'); ?>
 	<div class="box">
 		<div class="box-header">
-			<h4>Data Categories
+			<h4>Data Kategori
 				<div class="pull-right">
 					<a href="<?= site_url('categories/add') ?>" class="btn btn-primary">
 						<i class="fa fa-plus"></i>
@@ -33,7 +33,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">Nama Categories</th>
+						<th class="text-center">Kategori</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>

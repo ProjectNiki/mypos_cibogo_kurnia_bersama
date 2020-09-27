@@ -32,7 +32,7 @@
 		<div class="login-box-body">
 			<br />
 			<center>
-				<img src="assets/dist/img/user.png" width="100px" />
+				<img src="<?= base_url('assets') ?>/dist/img/logo_pt.png" width="100px" />
 			</center>
 			<br>
 			<p class="login-box-msg">Sign in to start your session</p>

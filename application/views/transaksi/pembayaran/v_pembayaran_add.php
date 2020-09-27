@@ -1,6 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
 $uniqid = uniqid();
+
+$myOriginalDate = date("Y-m-d");
 ?>
 
 <section class="content-header">
@@ -32,13 +34,14 @@ $uniqid = uniqid();
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="date" name="date" id="date" value="<?= date('Y-m-d') ?>" class="form-control">
+									<input type="text" name="" id="" value="<?= $myNewDate = date("d-m-Y", strtotime($myOriginalDate)); ?>" class="form-control" readonly>
+									<input type="hidden" name="date" id="date" value="<?= date('Y-m-d') ?>" class="form-control">
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top;">
-								<label for="Date">Kasir</label>
+								<label for="Date">Admin</label>
 							</td>
 							<td>
 								<div class="form-group">
@@ -120,7 +123,7 @@ $uniqid = uniqid();
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<h4>Invoice <b><span id="invoice"><?= $invoice ?></span></b></h4>
+						<h4>Invoice <b><span id="invoice">INV/<?= date('Ymd') ?>/CK/<span id="">CBT</span>/000001</span></b></h4>
 						<h1><b><span id="grand_total2" style="font-size: 50pt;">0</span></b></h1>
 					</div>
 					<small style="color: red;">* Grand Total </small>

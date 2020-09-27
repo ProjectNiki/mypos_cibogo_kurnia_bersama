@@ -36,7 +36,7 @@
 						<u>
 							<h4>
 								<b>
-									Detail Customer
+									Customers
 								</b>
 							</h4>
 						</u>
@@ -45,7 +45,7 @@
 						<u>
 							<h4>
 								<b>
-									Detail Transaksi
+									Admin
 								</b>
 							</h4>
 						</u>

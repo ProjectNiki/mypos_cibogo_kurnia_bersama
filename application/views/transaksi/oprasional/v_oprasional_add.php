@@ -52,27 +52,27 @@
 						<br>
 						<label for="name_items">Fee <i class="text-danger">*</i></label>
 						<div class="input-group ">
-							<span class="input-group-addon"><i class="fa fa-dollar" aria-hidden="true"></i></span>
+							<span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
 							<input type="text" id="name_items" name="name_items" class="form-control" value="" placeholder="Fee">
 						</div>
 						<br>
 						<!--  -->
 						<label for="qty_items">Oprasional <i class="text-danger">*</i></label>
 						<div class="input-group ">
-							<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+							<span class="input-group-addon"><i class="fa fa-money"></i></span>
 							<input type="text" id="qty_items" name="qty_items" class="form-control" placeholder="Oprasional" value="">
 						</div>
 						<br>
 						<!--  -->
 						<label for="qty_stock_in">Pajak/tax <i class="text-danger">*</i></label>
 						<div class="input-group ">
-							<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+							<span class="input-group-addon"><i class="fa fa-money"></i></span>
 							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Pajak/tax" value="" autocomplete="off">
 						</div>
 						<br>
 						<label for="qty_stock_in">Ls/Lab <i class="text-danger">*</i></label>
 						<div class="input-group ">
-							<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+							<span class="input-group-addon"><i class="fa fa-money"></i></span>
 							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Ls/Lab" value="" autocomplete="off">
 						</div>
 						<br>
