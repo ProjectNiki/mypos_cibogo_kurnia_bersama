@@ -223,6 +223,7 @@
 	<script>
 		$(document).ready(function() {
 			$('#datatable').DataTable();
+			$('#datatables').DataTable();
 		});
 	</script>
 </body>

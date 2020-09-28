@@ -100,13 +100,19 @@ class Pembayaran extends CI_Controller
 		$customers 	= $this->Customers_m->get()->result();
 		$items		= $this->Items_m->get()->result();
 		$cart 		= $this->Pembayaran_m->get_cart();
+		$data 		= $this->Pembayaran_m->ai_code();
 
+
+
+		$nourut = substr($data, 19, 22);
+		$kd_ai  = $nourut + 1;
 
 		$data = [
 			'customers' => $customers,
 			'items'		=> $items,
 			'cart'      => $cart,
-			'invoice'   => $this->Pembayaran_m->invoice_no(),
+			'row' 		=> $kd_ai
+			// 'invoice'   => $this->Pembayaran_m->invoice_no(),
 		];
 
 		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran_add', $data);

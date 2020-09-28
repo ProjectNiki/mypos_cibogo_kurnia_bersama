@@ -21,6 +21,13 @@ class Pembayaran_m extends CI_Model
 		return $query;
 	}
 
+	public function ai_code()
+	{
+		$query = $this->db->query("SELECT MAX(invoice) as invoice from pembayaran");
+		$hasil = $query->row();
+		return $hasil->invoice;
+	}
+
 	public function get_lunas($id = NULL)
 	{
 		$this->db->select('*, pembayaran.created as create_invoice, pembayaran_detail.harga_items as harga_pembayaran, pembayaran_detail.qty as pembayaran_qty');

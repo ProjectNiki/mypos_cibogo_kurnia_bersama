@@ -34,7 +34,7 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" name="" id="" value="<?= $myNewDate = date("d-m-Y", strtotime($myOriginalDate)); ?>" class="form-control" readonly>
+									<input type="text" value="<?= $myNewDate = date("d-m-Y", strtotime($myOriginalDate)); ?>" class="form-control" readonly>
 									<input type="hidden" name="date" id="date" value="<?= date('Y-m-d') ?>" class="form-control">
 								</div>
 							</td>
@@ -45,23 +45,23 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" name="" id="" value="<?= ucfirst($this->fungsi->user_login()->nama); ?>" class="form-control" readonly>
+									<input type="text" value="<?= ucfirst($this->fungsi->user_login()->nama); ?>" class="form-control" readonly>
 								</div>
 							</td>
 						</tr>
 						<tr>
-							<td style="vertical-align: top;">
-								<label for="Date">Customers</label>
-
+							<td style="vertical-align: top; width: 27%">
+								<label for="">Customers</label>
 							</td>
 							<td>
-								<div class="form-group">
-									<select name="customers_id" id="customers_id" class="form-control select2" style="width: 100%;">
-										<option value="">-- Pilih --</option>
-										<?php foreach ($customers as $key => $data) { ?>
-											<option value="<?= $data->customers_id ?>"><?= $data->name_customers . ' - ' . $data->pt_customers ?></option>
-										<?php } ?>
-									</select>
+								<div class="form-group input-group">
+									<input type="hidden" id="customers_id" name="customers_id">
+									<input type="text" id="name_customers" class="form-control" autofocus readonly>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#show_customers">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
 								</div>
 							</td>
 						</tr>
@@ -76,7 +76,7 @@ $myOriginalDate = date("Y-m-d");
 					<table width="100%">
 						<tr>
 							<td style="vertical-align: top; width: 27%">
-								<label for="Date">ID Items</label>
+								<label for="">ID Items</label>
 							</td>
 							<td>
 								<div class="form-group input-group">
@@ -123,7 +123,8 @@ $myOriginalDate = date("Y-m-d");
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<h4>Invoice <b><span id="invoice">INV/<?= date('Ymd') ?>/CK/<span id="">CBT</span>/000001</span></b></h4>
+						<h4>Invoice <b>INV/<?= date('Ymd') ?>/CK/<span id="inisial_pt"></span>/<?= sprintf("%05s", $row) ?></b></h4>
+						<input type="hidden" name="invoice" id="invoice" value="INV/<?= date('Ymd') ?>/CK/<?= sprintf("%05s", $row) ?>">
 						<h1><b><span id="grand_total2" style="font-size: 50pt;">0</span></b></h1>
 					</div>
 					<small style="color: red;">* Grand Total </small>
@@ -277,6 +278,51 @@ $myOriginalDate = date("Y-m-d");
 	</div>
 </div>
 
+
+<!-- Modal  Add Product -->
+<div class="modal fade" id="show_customers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="exampleModalLabel">Customers</h4>
+			</div>
+			<div class="modal-body table-responsive">
+				<table class="table table-bordered table-striped" id="datatables">
+					<thead>
+						<tr>
+							<th class="text-center">#</th>
+							<th class="text-center">ID Customers</th>
+							<th class="text-center">Customers</th>
+							<th class="text-center">Prushaan</th>
+							<th class="text-center">Phone (Rp)</th>
+							<th class="text-center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php $no = 1; ?>
+						<?php foreach ($customers as $key => $data) { ?>
+							<tr>
+								<td><?= $no++ ?></td>
+								<td><?= $data->customers_id ?></td>
+								<td><?= $data->name_customers ?></td>
+								<td><?= $data->pt_customers ?></td>
+								<td><?= $data->phone_customers ?></td>
+								<td class="text-center">
+									<button class="btn btn-success btn-sm" id="customers_select" data-inisial_pt="<?= $data->inisial_pt ?>" data-name_customers="<?= $data->name_customers ?>">
+										<i class=" fa fa-check"></i>
+									</button>
+								</td>
+							</tr>
+						<?php } ?>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	$(document).ready(function() {
 		$(document).on('click', '#select', function() {
@@ -286,6 +332,17 @@ $myOriginalDate = date("Y-m-d");
 			$('#qty_items').val($(this).data('qty_items'));
 			$('#items_key').val($(this).data('items_key'));
 			$('#exampleModal').modal('hide');
+		});
+
+		$(document).on('click', '#customers_select', function() {
+			// $('#inisial_pt').val($(this).data('inisial_pt'));
+			$('#name_customers').val($(this).data('name_customers'));
+
+			var inisial_pt = $(this).data('inisial_pt');
+
+			document.getElementById("inisial_pt").innerHTML = inisial_pt;
+
+			$('#show_customers').modal('hide');
 		});
 
 
