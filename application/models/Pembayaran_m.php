@@ -165,7 +165,7 @@ class Pembayaran_m extends CI_Model
 	public function add_pembayaran($post)
 	{
 		$params = array(
-			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '' . $post['invoice_ai'],
+			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '/' . $post['invoice_ai'],
 			'customers_id' => $post['customers_id'],
 			'total_price' => $post['subtotal'],
 			'cash' => str_replace(".", "", $post['cash']),
@@ -178,11 +178,11 @@ class Pembayaran_m extends CI_Model
 		return $this->db->insert_id();
 	}
 
-	public function add_pembayaran_sisa_dp($post)
+	public function add_pembayaran_dp($post)
 	{
 		$params = array(
-			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '' . $post['invoice_ai'],
-			'down_payment' => $post['down_payment'],
+			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '/' . $post['invoice_ai'],
+			'down_payment' => str_replace(".", "", $post['down_payment']),
 			'down_payment_id' => $post['down_payment_id'],
 			'user_id' => $this->session->userdata('user_id')
 		);
@@ -190,7 +190,7 @@ class Pembayaran_m extends CI_Model
 		$this->db->insert('pembayaran_down_payment', $params);
 	}
 
-	public function add_pembayaran_dp($post)
+	public function add_pembayaran_sisa_dp($post)
 	{
 		$params = array(
 			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '' . $post['invoice_ai'],

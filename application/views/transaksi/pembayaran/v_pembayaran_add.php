@@ -204,7 +204,7 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" name="down_payment" id="down_payment" class="form-control" placeholder="Down Payment">
+									<input type="text" name="down_payment" id="down_payment" onkeyup="splitInDots(this)" class="form-control" placeholder="Down Payment">
 								</div>
 							</td>
 						</tr>
@@ -439,13 +439,15 @@ $myOriginalDate = date("Y-m-d");
 
 			var down_payment = $('#down_payment').val()
 
-			var grand_total = subtotal - down_payment
+			var result = down_payment.replace(/[^a-zA-Z0-9]/g, '');
+
+			var grand_total = subtotal - result
 			console.log(subtotal)
 
 			document.getElementById('grand_total_dp').innerHTML = numeric_format.format(grand_total);
 		}
 
-		$(document).on('keyup mouseup', '#down_payment, #cash', function() {
+		$(document).on('keyup mouseup', '#down_payment', function() {
 			calculate();
 		})
 
