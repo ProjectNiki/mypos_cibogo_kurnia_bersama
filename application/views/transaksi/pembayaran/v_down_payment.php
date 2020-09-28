@@ -48,7 +48,7 @@ $uniqid = uniqid();
 						</tr>
 						<tr>
 							<td style="vertical-align: top;">
-								<label for="Date">Customers</label>
+								<label for="Date">Customer</label>
 
 							</td>
 							<td>

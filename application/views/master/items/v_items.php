@@ -49,7 +49,7 @@
 							<td><?= $data->name_items ?></td>
 							<td><?= $data->name_categories ?></td>
 							<td><?= $data->name_sub_categories ?></td>
-							<td class="text-center"><?= $data->qty_items ?></td>
+							<td class="text-center"><?= indo_qty($data->qty_items)  ?></td>
 							<td><?= indo_currency($data->harga_items) ?></td>
 							<td class="text-center">
 								<a href="<?= site_url('items/del/' . $data->items_id) ?>" class="btn btn-danger" onclick="return confirm('Apakah yakin ? Data <?= $data->name_items ?> akan dihapus secara permanen')">

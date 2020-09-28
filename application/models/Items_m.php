@@ -32,8 +32,8 @@ class Items_m extends CI_Model
 		$params['name_items']      		= $post['name_items'];
 		$params['categories_id']      	= $post['categories_id'];
 		$params['sub_categories_id']    = $post['sub_categories_id'];
-		$params['harga_items']      	= $post['harga_items'];
-		$params['qty_items']      		= $post['qty_items'];
+		$params['harga_items']      	= str_replace(".", "", $post['harga_items']);
+		$params['qty_items']      		= str_replace(".", "", $post['qty_items']);
 		$params['user_created']      	= $this->session->userdata('user_id');
 
 		$this->db->insert('items', $params);

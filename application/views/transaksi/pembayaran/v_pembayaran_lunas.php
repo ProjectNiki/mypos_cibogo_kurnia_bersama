@@ -36,7 +36,7 @@
 						<u>
 							<h4>
 								<b>
-									Customers
+									Customer
 								</b>
 							</h4>
 						</u>

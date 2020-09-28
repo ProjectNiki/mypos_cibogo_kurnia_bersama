@@ -111,7 +111,7 @@
 						<ul class="treeview-menu">
 							<li <?= $this->uri->segment(1) == 'customers' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('customers') ?>">
-									<i class="fa fa-circle-o"></i> Customers
+									<i class="fa fa-circle-o"></i> Customer
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'categories' ? 'class="active"' : null ?>>
@@ -147,7 +147,7 @@
 							</li>
 							<li <?= $this->uri->segment(1) == 'oprasional' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('oprasional') ?>">
-									<i class="fa fa-circle-o"></i> Oprasional
+									<i class="fa fa-circle-o"></i> Biaya Pengurusan
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'stock_in' ? 'class="active"' : null ?>>

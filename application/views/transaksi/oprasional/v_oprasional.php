@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Data Oprasional <small>Oprasional</small></h1>
+	<h1>Data Biaya Pengurusan <small>Biaya Pengurusan</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('dashboard') ?>">
@@ -10,7 +10,7 @@
 			Transaksi
 		</li>
 		<li class="active">
-			Oprasional
+			Biaya Pengurusan
 		</li>
 	</ol>
 </section>
@@ -18,7 +18,7 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header">
-			<h4>Data Oprasional
+			<h4>Data Biaya Pengurusan
 				<div class="pull-right">
 					<a href="<?= site_url('oprasional/add') ?>" class="btn btn-primary">
 						<i class="fa fa-plus"></i>

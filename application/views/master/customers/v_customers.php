@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Data Customers <small>Customers</small></h1>
+	<h1>Data Customer <small>Customer</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('dashboard') ?>">
@@ -10,7 +10,7 @@
 			Master
 		</li>
 		<li class="active">
-			Customers
+			Customer
 		</li>
 	</ol>
 </section>
@@ -19,7 +19,7 @@
 	<?= $this->session->flashdata('message'); ?>
 	<div class="box">
 		<div class="box-header">
-			<h4>Data Customers
+			<h4>Data Customer
 				<div class="pull-right">
 					<a href="<?= site_url('customers/add') ?>" class="btn btn-primary">
 						<i class="fa fa-plus"></i>
@@ -33,9 +33,9 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">ID Customers</th>
+						<th class="text-center">ID Customer</th>
 						<th class="text-center">Perusahaan</th>
-						<th class="text-center">Customers</th>
+						<th class="text-center">Customer</th>
 						<th class="text-center">Gander</th>
 						<th class="text-center">Phone</th>
 						<th class="text-center">E-Mail</th>

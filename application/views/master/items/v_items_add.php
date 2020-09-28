@@ -75,7 +75,7 @@
 						</div>
 						<div class="input-group  <?= form_error('harga_items') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="text" id="harga_items" name="harga_items" class="form-control" placeholder="Harga Items" value="<?= set_value('harga_items') ?>" autocomplete="off">
+							<input type="text" id="harga_items" onkeyup="splitInDots(this)" name="harga_items" class="form-control" placeholder="Harga Items" value="<?= set_value('harga_items') ?>" autocomplete="off">
 						</div>
 						<?= form_error('harga_items', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
@@ -83,7 +83,7 @@
 						<label for="qty_items">Qty <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_items') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" id="qty_items" name="qty_items" class="form-control" placeholder="Qty" value="<?= set_value('qty_items') ?>" autocomplete="off">
+							<input type="text" id="qty_items" onkeyup="splitInDots(this)" name="qty_items" class="form-control" placeholder="Qty" value="<?= set_value('qty_items') ?>" autocomplete="off">
 						</div>
 						<?= form_error('qty_items', '<div class="text-danger">', '</div>'); ?>
 
@@ -122,5 +122,29 @@
 				}
 			});
 		});
+
+
+
 	});
+</script>
+
+<script type="text/javascript">
+	function reverseNumber(input) {
+		return [].map.call(input, function(x) {
+			return x;
+		}).reverse().join('');
+	}
+
+	function plainNumber(number) {
+		return number.split('.').join('');
+	}
+
+	function splitInDots(input) {
+		var value = input.value,
+			plain = plainNumber(value),
+			reversed = reverseNumber(plain),
+			reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
+			normal = reverseNumber(reversedWithDots);
+		input.value = normal;
+	}
 </script>

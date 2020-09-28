@@ -29,7 +29,7 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">No Invoice</th>
-						<th class="text-center">Customers</th>
+						<th class="text-center">Customer</th>
 						<th class="text-center">Perusahaan</th>
 						<th class="text-center">Tanggal Transaksi</th>
 						<th class="text-center">Admin</th>

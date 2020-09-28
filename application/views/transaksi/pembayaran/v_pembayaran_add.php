@@ -34,7 +34,7 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" value="<?= $myNewDate = date("d-m-Y", strtotime($myOriginalDate)); ?>" class="form-control" readonly>
+									<input type="text" value="<?= date("d-m-Y", strtotime($myOriginalDate)); ?>" class="form-control" readonly>
 									<input type="hidden" name="date" id="date" value="<?= date('Y-m-d') ?>" class="form-control">
 								</div>
 							</td>
@@ -51,12 +51,13 @@ $myOriginalDate = date("Y-m-d");
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width: 27%">
-								<label for="">Customers</label>
+								<label for="">Customer</label>
 							</td>
 							<td>
 								<div class="form-group input-group">
-									<input type="hidden" id="customers_id" name="customers_id">
-									<input type="text" id="name_customers" class="form-control" autofocus readonly>
+
+									<input type="hidden" id="customers_id" id="customers_id">
+									<input type="text" id="name_customers" id="name_customers" class="form-control" autofocus readonly>
 									<span class="input-group-btn">
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#show_customers">
 											<i class="fa fa-search"></i>
@@ -123,9 +124,11 @@ $myOriginalDate = date("Y-m-d");
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<h4>Invoice <b>INV/<?= date('Ymd') ?>/CK/<span id="inisial_pt"></span>/<?= sprintf("%05s", $row) ?></b></h4>
-						<input type="hidden" name="invoice" id="invoice" value="INV/<?= date('Ymd') ?>/CK/<?= sprintf("%05s", $row) ?>">
-						<h1><b><span id="grand_total2" style="font-size: 50pt;">0</span></b></h1>
+						<h4>Invoice <b>INV/<?= date("dmy", strtotime($myOriginalDate)); ?>/CK/<span id="inisial_pt"></span>/<?= sprintf("%05s", $row) ?></b></h4>
+						<input type="hidden" name="invoice" id="invoice" value="INV/<?= date("dmy", strtotime($myOriginalDate)); ?>/CK/">
+						<input type="hidden" name="invoice_inisial" id="invoice_inisial">
+						<input type="hidden" name="invoice_ai" id="invoice_ai" value="<?= sprintf("%05s", $row) ?>">
+						<h3><b><span id="grand_total2" style="font-size: 30pt;">0</span></b></h3>
 					</div>
 					<small style="color: red;">* Grand Total </small>
 				</div>
@@ -137,7 +140,7 @@ $myOriginalDate = date("Y-m-d");
 					<div class="text-right">
 						<input type="hidden" id="down_payment_id" name="down_payment_id" value="<?= date('Ymd') . '' . $uniqid ?>">
 						<h4>DP <b><span id="dp"><?= date('Ymd') . '' . $uniqid ?></span></b></h4>
-						<h1><b><span id="grand_total_dp" style="font-size: 50pt;">0</span></b></h1>
+						<h3><b><span id="grand_total_dp" style="font-size: 30pt;">0</span></b></h3>
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>
 				</div>
@@ -201,7 +204,7 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="number" name="down_payment" id="down_payment" min="0" class="form-control" placeholder="Down Payment">
+									<input type="text" name="down_payment" id="down_payment" class="form-control" placeholder="Down Payment">
 								</div>
 							</td>
 						</tr>
@@ -211,7 +214,7 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="number" id="cash" min="0" class="form-control" placeholder="Cash">
+									<input type="text" id="cash" onkeyup="splitInDots(this)" name="cash" class="form-control" placeholder="Cash" autocomplete="off">
 								</div>
 							</td>
 						</tr>
@@ -285,15 +288,15 @@ $myOriginalDate = date("Y-m-d");
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="exampleModalLabel">Customers</h4>
+				<h4 class="modal-title" id="exampleModalLabel">Customer</h4>
 			</div>
 			<div class="modal-body table-responsive">
 				<table class="table table-bordered table-striped" id="datatables">
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th class="text-center">ID Customers</th>
-							<th class="text-center">Customers</th>
+							<th class="text-center">ID Customer</th>
+							<th class="text-center">Customer</th>
 							<th class="text-center">Prushaan</th>
 							<th class="text-center">Phone (Rp)</th>
 							<th class="text-center">Action</th>
@@ -309,7 +312,7 @@ $myOriginalDate = date("Y-m-d");
 								<td><?= $data->pt_customers ?></td>
 								<td><?= $data->phone_customers ?></td>
 								<td class="text-center">
-									<button class="btn btn-success btn-sm" id="customers_select" data-inisial_pt="<?= $data->inisial_pt ?>" data-name_customers="<?= $data->name_customers ?>">
+									<button class="btn btn-success btn-sm" id="customers_select" data-customers_id="<?= $data->customers_id ?>" data-inisial_pt="<?= $data->inisial_pt ?>" data-name_customers="<?= $data->name_customers ?>">
 										<i class=" fa fa-check"></i>
 									</button>
 								</td>
@@ -335,13 +338,13 @@ $myOriginalDate = date("Y-m-d");
 		});
 
 		$(document).on('click', '#customers_select', function() {
-			// $('#inisial_pt').val($(this).data('inisial_pt'));
 			$('#name_customers').val($(this).data('name_customers'));
+			$('#invoice_inisial').val($(this).data('inisial_pt'));
+			$('#customers_id').val($(this).data('customers_id'));
+
 
 			var inisial_pt = $(this).data('inisial_pt');
-
 			document.getElementById("inisial_pt").innerHTML = inisial_pt;
-
 			$('#show_customers').modal('hide');
 		});
 
@@ -417,7 +420,12 @@ $myOriginalDate = date("Y-m-d");
 
 
 		function calculate() {
+
 			var subtotal = 0;
+
+			var numeric_format = new Intl.NumberFormat('id-ID', {
+				currencyDisplay: 'symbol'
+			});
 
 			$('#cart_table tr').each(function() {
 				subtotal += parseInt($(this).find('#total').text())
@@ -425,29 +433,16 @@ $myOriginalDate = date("Y-m-d");
 
 			isNaN(subtotal) ? $('#sub_total').val(0) : $('#sub_total').val(subtotal)
 
-			var grand_total2 = subtotal
-
-			if (isNaN(grand_total2)) {
-				$('#grand_total2').text(0)
-			} else {
-				$('#grand_total2').text(grand_total2)
-			}
+			document.getElementById('grand_total2').innerHTML = numeric_format.format(subtotal);
+			document.getElementById('sub_total').innerHTML = numeric_format.format(subtotal);
+			document.getElementById('grand_total_dp').innerHTML = numeric_format.format(subtotal);
 
 			var down_payment = $('#down_payment').val()
+
 			var grand_total = subtotal - down_payment
+			console.log(subtotal)
 
-			if (isNaN(grand_total)) {
-				$('#grand_total').val(0)
-				$('#grand_total_dp').text(0)
-			} else {
-				$('#grand_total').val(grand_total)
-				$('#grand_total_dp').text(grand_total)
-			}
-
-
-			var cash = $('#cash').val();
-			cash != 0 ? $('#change').val(cash - down_payment) : $('#change').val(0);
-
+			document.getElementById('grand_total_dp').innerHTML = numeric_format.format(grand_total);
 		}
 
 		$(document).on('keyup mouseup', '#down_payment, #cash', function() {
@@ -469,6 +464,9 @@ $myOriginalDate = date("Y-m-d");
 			var change = $('#change').val()
 			var status = $('#status').val()
 			var date = $('#date').val()
+			var invoice_inisial = $('#invoice_inisial').val()
+			var invoice_ai = $('#invoice_ai').val()
+			var invoice = $('#invoice').val()
 
 			if (subtotal < 1) {
 				swal("Error!", "Belum Ada Product Item Yang Dipilih!", "error");
@@ -476,7 +474,7 @@ $myOriginalDate = date("Y-m-d");
 				swal("Error!", "Jumlah Uang Cash Belum Diinput!", "error");
 				$('#cash').focus();
 			} else if (customers_id == '') {
-				swal("Error!", "Data Customers Belum Diinput!", "error");
+				swal("Error!", "Data Customer Belum Diinput!", "error");
 				$('#customers_id').focus();
 			} else if (status == '') {
 				swal("Error!", "Data Status Pembayaran Belum Diinput!", "error");
@@ -496,7 +494,10 @@ $myOriginalDate = date("Y-m-d");
 							'cash': cash,
 							'change': change,
 							'status': status,
-							'date': date
+							'date': date,
+							'invoice_inisial': invoice_inisial,
+							'invoice_ai': invoice_ai,
+							'invoice': invoice
 						},
 						dataType: 'json',
 						success: function(result) {
@@ -518,8 +519,6 @@ $myOriginalDate = date("Y-m-d");
 
 <script>
 	$(document).ready(function() {
-		// $("#key_dp_hide").hide();
-		// $("#down_payment_hide").hide();
 
 		$('#status').on('change', function() {
 			if (this.value == '2') {
@@ -531,4 +530,25 @@ $myOriginalDate = date("Y-m-d");
 			}
 		});
 	});
+</script>
+
+<script type="text/javascript">
+	function reverseNumber(input) {
+		return [].map.call(input, function(x) {
+			return x;
+		}).reverse().join('');
+	}
+
+	function plainNumber(number) {
+		return number.split('.').join('');
+	}
+
+	function splitInDots(input) {
+		var value = input.value,
+			plain = plainNumber(value),
+			reversed = reverseNumber(plain),
+			reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
+			normal = reverseNumber(reversedWithDots);
+		input.value = normal;
+	}
 </script>

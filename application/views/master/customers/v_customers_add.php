@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Add Customers <small>Customers</small></h1>
+	<h1>Add Customer <small>Customer</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('Dashboard') ?>">
@@ -10,7 +10,7 @@
 			Master
 		</li>
 		<li>
-			<a href="<?= site_url('Customers') ?>">Customers</a>
+			<a href="<?= site_url('Customers') ?>">Customer</a>
 		</li>
 		<li class="active">
 			Add
@@ -21,7 +21,7 @@
 	<div class="box box-primary">
 		<div class="box-header">
 			<h4>
-				Add Customers
+				Add Customer
 				<div class="pull-right">
 					<a href="<?= site_url('customers') ?>" class="btn btn-warning">
 						<i class="fa fa-arrow-right"></i>
@@ -33,7 +33,7 @@
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<form action="" method="POST">
-						<label for="">ID Customers <i class="text-danger">*</i></label>
+						<label for="">ID Customer <i class="text-danger">*</i></label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-key"></i></span>
 							<input type="text" name="customers_key" id="customers_key" class="form-control" placeholder="ID Customers" value="C_<?= sprintf("%04s", $row) ?>" readonly>
@@ -57,7 +57,7 @@
 						<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
-						<label for="name_customers">Customers <i class="text-danger">*</i></label>
+						<label for="name_customers">Customer <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('name_customers') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
 							<input type="text" name="name_customers" id="name_customers" class="form-control" placeholder="Customers" value="<?= set_value('name_customers') ?>" autocomplete="off">
