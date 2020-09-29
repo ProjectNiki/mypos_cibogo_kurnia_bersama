@@ -179,6 +179,12 @@
 							</li>
 						</ul>
 					</li>
+					<li class="header">Admin</li>
+					<li <?= $this->uri->segment(1) == 'admin' ? 'class="active"' : null ?>>
+						<a href="<?= site_url('admin') ?>">
+							<i class="fa fa-user text-red"></i><span>Admin</span>
+						</a>
+					</li>
 				</ul>
 			</section>
 		</aside>

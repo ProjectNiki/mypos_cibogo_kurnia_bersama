@@ -54,7 +54,7 @@
 								<label for="inisial_pt">Inisial <i class="text-danger">*</i></label>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-									<input type="text" name="inisial_pt" id="inisial_pt" class="form-control" placeholder="Perusahaan" value="<?= set_value('inisial_pt') ?>" autocomplete="off" autofocus="true" maxlength="2" required>
+									<input type="text" name="inisial_pt" id="inisial_pt" class="form-control" placeholder="Inisial" value="<?= set_value('inisial_pt') ?>" autocomplete="off" autofocus="true" maxlength="2" required>
 								</div>
 							</div>
 						</div>

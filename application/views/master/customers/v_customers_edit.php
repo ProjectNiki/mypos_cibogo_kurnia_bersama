@@ -42,26 +42,29 @@
 						<?= form_error('customers_key', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
-						<label for="pt_customers">Perusahaan <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
-							<span class="input-group-addon"><i class="fa fa-building"></i></span>
-							<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Perusahaan" value="<?= $this->input->post('pt_customers') ?? $row->pt_customers ?>" autocomplete="off">
+						<div class="row">
+							<div class="col-md-10">
+								<label for="pt_customers">Perusahaan <i class="text-danger">*</i></label>
+								<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
+									<span class="input-group-addon"><i class="fa fa-building"></i></span>
+									<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Perusahaan" value="<?= $this->input->post('pt_customers') ?? $row->pt_customers ?>" autocomplete="off" autofocus="true">
+								</div>
+								<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
+							</div>
+							<div class="col-md-2">
+								<label for="inisial_pt">Inisial <i class="text-danger">*</i></label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+									<input type="text" name="inisial_pt" id="inisial_pt" class="form-control" placeholder="Inisial" value="<?= $this->input->post('inisial_pt') ?? $row->inisial_pt ?>" autocomplete="off" autofocus="true" maxlength="2" required>
+								</div>
+							</div>
 						</div>
-						<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
-						<!--  -->
-						<br>
-						<label for="pt_customers">Inisial <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
-							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Inisial" value="<?= set_value('pt_customers') ?>" autocomplete="off" autofocus="true">
-						</div>
-						<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
 						<label for="name_customers">Customer <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('name_customers') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" name="name_customers" id="name_customers" class="form-control" placeholder="Customers" value="<?= $row->name_customers ?>" autocomplete="off">
+							<input type="text" name="name_customers" id="name_customers" class="form-control" placeholder="Customers" value="<?= $this->input->post('name_customers') ?? $row->name_customers ?>" autocomplete="off">
 						</div>
 						<?= form_error('name_customers', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
@@ -79,7 +82,7 @@
 						<label for="phone_customers">Phone <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('phone_customers') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-							<input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==13) return false;" name="phone_customers" id="phone_customers" value="<?= $row->phone_customers ?>" class="form-control" placeholder="Phone" autocomplete="off">
+							<input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==13) return false;" name="phone_customers" id="phone_customers" value="<?= $this->input->post('phone_customers') ?? $row->phone_customers ?>" class="form-control" placeholder="Phone" autocomplete="off">
 						</div>
 						<?= form_error('phone_customers', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
@@ -87,14 +90,14 @@
 						<label for="email_customers">E-Mail <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('email_customers') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-							<input type="text" id="email_customers" name="email_customers" class="form-control" value="<?= $row->email_customers ?>" placeholder="E-Mail" autocomplete="off">
+							<input type="text" id="email_customers" name="email_customers" class="form-control" value="<?= $this->input->post('email_customers') ?? $row->email_customers ?>" placeholder="E-Mail" autocomplete="off">
 						</div>
 						<?= form_error('email_customers', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
 						<div class="form-group <?= form_error('address_customers') == TRUE ? 'has-error' : null ?>">
 							<label for="address_customers">Alamat <i class="text-danger">*</i></label>
-							<textarea name="address_customers" id="address_customers" rows="4" class="form-control" placeholder="Alamat Customers" autocomplete="off"><?= $row->address_customers ?></textarea>
+							<textarea name="address_customers" id="address_customers" rows="4" class="form-control" placeholder="Alamat Customers" autocomplete="off"><?= $this->input->post('address_customers') ?? $row->address_customers ?></textarea>
 							<?= form_error('address_customers', '<div class="text-danger">', '</div>'); ?>
 						</div>
 						<!--  -->

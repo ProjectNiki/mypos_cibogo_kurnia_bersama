@@ -41,8 +41,7 @@
 						</div>
 						<label for="">No Invoice<i class="text-danger">*</i></label>
 						<div class="input-group">
-							<input type="text" id="items_key" name="items_key" value="" class="form-control" readonly>
-							<input type="hidden" id="items_id" name="items_id" class="form-control" readonly>
+							<input type="text" id="invoice" name="invoice" value="" class="form-control" readonly>
 							<span class="input-group-btn">
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 									<i class="fa fa-search"></i>
@@ -50,36 +49,36 @@
 							</span>
 						</div>
 						<br>
-						<label for="name_items">Fee <i class="text-danger">*</i></label>
+						<label for="fee">Fee <i class="text-danger">*</i></label>
 						<div class="input-group ">
 							<span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
-							<input type="text" id="name_items" name="name_items" class="form-control" value="" placeholder="Fee">
+							<input type="text" id="fee" name="fee" class="form-control" value="" placeholder="Fee">
 						</div>
 						<br>
 						<!--  -->
-						<label for="qty_items">Oprasional <i class="text-danger">*</i></label>
+						<label for="oprasional">Oprasional <i class="text-danger">*</i></label>
 						<div class="input-group ">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="text" id="qty_items" name="qty_items" class="form-control" placeholder="Oprasional" value="">
+							<input type="text" id="oprasional" name="oprasional" class="form-control" placeholder="Oprasional" value="">
 						</div>
 						<br>
 						<!--  -->
-						<label for="qty_stock_in">Pajak/tax <i class="text-danger">*</i></label>
+						<label for="pajak_tax">Pajak/tax <i class="text-danger">*</i></label>
 						<div class="input-group ">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Pajak/tax" value="" autocomplete="off">
+							<input type="number" id="pajak_tax" name="pajak_tax" class="form-control" placeholder="Pajak/tax" value="" autocomplete="off">
 						</div>
 						<br>
-						<label for="qty_stock_in">Ls/Lab <i class="text-danger">*</i></label>
+						<label for="lab">Ls/Lab <i class="text-danger">*</i></label>
 						<div class="input-group ">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Ls/Lab" value="" autocomplete="off">
+							<input type="number" id="lab" name="lab" class="form-control" placeholder="Ls/Lab" value="" autocomplete="off">
 						</div>
 						<br>
-						<label for="jasa_op">Jasa Perusahaan <i class="text-danger">*</i></label>
+						<label for="jasa perushaan">Jasa Perusahaan <i class="text-danger">*</i></label>
 						<div class="input-group ">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="number" id="jasa_op" name="jasa_op" class="form-control" placeholder="Ls/Lab" value="" autocomplete="off">
+							<input type="number" id="jasa perushaan" name="jasa perushaan" class="form-control" placeholder="Jasa Perusahaan" value="" autocomplete="off">
 						</div>
 						<br>
 						<div class="form-group">
@@ -105,8 +104,8 @@
 						<tr>
 							<th class="text-center">#</th>
 							<th class="text-center">No Invoice</th>
-							<th class="text-center">Customers </th>
-							<th class="text-center">Nama PT </th>
+							<th class="text-center">Customer </th>
+							<th class="text-center">Perusahaan </th>
 							<th class="text-center">Tgl Pembelian</th>
 							<th class="text-center">Action</th>
 						</tr>

@@ -7,11 +7,21 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 		check_not_login();
-		// $this->load->model(['dashboard_m']);
+		$this->load->model(['Dashboard_m']);
 	}
 
 	public function index()
 	{
-		$this->template->load('v_template', 'v_dashboard');
+		$customer = $this->Dashboard_m->sum_customer();
+		$pendapatan = $this->Dashboard_m->sum_pendapatan()->result();
+		$pendapatan_dp = $this->Dashboard_m->sum_dp()->result();
+
+		$data = [
+			'customer' => $customer,
+			'pendapatan' => $pendapatan,
+			'pendapatan_dp' => $pendapatan_dp
+		];
+
+		$this->template->load('v_template', 'v_dashboard', $data);
 	}
 }

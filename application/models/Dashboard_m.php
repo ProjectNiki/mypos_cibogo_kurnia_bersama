@@ -2,16 +2,37 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 date_default_timezone_set("Asia/Bangkok");
-class Customers_m extends CI_Model
+class Dashboard_m extends CI_Model
 {
-	public function get($id = null)
+	public function sum_customer()
 	{
-		$this->db->select('*');
-		$this->db->from('user');
-		if ($id != NULL) {
-			$this->db->where('user_id', $id);
-		}
-		$query = $this->db->get();
-		return $query;
+		$query = $this->db->query("SELECT * FROM customers");
+		$count = $query->num_rows();
+		return $count;
+	}
+
+	public function sum_pendapatan()
+	{
+		$date = date('m');
+
+		$this->db->select('SUM(pembayaran.total_price) as sum_pendapatan_m');
+		$this->db->from('pembayaran');
+		$this->db->where('MONTH(pembayaran.date) =', $date);
+		$this->db->where('status =', 1);
+
+		$post = $this->db->get();
+		return $post;
+	}
+
+	public function sum_dp()
+	{
+		$date = date('m');
+
+		$this->db->select('SUM(pembayaran_down_payment.down_payment) as sum_dp');
+		$this->db->from('pembayaran_down_payment');
+		$this->db->where('MONTH(pembayaran_down_payment.created) =', $date);
+
+		$post = $this->db->get();
+		return $post;
 	}
 }

@@ -47,6 +47,7 @@ class Customers_m extends CI_Model
 		$params['phone_customers']      = $post['phone_customers'];
 		$params['address_customers']    = $post['address_customers'];
 		$params['updated']              = date('Y-m-d H:i:s');
+		$params['inisial_pt']			= strtoupper($post['inisial_pt']);
 		$params['user_updated']		 	= $this->session->userdata('user_id');
 
 		$this->db->where('customers_id', $post['customers_id']);
