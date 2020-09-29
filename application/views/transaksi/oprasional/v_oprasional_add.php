@@ -76,6 +76,12 @@
 							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Ls/Lab" value="" autocomplete="off">
 						</div>
 						<br>
+						<label for="jasa_op">Jasa Perusahaan <i class="text-danger">*</i></label>
+						<div class="input-group ">
+							<span class="input-group-addon"><i class="fa fa-money"></i></span>
+							<input type="number" id="jasa_op" name="jasa_op" class="form-control" placeholder="Ls/Lab" value="" autocomplete="off">
+						</div>
+						<br>
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 						</div>

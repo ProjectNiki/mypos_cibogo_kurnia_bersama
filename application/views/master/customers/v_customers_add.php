@@ -41,20 +41,23 @@
 						<?= form_error('customers_key', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
-						<label for="pt_customers">Perusahaan <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
-							<span class="input-group-addon"><i class="fa fa-building"></i></span>
-							<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Perusahaan" value="<?= set_value('pt_customers') ?>" autocomplete="off" autofocus="true">
+						<div class="row">
+							<div class="col-md-10">
+								<label for="pt_customers">Perusahaan <i class="text-danger">*</i></label>
+								<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
+									<span class="input-group-addon"><i class="fa fa-building"></i></span>
+									<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Perusahaan" value="<?= set_value('pt_customers') ?>" autocomplete="off" autofocus="true">
+								</div>
+								<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
+							</div>
+							<div class="col-md-2">
+								<label for="inisial_pt">Inisial <i class="text-danger">*</i></label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+									<input type="text" name="inisial_pt" id="inisial_pt" class="form-control" placeholder="Perusahaan" value="<?= set_value('inisial_pt') ?>" autocomplete="off" autofocus="true" maxlength="2" required>
+								</div>
+							</div>
 						</div>
-						<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
-						<!--  -->
-						<br>
-						<label for="pt_customers">Inisial <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
-							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Inisial" value="<?= set_value('pt_customers') ?>" autocomplete="off" autofocus="true">
-						</div>
-						<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
 						<label for="name_customers">Customer <i class="text-danger">*</i></label>

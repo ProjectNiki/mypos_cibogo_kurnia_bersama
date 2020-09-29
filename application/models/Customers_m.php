@@ -31,6 +31,7 @@ class Customers_m extends CI_Model
 		$params['phone_customers']      = $post['phone_customers'];
 		$params['email_customers']      = $post['email_customers'];
 		$params['address_customers']    = $post['address_customers'];
+		$params['inisial_pt']			= strtoupper($post['inisial_pt']);
 		$params['user_created']		 	= $this->session->userdata('user_id');
 
 

@@ -295,7 +295,6 @@ $myOriginalDate = date("Y-m-d");
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th class="text-center">ID Customer</th>
 							<th class="text-center">Customer</th>
 							<th class="text-center">Prushaan</th>
 							<th class="text-center">Phone (Rp)</th>
@@ -307,7 +306,6 @@ $myOriginalDate = date("Y-m-d");
 						<?php foreach ($customers as $key => $data) { ?>
 							<tr>
 								<td><?= $no++ ?></td>
-								<td><?= $data->customers_id ?></td>
 								<td><?= $data->name_customers ?></td>
 								<td><?= $data->pt_customers ?></td>
 								<td><?= $data->phone_customers ?></td>

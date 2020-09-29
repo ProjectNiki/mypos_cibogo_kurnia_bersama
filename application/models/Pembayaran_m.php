@@ -193,8 +193,8 @@ class Pembayaran_m extends CI_Model
 	public function add_pembayaran_sisa_dp($post)
 	{
 		$params = array(
-			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '' . $post['invoice_ai'],
-			'down_payment' => $post['down_payment'],
+			'invoice' => $post['invoice'],
+			'down_payment' => str_replace(".", "", $post['down_payment']),
 			'down_payment_id' => $post['down_payment_id'],
 			'user_id' => $this->session->userdata('user_id')
 		);
