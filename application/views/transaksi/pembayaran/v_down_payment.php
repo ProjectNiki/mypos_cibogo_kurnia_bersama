@@ -69,7 +69,7 @@ $uniqid = uniqid();
 					<div class="text-right">
 						<input type="hidden" id="invoice" name="invoice" value="<?= $row->invoice ?>">
 						<h4>Invoice <b><span id="invoice"><?= $row->invoice ?></span></b></h4>
-						<h1><b><span style="font-size: 40pt;"><?= $row->total_price ?></span></b></h1>
+						<h1><b><span style="font-size: 40pt;"><?= indo_qty($row->total_price)  ?></span></b></h1>
 					</div>
 					<small style="color: red;">* Grand Total </small>
 				</div>
@@ -81,7 +81,10 @@ $uniqid = uniqid();
 					<div class="text-right">
 						<input type="hidden" id="down_payment_id" name="down_payment_id" value="<?= date('Ymd') . '' . $uniqid ?>">
 						<h4>DP <b><span id="dp"><?= date('Ymd') . '' . $uniqid ?></span></b></h4>
-						<h1><b><span style="font-size: 40pt;" id="result"><?= $row->total_price - $row_dp->result_dp ?></span></b></h1>
+						<?php
+						$result_dp = $row->total_price - $row_dp->result_dp
+						?>
+						<h1><b><span style="font-size: 40pt;" id="result"><?= indo_qty($result_dp) ?></span></b></h1>
 						<input type="hidden" id="grand_total_dp" value="<?= $row->total_price - $row_dp->result_dp ?>">
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>
@@ -111,7 +114,7 @@ $uniqid = uniqid();
 									<td class="text-center"><?= $no++ ?></td>
 									<td><?= $data->name_items ?></td>
 									<td><?= indo_currency($data->harga_pembayaran)  ?></td>
-									<td class="text-center"><?= $data->pembayaran_qty ?></td>
+									<td class="text-center"><?= indo_qty($data->pembayaran_qty) ?></td>
 									<td id="total"><?= indo_currency($data->harga_pembayaran * $data->pembayaran_qty) ?></td>
 								</tr>
 							<?php } ?>
@@ -172,7 +175,7 @@ $uniqid = uniqid();
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="number" name="down_payment" id="down_payment" min="0" class="form-control" placeholder="Down Payment">
+										<input type="text" name="down_payment" onkeyup="splitInDots(this)" id="down_payment" min="0" class="form-control" placeholder="Down Payment">
 									</div>
 								</td>
 							</tr>
@@ -182,7 +185,7 @@ $uniqid = uniqid();
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="number" id="cash" min="0" class="form-control" placeholder="Cash">
+										<input type="text" id="cash" min="0" onkeyup="splitInDots(this)" class="form-control" placeholder="Cash">
 									</div>
 								</td>
 							</tr>
@@ -216,12 +219,18 @@ $uniqid = uniqid();
 <script>
 	function calculate() {
 
+		var numeric_format = new Intl.NumberFormat('id-ID', {
+			currencyDisplay: 'symbol'
+		});
+
 		var grand_total_dp = $('#grand_total_dp').val()
+		console.log(grand_total_dp);
+
 		var down_payment = $('#down_payment').val()
+		var result = down_payment.replace(/[^a-zA-Z0-9]/g, '');
+		var grand_total = grand_total_dp - result
 
-		var grand_total = grand_total_dp - down_payment
-
-		$('#result').text(grand_total)
+		document.getElementById('result').innerHTML = numeric_format.format(grand_total);
 	}
 
 	$(document).on('keyup mouseup', '#down_payment', function() {
@@ -288,4 +297,27 @@ $uniqid = uniqid();
 			}
 		}
 	});
+</script>
+
+
+
+<script type="text/javascript">
+	function reverseNumber(input) {
+		return [].map.call(input, function(x) {
+			return x;
+		}).reverse().join('');
+	}
+
+	function plainNumber(number) {
+		return number.split('.').join('');
+	}
+
+	function splitInDots(input) {
+		var value = input.value,
+			plain = plainNumber(value),
+			reversed = reverseNumber(plain),
+			reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
+			normal = reverseNumber(reversedWithDots);
+		input.value = normal;
+	}
 </script>
