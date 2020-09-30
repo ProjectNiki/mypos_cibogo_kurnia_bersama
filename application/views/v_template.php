@@ -58,7 +58,7 @@
 								</li>
 								<li class="user-footer">
 									<div class="pull-left">
-										<a href="#" class="btn btn-default">Profile</a>
+										<a href="<?= site_url('admin') ?>" class="btn btn-default">Profile</a>
 									</div>
 									<div class="pull-right">
 										<a href="<?= site_url('auth/logout') ?>" class="btn btn-danger">Sign out</a>
@@ -164,7 +164,7 @@
 						</ul>
 					</li>
 
-					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
+					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_invoice' || $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
 						<a href="#">
 							<i class="fa fa-line-chart"></i> <span>Laporan</span>
 							<span class="pull-right-container">
@@ -175,6 +175,11 @@
 							<li <?= $this->uri->segment(1) == 'lap_invoice' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('lap_invoice') ?>">
 									<i class="fa fa-circle-o"></i> Invoice
+								</a>
+							</li>
+							<li <?= $this->uri->segment(1) == 'lap_oprasional' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('lap_oprasional') ?>">
+									<i class="fa fa-circle-o"></i> Oprasional
 								</a>
 							</li>
 						</ul>

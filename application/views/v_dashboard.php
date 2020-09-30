@@ -15,7 +15,7 @@ date_default_timezone_set("Asia/Bangkok");
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header">
-			<h2>Welcome Back, <?= ucfirst($this->fungsi->user_login()->nama); ?></h2>
+			<h2> <u>Welcome Back, <?= ucfirst($this->fungsi->user_login()->nama); ?></u></h2>
 		</div>
 
 		<div class="box-body">
