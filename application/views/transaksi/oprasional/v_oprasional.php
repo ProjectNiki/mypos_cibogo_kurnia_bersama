@@ -16,6 +16,7 @@
 </section>
 
 <section class="content">
+	<?= $this->session->flashdata('message'); ?>
 	<div class="box box-primary">
 		<div class="box-header">
 			<h4>Data Biaya Pengurusan
@@ -31,6 +32,7 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
+						<th class="text-center">No Invoice</th>
 						<th class="text-center">Fee</th>
 						<th class="text-center">Oprasional</th>
 						<th class="text-center">Pajak/Tax</th>
@@ -39,14 +41,22 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<?php $no = 1; ?>
+					<?php foreach ($row as $key => $data) { ?>
+						<tr>
+							<td class="text-center"><?= $no++; ?></td>
+							<td class="text-center"><?= $data->invoice ?></td>
+							<td><?= indo_currency($data->fee_oprasional) ?></td>
+							<td><?= indo_currency($data->oprasional) ?></td>
+							<td><?= indo_currency($data->pajak_tax) ?></td>
+							<td><?= indo_currency($data->lab) ?></td>
+							<td class="text-center">
+								<a href="" class="btn btn-default">
+									<i class="fa fa-eye"></i>
+								</a>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>

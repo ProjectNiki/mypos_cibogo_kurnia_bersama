@@ -4,6 +4,17 @@ date_default_timezone_set("Asia/Bangkok");
 
 class Pembayaran_m extends CI_Model
 {
+	public function get_oprasional()
+	{
+		$this->db->select('*, pembayaran.created as created_pembelian');
+		$this->db->from('pembayaran');
+		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
+		$this->db->where('pembayaran.pembayaran_oprasional =', null);
+		$this->db->group_by('pembayaran.invoice');
+
+		$query = $this->db->get();
+		return $query;
+	}
 
 	public function get($id = NULL)
 	{
