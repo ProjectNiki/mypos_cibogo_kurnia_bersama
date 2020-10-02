@@ -4,18 +4,6 @@ date_default_timezone_set("Asia/Bangkok");
 
 class Pembayaran_m extends CI_Model
 {
-	public function get_oprasional()
-	{
-		$this->db->select('*, pembayaran.created as created_pembelian');
-		$this->db->from('pembayaran');
-		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
-		$this->db->where('pembayaran.pembayaran_oprasional =', null);
-		$this->db->group_by('pembayaran.invoice');
-
-		$query = $this->db->get();
-		return $query;
-	}
-
 	public function get($id = NULL)
 	{
 		$this->db->select('*, pembayaran.created as created_dp');
@@ -26,7 +14,7 @@ class Pembayaran_m extends CI_Model
 		if ($id != NULL) {
 			$this->db->where('pembayaran.pembayaran_id', $id);
 		}
-		$this->db->group_by('pembayaran.invoice');
+		$this->db->group_by('pembayaran.no_urut_invoice');
 
 		$query = $this->db->get();
 		return $query;
@@ -34,9 +22,9 @@ class Pembayaran_m extends CI_Model
 
 	public function ai_code()
 	{
-		$query = $this->db->query("SELECT MAX(invoice) as invoice from pembayaran");
+		$query = $this->db->query("SELECT MAX(no_urut_invoice) as no_urut_invoice from pembayaran");
 		$hasil = $query->row();
-		return $hasil->invoice;
+		return $hasil->no_urut_invoice;
 	}
 
 	public function get_lunas($id = NULL)
@@ -62,10 +50,11 @@ class Pembayaran_m extends CI_Model
 	{
 		$this->db->select('*, 
 							pembayaran.created as create_invoice,
-							pembayaran_down_payment.created as created_dp
+							pembayaran_down_payment.created as created_dp,
+							pembayaran.invoice as invoice_pembayaran
 							');
 		$this->db->from('pembayaran');
-		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
+		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.no_urut_invoice');
 		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
 		$this->db->join('user', 'user.user_id = pembayaran.user_id');
 
@@ -81,7 +70,7 @@ class Pembayaran_m extends CI_Model
 	{
 		$this->db->select('SUM(pembayaran_down_payment.down_payment) as result_dp, pembayaran.total_price as total_price');
 		$this->db->from('pembayaran');
-		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.invoice');
+		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.no_urut_invoice');
 
 		if ($id != NULL) {
 			$this->db->where('pembayaran.pembayaran_id', $id);
@@ -176,7 +165,8 @@ class Pembayaran_m extends CI_Model
 	public function add_pembayaran($post)
 	{
 		$params = array(
-			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '/' . $post['invoice_ai'],
+			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '/',
+			'no_urut_invoice' => $post['invoice_ai'],
 			'customers_id' => $post['customers_id'],
 			'total_price' => $post['subtotal'],
 			'cash' => str_replace(".", "", $post['cash']),
@@ -185,6 +175,10 @@ class Pembayaran_m extends CI_Model
 			'user_id' => $this->session->userdata('user_id')
 		);
 
+		if ($post['noted'] != NULL) {
+			$params['noted'] = $post['noted'];
+		}
+
 		$this->db->insert('pembayaran', $params);
 		return $this->db->insert_id();
 	}
@@ -192,7 +186,7 @@ class Pembayaran_m extends CI_Model
 	public function add_pembayaran_dp($post)
 	{
 		$params = array(
-			'invoice' => $post['invoice'] . '' . $post['invoice_inisial'] . '/' . $post['invoice_ai'],
+			'invoice' => $post['invoice_ai'],
 			'down_payment' => str_replace(".", "", $post['down_payment']),
 			'down_payment_id' => $post['down_payment_id'],
 			'user_id' => $this->session->userdata('user_id')
@@ -209,6 +203,11 @@ class Pembayaran_m extends CI_Model
 			'down_payment_id' => $post['down_payment_id'],
 			'user_id' => $this->session->userdata('user_id')
 		);
+
+		if ($post['noted'] != NULL) {
+			$params['noted'] = $post['noted'];
+		}
+
 
 		$this->db->insert('pembayaran_down_payment', $params);
 	}

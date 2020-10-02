@@ -104,7 +104,7 @@ class Pembayaran extends CI_Controller
 
 
 
-		$nourut = substr($data, 17, 22);
+		$nourut = substr($data, 1, 5);
 		$kd_ai  = $nourut + 1;
 
 		$data = [

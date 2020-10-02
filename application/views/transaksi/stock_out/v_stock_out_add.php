@@ -71,7 +71,7 @@
 						<label for="qty_stock_out">Qty <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_stock_out') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="number" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="Qty Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
+							<input type="text" onkeyup="splitInDots(this)" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="Qty Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_out') ?>" autocomplete="off">
 						</div>
 						<?= form_error('qty_stock_out', '<div class="text-danger">', '</div>'); ?>
 						<br>
@@ -118,7 +118,7 @@
 								<td class="text-center"><?= $no++ ?></td>
 								<td><?= $data->name_items ?></td>
 								<td><?= indo_currency($data->harga_items) ?></td>
-								<td class="text-center"><?= $data->qty_items ?></td>
+								<td class="text-center"><?= indo_qty($data->qty_items) ?></td>
 								<td class="text-center">
 									<button class="btn btn-success btn-sm" id="select" data-items_key="<?= $data->items_key ?>" data-items_id="<?= $data->items_id ?>" data-name_items="<?= $data->name_items ?>" data-qty_items="<?= $data->qty_items ?>">
 										<i class="fa fa-check"></i>
@@ -149,10 +149,15 @@
 
 <script>
 	$(document).on('keyup mouseup', '#qty_stock_out', function() {
+
 		var qty_show = $('#qty_items').val();
 		var qty_input = $('#qty_stock_out').val();
 
-		count = qty_show - qty_input;
+		var result = qty_input.replace(/[^a-zA-Z0-9]/g, '');
+
+		count = qty_show - result;
+
+		console.log(count)
 
 		if (count < 0) {
 			alert('Qty Stock Out tidak boleh melebihi Initial Stock');
@@ -161,4 +166,25 @@
 			$(':input[type="submit"]').prop('disabled', false);
 		}
 	})
+</script>
+
+<script type="text/javascript">
+	function reverseNumber(input) {
+		return [].map.call(input, function(x) {
+			return x;
+		}).reverse().join('');
+	}
+
+	function plainNumber(number) {
+		return number.split('.').join('');
+	}
+
+	function splitInDots(input) {
+		var value = input.value,
+			plain = plainNumber(value),
+			reversed = reverseNumber(plain),
+			reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
+			normal = reverseNumber(reversedWithDots);
+		input.value = normal;
+	}
 </script>

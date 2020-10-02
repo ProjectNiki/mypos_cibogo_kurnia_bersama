@@ -22,15 +22,17 @@ class Stock_out_m extends CI_Model
 		$params['type']         	= 'Out';
 		$params['detail']       	= $post['detail'];
 		$params['date']         	= $post['date'];
-		$params['qty_stock_out'] 	= $post['qty_stock_out'];
+		$params['qty_stock_out'] 	= str_replace(".", "", $post['qty_stock_out']);
 		$params['user_created'] 	= $this->session->userdata('user_id');
 
 		$this->db->insert('stock_out', $params);
 	}
 
 	public function update_stock_out_item($post)
+
 	{
-		$qty    = $post['qty_stock_out'];
+
+		$qty    = str_replace(".", "", $post['qty_stock_out']);
 		$id     = $post['items_id'];
 
 		$sql    = "UPDATE items SET qty_items = qty_items - '$qty' WHERE items_id = '$id' ";

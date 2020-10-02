@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AdminLTE 2 | Blank Page</title>
+	<title>Min Page</title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" href="<?= base_url('assets') ?>/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets') ?>/bower_components/font-awesome/css/font-awesome.min.css">
@@ -164,7 +164,7 @@
 						</ul>
 					</li>
 
-					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_invoice' || $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
+					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_oprasional' || $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
 						<a href="#">
 							<i class="fa fa-line-chart"></i> <span>Laporan</span>
 							<span class="pull-right-container">
@@ -203,8 +203,9 @@
 			<div class="pull-right hidden-xs">
 				<b>Version</b> 2.4.0
 			</div>
-			<strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-			reserved.
+			<div class="text-center">
+				<strong style="text-align: center;">&copy; Copyright <?= date('Y') ?> | Built <i style="color: salmon" class="glyphicon glyphicon-heart"></i> By. <a href="#">Anonymouse</a></strong>
+			</div>
 		</footer>
 
 		<div class="control-sidebar-bg"></div>

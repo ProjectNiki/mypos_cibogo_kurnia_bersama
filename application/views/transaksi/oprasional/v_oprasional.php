@@ -33,11 +33,12 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">No Invoice</th>
+						<th class="text-center">Tanggal</th>
 						<th class="text-center">Fee</th>
 						<th class="text-center">Oprasional</th>
 						<th class="text-center">Pajak/Tax</th>
 						<th class="text-center">Uang LS/Lab</th>
-						<th class="text-center">Action</th>
+						<th class="text-center">Jasa Perusahaan</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,16 +46,13 @@
 					<?php foreach ($row as $key => $data) { ?>
 						<tr>
 							<td class="text-center"><?= $no++; ?></td>
-							<td class="text-center"><?= $data->invoice ?></td>
+							<td class="text-center"><?= $data->invoice_pembayaran . '' . $data->invoice ?></td>
+							<td class="text-center"><?= indo_date($data->created) ?></td>
 							<td><?= indo_currency($data->fee_oprasional) ?></td>
 							<td><?= indo_currency($data->oprasional) ?></td>
 							<td><?= indo_currency($data->pajak_tax) ?></td>
 							<td><?= indo_currency($data->lab) ?></td>
-							<td class="text-center">
-								<a href="" class="btn btn-default">
-									<i class="fa fa-eye"></i>
-								</a>
-							</td>
+							<td><?= indo_currency($data->jasa_perushaan) ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>

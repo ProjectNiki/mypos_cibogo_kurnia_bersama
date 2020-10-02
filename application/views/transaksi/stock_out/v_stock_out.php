@@ -46,9 +46,9 @@
 						<tr>
 							<td class="text-center"><?= $no++; ?></td>
 							<td><?= $data->name_items ?></td>
-							<td class="text-center"><?= $data->qty_stock_out ?></td>
+							<td class="text-center"><?= indo_qty($data->qty_stock_out) ?></td>
 							<td class="text-center"><?= indo_date($data->date); ?></td>
-							<td class="text-center"><?= $data->detail ?></td>
+							<td><?= $data->detail ?></td>
 							<td class="text-center"><?= $data->nama ?></td>
 							<td class="text-center">
 								<a href="<?= site_url('Stock_out/del/' . $data->stock_out_id . '/' . $data->items_id) ?>" class="btn btn-danger" onclick="return confirm('Data <?= $data->name_items ?> akan dihapus secara permanen, apakah anda yakin  ?');">

@@ -58,6 +58,7 @@ class Stock_out extends CI_Controller
 			'items_id'   		=> $items_id
 		];
 
+
 		$this->Stock_out_m->del_stock_out_item($data);
 		$this->Stock_out_m->del_stock_out($stock_id);
 

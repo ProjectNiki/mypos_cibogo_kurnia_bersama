@@ -71,7 +71,7 @@
 						<label for="qty_stock_in">Qty <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_stock_in') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="number" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Qty" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
+							<input type="text" onkeyup="splitInDots(this)" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="Qty" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
 						</div>
 						<?= form_error('qty_stock_in', '<div class="text-danger">', '</div>'); ?>
 						<br>
@@ -145,4 +145,25 @@
 			$('#exampleModal').modal('hide');
 		});
 	});
+</script>
+
+<script type="text/javascript">
+	function reverseNumber(input) {
+		return [].map.call(input, function(x) {
+			return x;
+		}).reverse().join('');
+	}
+
+	function plainNumber(number) {
+		return number.split('.').join('');
+	}
+
+	function splitInDots(input) {
+		var value = input.value,
+			plain = plainNumber(value),
+			reversed = reverseNumber(plain),
+			reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
+			normal = reverseNumber(reversedWithDots);
+		input.value = normal;
+	}
 </script>

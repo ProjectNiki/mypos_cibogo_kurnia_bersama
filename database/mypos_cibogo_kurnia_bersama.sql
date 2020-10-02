@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Sep 2020 pada 14.59
+-- Waktu pembuatan: 02 Okt 2020 pada 14.37
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `mypos_cibogo_kurnia_bersama`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `biaya_pengurusan`
+--
+
+CREATE TABLE `biaya_pengurusan` (
+  `pengurusan_id` int(6) NOT NULL,
+  `invoice` varchar(50) DEFAULT NULL,
+  `fee_oprasional` int(128) DEFAULT NULL,
+  `oprasional` int(128) DEFAULT NULL,
+  `pajak_tax` int(128) DEFAULT NULL,
+  `lab` int(128) DEFAULT NULL,
+  `jasa_perushaan` int(128) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `created` datetime DEFAULT current_timestamp(),
+  `user_id` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,10 +75,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`categories_id`, `name_categories`, `created`, `updated`, `user_created`, `user_updated`) VALUES
-(1, 'Pakain Jadi', '2020-09-26 19:58:02', NULL, 1, NULL),
-(2, 'Aksesoris', '2020-09-26 19:58:14', NULL, 1, NULL),
-(3, 'Bahan', '2020-09-26 19:58:19', NULL, 1, NULL),
-(4, 'Mesin', '2020-09-26 19:58:24', NULL, 1, NULL);
+(1, 'Pakain Jadi', '2020-10-02 19:36:19', NULL, 1, NULL),
+(2, 'Aksesoris', '2020-10-02 19:36:23', NULL, 1, NULL),
+(3, 'Bahan', '2020-10-02 19:36:28', NULL, 1, NULL),
+(4, 'Mesin', '2020-10-02 19:36:33', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -71,6 +90,7 @@ CREATE TABLE `customers` (
   `customers_id` int(6) NOT NULL,
   `customers_key` varchar(6) DEFAULT NULL,
   `pt_customers` varchar(50) DEFAULT NULL,
+  `inisial_pt` varchar(2) DEFAULT NULL,
   `name_customers` varchar(50) DEFAULT NULL,
   `gander_customers` int(1) DEFAULT NULL,
   `phone_customers` varchar(13) DEFAULT NULL,
@@ -111,11 +131,14 @@ CREATE TABLE `items` (
 CREATE TABLE `pembayaran` (
   `pembayaran_id` int(6) NOT NULL,
   `invoice` varchar(50) DEFAULT NULL,
+  `no_urut_invoice` varchar(50) DEFAULT NULL,
   `customers_id` int(6) DEFAULT NULL,
   `total_price` int(11) DEFAULT NULL,
   `cash` int(11) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
+  `pembayaran_oprasional` int(1) DEFAULT NULL,
   `lunas_down_payment` int(1) DEFAULT NULL,
+  `noted` text DEFAULT NULL,
   `date` date DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `user_id` int(2) DEFAULT NULL
@@ -158,6 +181,7 @@ CREATE TABLE `pembayaran_down_payment` (
   `invoice` varchar(50) DEFAULT NULL,
   `down_payment_id` varchar(128) DEFAULT NULL,
   `down_payment` int(128) DEFAULT NULL,
+  `noted` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `user_id` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -222,6 +246,7 @@ CREATE TABLE `user` (
   `user_id` int(2) NOT NULL,
   `nama` varchar(128) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
   `password` varchar(250) DEFAULT NULL,
   `is_active` varchar(250) DEFAULT NULL,
   `level` int(1) DEFAULT NULL,
@@ -234,18 +259,27 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`user_id`, `nama`, `email`, `password`, `is_active`, `level`, `in`, `log`, `ip`) VALUES
-(1, 'Pak. Dayat', 'dayat@gmail.com', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 19:24:06', '2020-09-25 21:52:25', '127.0.0.1');
+INSERT INTO `user` (`user_id`, `nama`, `email`, `alamat`, `password`, `is_active`, `level`, `in`, `log`, `ip`) VALUES
+(1, 'Pak. Dayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$BA4bFeOoSz25iJ1gcILx8es6DXEsWAsL3P7eZAOZ4wsjvDhJe8rRu', '1', 1, '2020-10-02 19:33:49', '2020-09-29 23:53:38', '127.0.0.1'),
+(2, 'Pak. Lucky', 'lucky@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1'),
+(3, 'Ika', 'ika@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indeks untuk tabel `biaya_pengurusan`
+--
+ALTER TABLE `biaya_pengurusan`
+  ADD PRIMARY KEY (`pengurusan_id`);
+
+--
 -- Indeks untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`);
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `items_id` (`items_id`);
 
 --
 -- Indeks untuk tabel `categories`
@@ -263,19 +297,23 @@ ALTER TABLE `customers`
 -- Indeks untuk tabel `items`
 --
 ALTER TABLE `items`
-  ADD PRIMARY KEY (`items_id`);
+  ADD PRIMARY KEY (`items_id`),
+  ADD KEY `sub_categories_id` (`sub_categories_id`);
 
 --
 -- Indeks untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  ADD PRIMARY KEY (`pembayaran_id`);
+  ADD PRIMARY KEY (`pembayaran_id`),
+  ADD KEY `customers_id` (`customers_id`);
 
 --
 -- Indeks untuk tabel `pembayaran_detail`
 --
 ALTER TABLE `pembayaran_detail`
-  ADD PRIMARY KEY (`detail_id`);
+  ADD PRIMARY KEY (`detail_id`),
+  ADD KEY `pembayaran_id` (`pembayaran_id`),
+  ADD KEY `items_id` (`items_id`);
 
 --
 -- Indeks untuk tabel `pembayaran_down_payment`
@@ -287,19 +325,22 @@ ALTER TABLE `pembayaran_down_payment`
 -- Indeks untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
-  ADD PRIMARY KEY (`stock_in_id`);
+  ADD PRIMARY KEY (`stock_in_id`),
+  ADD KEY `items_id` (`items_id`);
 
 --
 -- Indeks untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
-  ADD PRIMARY KEY (`stock_out_id`);
+  ADD PRIMARY KEY (`stock_out_id`),
+  ADD KEY `FK_stock_out_items` (`items_id`);
 
 --
 -- Indeks untuk tabel `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  ADD PRIMARY KEY (`sub_categories_id`);
+  ADD PRIMARY KEY (`sub_categories_id`),
+  ADD KEY `categories_id` (`categories_id`);
 
 --
 -- Indeks untuk tabel `user`
@@ -310,6 +351,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `biaya_pengurusan`
+--
+ALTER TABLE `biaya_pengurusan`
+  MODIFY `pengurusan_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `cart`
@@ -375,7 +422,54 @@ ALTER TABLE `sub_categories`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `FK_cart_items` FOREIGN KEY (`items_id`) REFERENCES `items` (`items_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `items`
+--
+ALTER TABLE `items`
+  ADD CONSTRAINT `FK_items_sub_categories` FOREIGN KEY (`sub_categories_id`) REFERENCES `sub_categories` (`sub_categories_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD CONSTRAINT `FK_pembayaran_customers` FOREIGN KEY (`customers_id`) REFERENCES `customers` (`customers_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `pembayaran_detail`
+--
+ALTER TABLE `pembayaran_detail`
+  ADD CONSTRAINT `FK_pembayaran_detail_items` FOREIGN KEY (`items_id`) REFERENCES `items` (`items_id`),
+  ADD CONSTRAINT `FK_pembayaran_detail_pembayaran` FOREIGN KEY (`pembayaran_id`) REFERENCES `pembayaran` (`pembayaran_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `stock_in`
+--
+ALTER TABLE `stock_in`
+  ADD CONSTRAINT `FK_stock_in_items` FOREIGN KEY (`items_id`) REFERENCES `items` (`items_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `stock_out`
+--
+ALTER TABLE `stock_out`
+  ADD CONSTRAINT `FK_stock_out_items` FOREIGN KEY (`items_id`) REFERENCES `items` (`items_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `sub_categories`
+--
+ALTER TABLE `sub_categories`
+  ADD CONSTRAINT `FK_sub_categories_categories` FOREIGN KEY (`categories_id`) REFERENCES `categories` (`categories_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -18,11 +18,15 @@ class Stock_in_m extends CI_Model
 
 	public function add($post)
 	{
+
+		$params['qty_stock_in']   = str_replace(".", "", $post['qty_stock_in']);
+
+
 		$params['items_id']     = $post['items_id'];
 		$params['type']         = 'In';
 		$params['detail']       = $post['detail'];
 		$params['date']         = $post['date'];
-		$params['qty_stock_in'] = $post['qty_stock_in'];
+		$params['qty_stock_in']   = str_replace(".", "", $post['qty_stock_in']);
 		$params['user_created'] = $this->session->userdata('user_id');
 
 		$this->db->insert('stock_in', $params);
@@ -30,7 +34,7 @@ class Stock_in_m extends CI_Model
 
 	public function update_stock_in_item($post)
 	{
-		$qty    = $post['qty_stock_in'];
+		$qty    = str_replace(".", "", $post['qty_stock_in']);
 		$id     = $post['items_id'];
 
 		$sql    = "UPDATE items SET qty_items = qty_items + '$qty' WHERE items_id = '$id' ";

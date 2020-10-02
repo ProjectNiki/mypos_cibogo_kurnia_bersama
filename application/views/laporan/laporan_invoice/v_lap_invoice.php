@@ -44,7 +44,7 @@
 						<?php if ($data->status == 1 ||	$data->lunas_down_payment != null) { ?>
 							<tr>
 								<td class="text-center"><?= $no++ ?></td>
-								<td class="text-center"><?= $data->invoice ?></td>
+								<td class="text-center"><?= $data->invoice . '' . $data->no_urut_invoice ?></td>
 								<td><?= $data->name_customers ?></td>
 								<td><?= $data->pt_customers ?></td>
 								<td class="text-center"><?= indo_date($data->date)  ?></td>

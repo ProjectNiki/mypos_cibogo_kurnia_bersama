@@ -79,7 +79,7 @@
 				</tr>
 			</table>
 			<div class="text-center">
-				<h3>INVOICE : <?= $row->invoice ?></h3>
+				<h3>INVOICE : <?= $row->invoice . '' . $row->no_urut_invoice ?></h3>
 				<hr width="35%">
 			</div>
 			Print On : <?= date('Y-m-d H:i:s'); ?>

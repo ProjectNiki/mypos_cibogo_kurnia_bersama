@@ -58,7 +58,8 @@ class Stock_in extends CI_Controller
 			'items_id'   		=> $items_id
 		];
 
-		if ($qty_stock <= $qty_stock_in) {
+
+		if ($qty_stock < $qty_stock_in) {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger"><strong>Dangger!</strong> Data gagal dihapus karena jumlah Qty Items kurang dari 0 </div>');
 			redirect('stock_in');
 		}

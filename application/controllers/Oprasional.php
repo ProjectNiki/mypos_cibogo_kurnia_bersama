@@ -29,7 +29,7 @@ class Oprasional extends CI_Controller
 
 
 		if ($this->form_validation->run() == FALSE) {
-			$pembayaran['row'] = $this->Pembayaran_m->get_oprasional()->result();
+			$pembayaran['row'] = $this->Oprasional_m->get_oprasional()->result();
 
 			$this->template->load('v_template', 'transaksi/oprasional/v_oprasional_add', $pembayaran);
 		} else {

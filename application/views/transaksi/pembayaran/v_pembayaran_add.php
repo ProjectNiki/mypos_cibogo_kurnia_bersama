@@ -1,4 +1,7 @@
 <?php
+
+use Sabberworm\CSS\Value\Value;
+
 date_default_timezone_set("Asia/Bangkok");
 $uniqid = uniqid();
 
@@ -34,8 +37,7 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" value="<?= date("d-m-Y", strtotime($myOriginalDate)); ?>" class="form-control" readonly>
-									<input type="hidden" name="date" id="date" value="<?= date('Y-m-d') ?>" class="form-control">
+									<input type="date" name="date" id="date" value="<?= date('Y-m-d') ?>" class="form-control">
 								</div>
 							</td>
 						</tr>
@@ -128,7 +130,7 @@ $myOriginalDate = date("Y-m-d");
 						<input type="hidden" name="invoice" id="invoice" value="INV/<?= date("dmy", strtotime($myOriginalDate)); ?>/CK/">
 						<input type="hidden" name="invoice_inisial" id="invoice_inisial">
 						<input type="hidden" name="invoice_ai" id="invoice_ai" value="<?= sprintf("%05s", $row) ?>">
-						<h3><b><span id="grand_total2" style="font-size: 30pt;">0</span></b></h3>
+						<h3><b><span style="font-size: 30pt;">Rp</span> <span id="grand_total2" style="font-size: 30pt;">0</span></b></h3>
 					</div>
 					<small style="color: red;">* Grand Total </small>
 				</div>
@@ -140,7 +142,7 @@ $myOriginalDate = date("Y-m-d");
 					<div class="text-right">
 						<input type="hidden" id="down_payment_id" name="down_payment_id" value="<?= date('Ymd') . '' . $uniqid ?>">
 						<h4>DP <b><span id="dp"><?= date('Ymd') . '' . $uniqid ?></span></b></h4>
-						<h3><b><span id="grand_total_dp" style="font-size: 30pt;">0</span></b></h3>
+						<h3><b><span style="font-size: 30pt;">Rp</span> <span id="grand_total_dp" style="font-size: 30pt;">0</span></b></h3>
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>
 				</div>
@@ -222,20 +224,47 @@ $myOriginalDate = date("Y-m-d");
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
-			<div class="box">
-				<div class="box-body">
-					<button id="cancel_payment" class="btn btn-warning" style="width: 100%;">
-						<i class="fa fa-refresh"></i>
-					</button>
-					<hr style="width: 70%;">
-					<button id="process_payment" class="btn btn-success" style="width: 100%;">
-						<i class="fa fa-plus"></i>
-					</button>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="box">
+					<div class="box-body">
+						<table style="width: 100%;">
+							<tr>
+								<td>
+									<div class="form-group">
+										<input type="hidden" name="sub_total" id="sub_total" value="" class="form-control" readonly>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; width: 15%">
+									<label for="status">Note </label>
+								</td>
+								<td>
+									<div class="form-group">
+										<textarea name="noted" id="noted" cols="30" rows="3" class="form-control" placeholder="Note Pembayaran"></textarea>
+										<small><span class="text-danger">* Biarkan Kosong Jika Tidak Diisi </span></small>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="box">
+					<div class="box-body">
+						<button id="cancel_payment" class="btn btn-warning" style="width: 100%;">
+							<i class="fa fa-refresh"></i>
+						</button>
+						<hr style="width: 70%;">
+						<button id="process_payment" class="btn btn-success" style="width: 100%;">
+							<i class="fa fa-plus"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 <!-- Modal  Add Product -->
@@ -456,6 +485,7 @@ $myOriginalDate = date("Y-m-d");
 		// Proses payment
 		$(document).on('click', '#process_payment', function() {
 			var customers_id = $('#customers_id').val()
+			var noted = $('#noted').val()
 			var subtotal = $('#sub_total').val()
 			var down_payment = $('#down_payment').val()
 			var down_payment_id = $('#down_payment_id').val()
@@ -494,6 +524,7 @@ $myOriginalDate = date("Y-m-d");
 							'cash': cash,
 							'change': change,
 							'status': status,
+							'noted': noted,
 							'date': date,
 							'invoice_inisial': invoice_inisial,
 							'invoice_ai': invoice_ai,

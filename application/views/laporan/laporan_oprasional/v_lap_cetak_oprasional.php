@@ -55,7 +55,7 @@ date_default_timezone_set("Asia/Bangkok");
 		<tr>
 			<td><?= $row->pt_customers ?></td>
 			<td>
-				<?= $row->create_invoice ?>
+				<?= $row->created_pengurusan ?>
 			</td>
 		</tr>
 		<tr>
@@ -66,7 +66,7 @@ date_default_timezone_set("Asia/Bangkok");
 		</tr>
 	</table>
 	<div class="text-center">
-		<h3>INVOICE : <?= $row->invoice_pembayaran . '' . $row->no_urut_invoice ?></h3>
+		<h3>INVOICE : <?= $row->invoice ?> </h3>
 		<hr width="35%">
 	</div>
 	Print On : <?= date('Y-m-d H:i:s'); ?>
@@ -74,49 +74,40 @@ date_default_timezone_set("Asia/Bangkok");
 		<thead>
 			<tr>
 				<th class="text-center">#</th>
-				<th class="text-center">ID Down Payment</th>
-				<th class="text-center">Price (Rp)</th>
-				<th class="text-center">Admin</th>
-				<th class="text-center">Tanggal Dp</th>
-				<th class="text-center">Total</th>
+				<th class="text-center">Fee (Rp)</th>
+				<th class="text-center">Oprasional (Rp)</th>
+				<th class="text-center">Pajak/tax (Rp)</th>
+				<th class="text-center">Uang Ls/lab (Rp)</th>
+				<th class="text-center">Jasa Perusahaan</th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php $no = 1; ?>
-			<?php foreach ($result as $key => $data) { ?>
-				<tr>
-					<td class="text-center"><?= $no++ ?></td>
-					<td class="text-center"><?= $data->down_payment_id ?></td>
-					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
-					<td class="text-center"><?= $data->nama ?></td>
-					<td class="text-center"><?= $data->created_dp ?></td>
-					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
-				</tr>
-			<?php } ?>
+			<tr>
+				<td class="text-center">1</td>
+				<td>
+					<?= indo_currency($row_sum->sum_fee) ?>
+				</td>
+				<td>
+					<?= indo_currency($row_sum->sum_oprasional) ?>
+				</td>
+				<td>
+					<?= indo_currency($row_sum->sum_pajak) ?>
+				</td>
+				<td>
+					<?= indo_currency($row_sum->sum_lab) ?>
+				</td>
+				<td>
+					<?= indo_currency($row_sum->sum_jasa_perushaan) ?>
+				</td>
+			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="5" class="text-right">
-					<b>Jumlah Terbayar</b>
+					<b>Grand Total</b>
 				</td>
-				<td colspan="1" class="text-left">
-					<?= indo_currency($get_sum_dp->result_dp) ?>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="5" class="text-right">
-					<b>Jumlah Transaksi</b>
-				</td>
-				<td colspan="1" class="text-left">
-					<?= indo_currency($get_sum_dp->total_price) ?>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="5" class="text-right">
-					<b>Sisa Pembayaran</b>
-				</td>
-				<td colspan="1" class="text-left">
-					<?= indo_currency($get_sum_dp->total_price - $get_sum_dp->result_dp) ?>
+				<td colspan="1" style="text-align: left;">
+					<?= indo_currency($row_sum->sum_fee + $row_sum->sum_oprasional + $row_sum->sum_pajak + $row_sum->sum_lab + $row_sum->sum_jasa_perushaan) ?>
 				</td>
 			</tr>
 		</tfoot>

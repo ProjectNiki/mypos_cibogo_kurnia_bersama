@@ -67,9 +67,9 @@ $uniqid = uniqid();
 			<div class="box box-widget">
 				<div class="box-body">
 					<div class="text-right">
-						<input type="hidden" id="invoice" name="invoice" value="<?= $row->invoice ?>">
-						<h4>Invoice <b><span id="invoice"><?= $row->invoice ?></span></b></h4>
-						<h1><b><span style="font-size: 40pt;"><?= indo_qty($row->total_price)  ?></span></b></h1>
+						<input type="hidden" id="invoice" name="invoice" value="<?= $row->no_urut_invoice ?>">
+						<h4>Invoice <b><span id="invoice"><?= $row->invoice  . '' . $row->no_urut_invoice ?></span></b></h4>
+						<h1><b><span style="font-size: 40pt;">Rp</span> <span style="font-size: 40pt;"><?= indo_qty($row->total_price)  ?></span></b></h1>
 					</div>
 					<small style="color: red;">* Grand Total </small>
 				</div>
@@ -84,7 +84,7 @@ $uniqid = uniqid();
 						<?php
 						$result_dp = $row->total_price - $row_dp->result_dp
 						?>
-						<h1><b><span style="font-size: 40pt;" id="result"><?= indo_qty($result_dp) ?></span></b></h1>
+						<h1><b><span style="font-size: 40pt;">Rp</span> <span style="font-size: 40pt;" id="result"><?= indo_qty($result_dp) ?></span></b></h1>
 						<input type="hidden" id="grand_total_dp" value="<?= $row->total_price - $row_dp->result_dp ?>">
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>
@@ -194,6 +194,62 @@ $uniqid = uniqid();
 				</div>
 			</div>
 		</div>
+		<?php if ($row_dp->total_price - $row_dp->result_dp == 0) { ?>
+			<div class="col-md-3">
+				<div class="box">
+					<div class="box-body">
+						<table style="width: 100%;">
+							<tr>
+								<td>
+									<div class="form-group">
+										<input type="hidden" name="sub_total" id="sub_total" value="" class="form-control" readonly>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; width: 15%">
+									<label for="status">Note </label>
+								</td>
+								<td>
+									<div class="form-group">
+										<textarea name="noted" id="noted" cols="30" rows="3" class="form-control" placeholder="Note Pembayaran" readonly></textarea>
+										<small><span class="text-danger">* Biarkan Kosong Jika Tidak Diisi </span></small>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		<?php } else { ?>
+			<div class="col-md-3">
+				<div class="box">
+					<div class="box-body">
+						<table style="width: 100%;">
+							<tr>
+								<td>
+									<div class="form-group">
+										<input type="hidden" name="sub_total" id="sub_total" value="" class="form-control" readonly>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; width: 15%">
+									<label for="status">Note </label>
+								</td>
+								<td>
+									<div class="form-group">
+										<textarea name="noted" id="noted" cols="30" rows="3" class="form-control" placeholder="Note Pembayaran"></textarea>
+										<small><span class="text-danger">* Biarkan Kosong Jika Tidak Diisi </span></small>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
+
 		<div class="col-md-3">
 			<div class="box">
 				<div class="box-body">
@@ -251,6 +307,7 @@ $uniqid = uniqid();
 		var invoice = $('#invoice').val()
 		var status = $('#status').val()
 		var date = $('#date').val()
+		var noted = $('#noted').val()
 
 		if (subtotal < 1) {
 			swal("Error!", "Belum Ada Product Item Yang Dipilih!", "error");
@@ -280,6 +337,7 @@ $uniqid = uniqid();
 						'down_payment_id': down_payment_id,
 						'grandtotal': grandtotal,
 						'cash': cash,
+						'noted': noted,
 						'invoice': invoice,
 						'date': date
 					},
