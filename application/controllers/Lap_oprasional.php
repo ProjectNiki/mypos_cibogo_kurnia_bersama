@@ -19,7 +19,7 @@ class Lap_oprasional extends CI_Controller
 
 	public function cetak_lap_oprasional($id)
 	{
-		$tgl = date('Y-m-d');
+		$tgl = date('Y-m-d H:i:s');
 
 		$row_preview 		= $this->Oprasional_m->get($id)->row();
 		$result_preview 	= $this->Oprasional_m->get($id)->result();
@@ -32,6 +32,6 @@ class Lap_oprasional extends CI_Controller
 		];
 
 		$html = $this->load->view('laporan/laporan_oprasional/v_lap_cetak_oprasional', $data, true);
-		$this->fungsi->PdfGenerator($html, 'Lap_pengeluaran_' . $tgl, 'A4', 'landscape');
+		$this->fungsi->PdfGenerator($html, 'Lap_pengurusan_' . $tgl, 'A4', 'landscape');
 	}
 }

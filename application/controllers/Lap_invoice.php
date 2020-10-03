@@ -18,7 +18,7 @@ class Lap_invoice extends CI_Controller
 
 	public function cetak_lap_invoice($id)
 	{
-		$tgl = date('Y-m-d');
+		$tgl = date('Y-m-d H:i:s');
 
 		$uri 	= $this->uri->segment(4);
 		// 
@@ -43,16 +43,16 @@ class Lap_invoice extends CI_Controller
 
 		if ($uri == 1) {
 			$html = $this->load->view('laporan/laporan_invoice/v_lap_invoice_lunas', $data_lunas, true);
-			$this->fungsi->PdfGenerator($html, 'Lap_pengeluaran_' . $tgl, 'A4', 'landscape');
+			$this->fungsi->PdfGenerator($html, 'Lap_Invoice_' . $tgl, 'A4', 'landscape');
 		} else {
 			$html = $this->load->view('laporan/laporan_invoice/v_lap_invoice_dp', $data_dp, true);
-			$this->fungsi->PdfGenerator($html, 'Lap_pengeluaran_' . $tgl, 'A4', 'landscape');
+			$this->fungsi->PdfGenerator($html, 'Lap_Invoice_' . $tgl, 'A4', 'landscape');
 		}
 	}
 
 	public function cetak_preview_dp($id)
 	{
-		$tgl = date('Y-m-d');
+		$tgl = date('Y-m-d H:i:s');
 
 		$row_preview_dp = $this->Lap_invoice_m->get_lunas($id)->row();
 		$result_preview_dp = $this->Lap_invoice_m->get_lunas($id)->result();
@@ -63,6 +63,6 @@ class Lap_invoice extends CI_Controller
 		];
 
 		$html = $this->load->view('laporan/laporan_invoice/v_lap_invoice_dp_preview', $data_lunas, true);
-		$this->fungsi->PdfGenerator($html, 'Lap_pengeluaran_' . $tgl, 'A4', 'landscape');
+		$this->fungsi->PdfGenerator($html, 'Lap_Invoice_' . $tgl, 'A4', 'landscape');
 	}
 }

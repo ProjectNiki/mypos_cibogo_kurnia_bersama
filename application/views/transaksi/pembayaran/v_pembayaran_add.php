@@ -33,7 +33,7 @@ $myOriginalDate = date("Y-m-d");
 					<table width="100%">
 						<tr>
 							<td style="vertical-align: top;">
-								<label for="Date">Date</label>
+								<label for="Date">Tanggal</label>
 							</td>
 							<td>
 								<div class="form-group">

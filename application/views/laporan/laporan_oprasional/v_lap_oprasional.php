@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Data Laporan Oprasional <small>Laporan Oprasional</small></h1>
+	<h1>Data Laporan Pengurusan <small>Laporan Pengurusan</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('dashboard') ?>">
@@ -10,7 +10,7 @@
 			Laporan
 		</li>
 		<li class="active">
-			Laporan Oprasional
+			Laporan Pengurusan
 		</li>
 	</ol>
 </section>
@@ -19,7 +19,7 @@
 	<?= $this->session->flashdata('message'); ?>
 	<div class="box box-primary">
 		<div class="box-header">
-			<h4>Data Laporan Oprasional
+			<h4>Data Laporan Pengurusan
 				<div class="pull-right">
 					<a href="<?= site_url('oprasional/add') ?>" class="btn btn-primary">
 						<i class="fa fa-plus"></i>

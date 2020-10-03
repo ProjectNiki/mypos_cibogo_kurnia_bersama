@@ -33,7 +33,7 @@ date_default_timezone_set("Asia/Bangkok");
 							<p>Pendapatan Bulan : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
-							<span>Rp</span>
+							<i class="fa fa-doll``ar"></i>
 						</div>
 					</div>
 				</div>

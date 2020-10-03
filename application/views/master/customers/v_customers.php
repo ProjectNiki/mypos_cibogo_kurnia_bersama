@@ -37,7 +37,7 @@
 						<th class="text-center">Perusahaan</th>
 						<th class="text-center">Customer</th>
 						<th class="text-center">Gander</th>
-						<th class="text-center">Phone</th>
+						<th class="text-center">No. Hp</th>
 						<th class="text-center">E-Mail</th>
 						<th class="text-center">Alamat</th>
 						<th class="text-center">Action</th>

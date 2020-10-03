@@ -36,7 +36,7 @@
 				<div class="col-md-6 col-md-offset-3">
 					<form action="" method="POST">
 						<div class="form-group">
-							<label for="">Date <i class="text-danger">*</i></label>
+							<label for="">Tanggal <i class="text-danger">*</i></label>
 							<input type="date" name="date" id="date" class="form-control" value="<?= date('Y-m-d') ?>">
 						</div>
 						<label for="">No Invoice<i class="text-danger">*</i></label>
@@ -69,21 +69,21 @@
 						<label for="pajak_tax">Pajak/tax <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('pajak_tax') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="number" onkeyup="splitInDots(this)" id="pajak_tax" name="pajak_tax" class="form-control" placeholder="Pajak/tax" value="<?= set_value('pajak_tax') ?>" autocomplete="off">
+							<input type="text" onkeyup="splitInDots(this)" id="pajak_tax" name="pajak_tax" class="form-control" placeholder="Pajak/tax" value="<?= set_value('pajak_tax') ?>" autocomplete="off">
 						</div>
 						<?= form_error('pajak_tax', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<label for="lab">Ls/Lab <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('lab') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="number" onkeyup="splitInDots(this)" id="lab" name="lab" class="form-control" placeholder="Ls/Lab" value="<?= set_value('lab') ?>" autocomplete="off">
+							<input type="text" onkeyup="splitInDots(this)" id="lab" name="lab" class="form-control" placeholder="Ls/Lab" value="<?= set_value('lab') ?>" autocomplete="off">
 						</div>
 						<?= form_error('lab', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<label for="jasa_perushaan">Jasa Perusahaan <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('jasa_perushaan') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="number" onkeyup="splitInDots(this)" id="jasa_perushaan" name="jasa_perushaan" class="form-control" placeholder="Jasa Perusahaan" value="<?= set_value('jasa_perushaan') ?>" autocomplete="off">
+							<input type="text" onkeyup="splitInDots(this)" id="jasa_perushaan" name="jasa_perushaan" class="form-control" placeholder="Jasa Perusahaan" value="<?= set_value('jasa_perushaan') ?>" autocomplete="off">
 						</div>
 						<?= form_error('jasa_perushaan', '<div class="text-danger">', '</div>'); ?>
 						<br>

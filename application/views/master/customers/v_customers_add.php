@@ -42,7 +42,7 @@
 						<!--  -->
 						<br>
 						<div class="row">
-							<div class="col-md-10">
+							<div class="col-md-8">
 								<label for="pt_customers">Perusahaan <i class="text-danger">*</i></label>
 								<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
 									<span class="input-group-addon"><i class="fa fa-building"></i></span>
@@ -50,7 +50,7 @@
 								</div>
 								<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-4">
 								<label for="inisial_pt">Inisial <i class="text-danger">*</i></label>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
@@ -78,7 +78,7 @@
 							<?= form_error('gander_customers', '<div class="text-danger">', '</div>'); ?>
 						</div>
 						<!--  -->
-						<label for="phone_customers">Phone <i class="text-danger">*</i></label>
+						<label for="phone_customers">No. Hp <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('phone_customers') == TRUE ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-phone"></i></span>
 							<input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==13) return false;" name="phone_customers" id="phone_customers" value="<?= set_value('phone_customers') ?>" class="form-control" placeholder="Phone" autocomplete="off">

@@ -91,6 +91,7 @@
 						<th class="text-center">#</th>
 						<th class="text-center">ID Down Payment</th>
 						<th class="text-center">Price (Rp)</th>
+						<th class="text-center">Note</th>
 						<th class="text-center">A/N</th>
 						<th class="text-center">Tanggal Dp</th>
 						<th class="text-center">Total</th>
@@ -103,6 +104,7 @@
 							<td class="text-center"><?= $no++ ?></td>
 							<td class="text-center"><?= $data->down_payment_id ?></td>
 							<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+							<td class="text-left"><?= $data->noted_dp ?></td>
 							<td class="text-center"><?= $data->nama ?></td>
 							<td class="text-center"><?= $data->created_dp ?></td>
 							<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
@@ -111,7 +113,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="5" class="text-right">
+						<td colspan="6" class="text-right">
 							<b>Jumlah Terbayar</b>
 						</td>
 						<td colspan="1" class="text-left">
@@ -119,7 +121,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="5" class="text-right">
+						<td colspan="6" class="text-right">
 							<b>Jumlah Transaksi</b>
 						</td>
 						<td colspan="1" class="text-left">
@@ -127,7 +129,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="5" class="text-right">
+						<td colspan="6" class="text-right">
 							<b>Sisa Pembayaran</b>
 						</td>
 						<td colspan="1" class="text-left">
@@ -150,6 +152,11 @@
 					<input type='submit' value="Simpan" id='submitBtn' style="width: 50%;" class='btn btn-danger' disabled='disabled' />
 				</div>
 			<?php } ?>
+			<div class="text-right">
+				<a href="" class="btn btn-warning">
+					<i class="fa fa-print"></i>
+				</a>
+			</div>
 		</div>
 	</div>
 </section>

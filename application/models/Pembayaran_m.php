@@ -51,7 +51,8 @@ class Pembayaran_m extends CI_Model
 		$this->db->select('*, 
 							pembayaran.created as create_invoice,
 							pembayaran_down_payment.created as created_dp,
-							pembayaran.invoice as invoice_pembayaran
+							pembayaran.invoice as invoice_pembayaran,
+							pembayaran_down_payment.noted as noted_dp
 							');
 		$this->db->from('pembayaran');
 		$this->db->join('pembayaran_down_payment', 'pembayaran_down_payment.invoice = pembayaran.no_urut_invoice');

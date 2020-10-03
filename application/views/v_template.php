@@ -114,6 +114,11 @@
 									<i class="fa fa-circle-o"></i> Customer
 								</a>
 							</li>
+							<li <?= $this->uri->segment(1) == 'items' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('items') ?>">
+									<i class="fa fa-circle-o"></i> Items
+								</a>
+							</li>
 							<li <?= $this->uri->segment(1) == 'categories' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('categories') ?>">
 									<i class="fa fa-circle-o"></i> Kategori
@@ -122,11 +127,6 @@
 							<li <?= $this->uri->segment(1) == 'sub_categories' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('sub_categories') ?>">
 									<i class="fa fa-circle-o"></i> Sub Kategori
-								</a>
-							</li>
-							<li <?= $this->uri->segment(1) == 'items' ? 'class="active"' : null ?>>
-								<a href="<?= site_url('items') ?>">
-									<i class="fa fa-circle-o"></i> Items
 								</a>
 							</li>
 						</ul>
@@ -140,14 +140,14 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li <?= $this->uri->segment(1) == 'pembayaran' ? 'class="active"' : null ?>>
-								<a href="<?= site_url('pembayaran') ?>">
-									<i class="fa fa-circle-o"></i> Pembayaran
-								</a>
-							</li>
 							<li <?= $this->uri->segment(1) == 'oprasional' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('oprasional') ?>">
 									<i class="fa fa-circle-o"></i> Biaya Pengurusan
+								</a>
+							</li>
+							<li <?= $this->uri->segment(1) == 'pembayaran' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('pembayaran') ?>">
+									<i class="fa fa-circle-o"></i> Pembayaran
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'stock_in' ? 'class="active"' : null ?>>
@@ -179,7 +179,7 @@
 							</li>
 							<li <?= $this->uri->segment(1) == 'lap_oprasional' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('lap_oprasional') ?>">
-									<i class="fa fa-circle-o"></i> Oprasional
+									<i class="fa fa-circle-o"></i> Invoice Pengurusan
 								</a>
 							</li>
 						</ul>
@@ -204,7 +204,7 @@
 				<b>Version</b> 2.4.0
 			</div>
 			<div class="text-center">
-				<strong style="text-align: center;">&copy; Copyright <?= date('Y') ?> | Built <i style="color: salmon" class="glyphicon glyphicon-heart"></i> By. <a href="#">Anonymouse</a></strong>
+				<strong style="text-align: center;">&copy; Copyright <?= date('Y') ?> | Built <i style="color: salmon" class="glyphicon glyphicon-heart"></i> By. <a href="#">Cibogo Kurnia Bersama</a></strong>
 			</div>
 		</footer>
 

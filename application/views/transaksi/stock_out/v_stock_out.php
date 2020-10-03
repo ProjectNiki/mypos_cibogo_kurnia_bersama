@@ -34,7 +34,7 @@
 						<th class="text-center">#</th>
 						<th class="text-center">Nama Items</th>
 						<th class="text-center">Qty</th>
-						<th class="text-center">Date</th>
+						<th class="text-center">Tanggal</th>
 						<th class="text-center">Detail</th>
 						<th class="text-center">Admin</th>
 						<th class="text-center">Action</th>

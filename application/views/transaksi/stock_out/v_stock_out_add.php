@@ -36,7 +36,7 @@
 				<div class="col-md-6 col-md-offset-3">
 					<form action="" method="POST">
 						<div class="form-group">
-							<label for="">Date <i class="text-danger">*</i></label>
+							<label for="">Tanggal <i class="text-danger">*</i></label>
 							<input type="date" name="date" id="date" class="form-control" value="<?= date('Y-m-d') ?>">
 							<?= form_error('date', '<div class="text-danger">', '</div>'); ?>
 						</div>
