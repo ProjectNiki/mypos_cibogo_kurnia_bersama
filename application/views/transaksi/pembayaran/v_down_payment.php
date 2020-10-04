@@ -69,7 +69,7 @@ $uniqid = uniqid();
 					<div class="text-right">
 						<input type="hidden" id="invoice" name="invoice" value="<?= $row->no_urut_invoice ?>">
 						<h4>Invoice <b><span id="invoice"><?= $row->invoice  . '' . $row->no_urut_invoice ?></span></b></h4>
-						<h1><b><span style="font-size: 40pt;">Rp</span> <span style="font-size: 40pt;"><?= indo_qty($row->total_price)  ?></span></b></h1>
+						<h3><b><span style="font-size: 30pt;">Rp</span> <span style="font-size: 30pt;"><?= indo_qty($row->total_price)  ?></span></b></h3>
 					</div>
 					<small style="color: red;">* Grand Total </small>
 				</div>
@@ -84,7 +84,7 @@ $uniqid = uniqid();
 						<?php
 						$result_dp = $row->total_price - $row_dp->result_dp
 						?>
-						<h1><b><span style="font-size: 40pt;">Rp</span> <span style="font-size: 40pt;" id="result"><?= indo_qty($result_dp) ?></span></b></h1>
+						<h3><b><span style="font-size: 30pt;">Rp</span> <span style="font-size: 30pt;" id="result"><?= indo_qty($result_dp) ?></span></b></h3>
 						<input type="hidden" id="grand_total_dp" value="<?= $row->total_price - $row_dp->result_dp ?>">
 					</div>
 					<small style="color: red;">* Sisa Pembayaran </small>

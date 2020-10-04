@@ -90,6 +90,8 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Nama Items</th>
+						<th class="text-center">Sub Katagori</th>
+						<th class="text-center">Katagori</th>
 						<th class="text-center">Qty</th>
 						<th class="text-center">Price (Rp)</th>
 						<th class="text-center">Total</th>
@@ -101,6 +103,8 @@
 						<tr>
 							<td class="text-center"><?= $no++ ?></td>
 							<td><?= $data->name_items ?></td>
+							<td><?= $data->name_sub_categories ?></td>
+							<td><?= $data->name_categories ?></td>
 							<td class="text-center"><?= $data->pembayaran_qty ?></td>
 							<td><?= indo_currency($data->harga_pembayaran) ?></td>
 							<td><?= indo_currency($data->pembayaran_qty * $data->harga_pembayaran) ?></td>
@@ -109,7 +113,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="4" class="text-right">
+						<td colspan="6" class="text-right">
 							<b>Grand Total</b>
 						</td>
 						<td colspan="1" style="text-align: left;">
