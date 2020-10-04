@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Okt 2020 pada 14.37
+-- Waktu pembuatan: 04 Okt 2020 pada 09.51
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -30,11 +30,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `biaya_pengurusan` (
   `pengurusan_id` int(6) NOT NULL,
   `invoice` varchar(50) DEFAULT NULL,
-  `fee_oprasional` int(128) DEFAULT NULL,
-  `oprasional` int(128) DEFAULT NULL,
-  `pajak_tax` int(128) DEFAULT NULL,
-  `lab` int(128) DEFAULT NULL,
-  `jasa_perushaan` int(128) DEFAULT NULL,
+  `fee_oprasional` bigint(20) DEFAULT NULL,
+  `oprasional` bigint(20) DEFAULT NULL,
+  `pajak_tax` bigint(20) DEFAULT NULL,
+  `lab` bigint(20) DEFAULT NULL,
+  `jasa_perushaan` bigint(20) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `user_id` int(2) DEFAULT NULL
@@ -49,10 +49,28 @@ CREATE TABLE `biaya_pengurusan` (
 CREATE TABLE `cart` (
   `cart_id` int(6) NOT NULL,
   `items_id` int(6) DEFAULT NULL,
-  `harga_items` int(11) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `harga_items` bigint(20) DEFAULT NULL,
+  `qty` bigint(20) DEFAULT NULL,
+  `total` bigint(20) DEFAULT NULL,
+  `user_id` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `cash_in_cash_out`
+--
+
+CREATE TABLE `cash_in_cash_out` (
+  `cico_id` int(6) NOT NULL,
+  `type` varchar(3) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `pj` varchar(50) DEFAULT NULL,
+  `payment` int(1) DEFAULT NULL,
+  `total` bigint(20) DEFAULT NULL,
+  `noted` text DEFAULT NULL,
+  `created` time DEFAULT current_timestamp(),
+  `user_id` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -114,8 +132,8 @@ CREATE TABLE `items` (
   `name_items` varchar(128) DEFAULT NULL,
   `categories_id` int(6) DEFAULT NULL,
   `sub_categories_id` int(6) DEFAULT NULL,
-  `harga_items` int(11) DEFAULT NULL,
-  `qty_items` int(11) DEFAULT NULL,
+  `harga_items` bigint(20) DEFAULT NULL,
+  `qty_items` bigint(20) DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL,
   `user_created` int(1) DEFAULT NULL,
@@ -133,8 +151,8 @@ CREATE TABLE `pembayaran` (
   `invoice` varchar(50) DEFAULT NULL,
   `no_urut_invoice` varchar(50) DEFAULT NULL,
   `customers_id` int(6) DEFAULT NULL,
-  `total_price` int(11) DEFAULT NULL,
-  `cash` int(11) DEFAULT NULL,
+  `total_price` bigint(20) DEFAULT NULL,
+  `cash` bigint(20) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   `pembayaran_oprasional` int(1) DEFAULT NULL,
   `lunas_down_payment` int(1) DEFAULT NULL,
@@ -153,10 +171,10 @@ CREATE TABLE `pembayaran` (
 CREATE TABLE `pembayaran_detail` (
   `detail_id` int(6) NOT NULL,
   `pembayaran_id` int(6) DEFAULT NULL,
-  `items_id` int(6) DEFAULT NULL,
-  `harga_items` int(11) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL
+  `items_id` int(128) DEFAULT NULL,
+  `harga_items` bigint(20) DEFAULT NULL,
+  `qty` bigint(20) DEFAULT NULL,
+  `total` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -180,7 +198,7 @@ CREATE TABLE `pembayaran_down_payment` (
   `pembayaran_dp_id` int(6) NOT NULL,
   `invoice` varchar(50) DEFAULT NULL,
   `down_payment_id` varchar(128) DEFAULT NULL,
-  `down_payment` int(128) DEFAULT NULL,
+  `down_payment` bigint(20) DEFAULT NULL,
   `noted` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `user_id` int(2) DEFAULT NULL
@@ -196,7 +214,7 @@ CREATE TABLE `stock_in` (
   `stock_in_id` int(6) NOT NULL,
   `items_id` int(6) DEFAULT NULL,
   `type` varchar(2) DEFAULT NULL,
-  `qty_stock_in` int(11) DEFAULT NULL,
+  `qty_stock_in` bigint(20) DEFAULT NULL,
   `date` date DEFAULT current_timestamp(),
   `detail` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
@@ -213,7 +231,7 @@ CREATE TABLE `stock_out` (
   `stock_out_id` int(6) NOT NULL,
   `items_id` int(6) DEFAULT NULL,
   `type` varchar(3) DEFAULT NULL,
-  `qty_stock_out` int(11) DEFAULT NULL,
+  `qty_stock_out` bigint(20) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `detail` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
@@ -260,7 +278,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `nama`, `email`, `alamat`, `password`, `is_active`, `level`, `in`, `log`, `ip`) VALUES
-(1, 'Pak. Dayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$BA4bFeOoSz25iJ1gcILx8es6DXEsWAsL3P7eZAOZ4wsjvDhJe8rRu', '1', 1, '2020-10-02 19:33:49', '2020-09-29 23:53:38', '127.0.0.1'),
+(1, 'Pak. Dayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-10-04 12:26:43', '2020-10-03 01:29:17', '127.0.0.1'),
 (2, 'Pak. Lucky', 'lucky@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1'),
 (3, 'Ika', 'ika@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1');
 
@@ -280,6 +298,12 @@ ALTER TABLE `biaya_pengurusan`
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `items_id` (`items_id`);
+
+--
+-- Indeks untuk tabel `cash_in_cash_out`
+--
+ALTER TABLE `cash_in_cash_out`
+  ADD PRIMARY KEY (`cico_id`);
 
 --
 -- Indeks untuk tabel `categories`
@@ -363,6 +387,12 @@ ALTER TABLE `biaya_pengurusan`
 --
 ALTER TABLE `cart`
   MODIFY `cart_id` int(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `cash_in_cash_out`
+--
+ALTER TABLE `cash_in_cash_out`
+  MODIFY `cico_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
