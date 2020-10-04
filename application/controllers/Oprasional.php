@@ -44,4 +44,20 @@ class Oprasional extends CI_Controller
 			}
 		}
 	}
+
+	public function del($post)
+	{
+		$this->Oprasional_m->del($post);
+
+		$error = $this->db->error();
+		if ($error['code'] != 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"><strong>Error!</strong> Data tidak dapat dihapus, karena suda berelasi dengan table lain</div>');
+			redirect('oprasional');
+		}
+
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"><strong>Success!</strong> Data berhasil dihapus </div>');
+			redirect('oprasional');
+		}
+	}
 }

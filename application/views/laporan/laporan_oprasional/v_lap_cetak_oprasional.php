@@ -8,7 +8,7 @@ date_default_timezone_set("Asia/Bangkok");
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<title>Laporan Pengeluaran_<?= date('Y-m-d') ?></title>
+	<title>Lap_pengurusan_<?= date('Y-m-d') ?></title>
 	<style>
 		.line-title {
 			border: 0;
@@ -66,7 +66,7 @@ date_default_timezone_set("Asia/Bangkok");
 		</tr>
 	</table>
 	<div class="text-center">
-		<h3>INVOICE : <?= $row->invoice ?> </h3>
+		<h3>INVOICE : <?= $row->invoice_pembayaran . '' . $row->no_urut_invoice ?> </h3>
 		<hr width="35%">
 	</div>
 	Print On : <?= date('Y-m-d H:i:s'); ?>

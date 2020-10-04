@@ -104,7 +104,15 @@
 							<td class="text-center"><?= $no++ ?></td>
 							<td class="text-center"><?= $data->down_payment_id ?></td>
 							<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
-							<td class="text-left"><?= $data->noted_dp ?></td>
+							<?php if ($data->noted == NULL) { ?>
+								<td class="text-center">
+									-
+								</td>
+							<?php } else { ?>
+								<td class="text-left">
+									<?= $data->noted_dp == null ? '-' : $data->noted_dp ?>
+								</td>
+							<?php } ?>
 							<td class="text-center"><?= $data->nama ?></td>
 							<td class="text-center"><?= $data->created_dp ?></td>
 							<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
@@ -151,12 +159,19 @@
 				<div class="text-center">
 					<input type='submit' value="Simpan" id='submitBtn' style="width: 50%;" class='btn btn-danger' disabled='disabled' />
 				</div>
+				<div class="row">
+					<div class="col-md-10">
+					</div>
+					<div class="col-md-2">
+						<div class="text-right">
+							<a href="<?= site_url('pembayaran/cetak_dp/' . $row->pembayaran_id) ?>" class="btn btn-success" style="width: 75%;" target="_blank">
+								<i class="fa fa-print"></i>
+							</a>
+						</div>
+					</div>
+				</div>
 			<?php } ?>
-			<div class="text-right">
-				<a href="" class="btn btn-warning">
-					<i class="fa fa-print"></i>
-				</a>
-			</div>
+
 		</div>
 	</div>
 </section>

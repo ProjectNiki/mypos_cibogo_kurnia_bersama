@@ -35,4 +35,31 @@ class Dashboard_m extends CI_Model
 		$post = $this->db->get();
 		return $post;
 	}
+
+	public function get_out_sum()
+	{
+		$date = date('m');
+
+		$this->db->select('SUM(cash_in_cash_out.total) as grand_total_out');
+		$this->db->from('cash_in_cash_out');
+		$this->db->where('MONTH(cash_in_cash_out.date) =', $date);
+		$this->db->where('type =', 'Out');
+
+		$post = $this->db->get();
+		return $post;
+	}
+
+
+	public function get_in_sum()
+	{
+		$date = date('m');
+
+		$this->db->select('SUM(cash_in_cash_out.total) as grand_total_in');
+		$this->db->from('cash_in_cash_out');
+		$this->db->where('MONTH(cash_in_cash_out.date) =', $date);
+		$this->db->where('type =', 'In');
+
+		$post = $this->db->get();
+		return $post;
+	}
 }

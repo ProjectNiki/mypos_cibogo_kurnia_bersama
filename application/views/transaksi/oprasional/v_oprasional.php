@@ -39,6 +39,7 @@
 						<th class="text-center">Pajak/Tax</th>
 						<th class="text-center">Uang LS/Lab</th>
 						<th class="text-center">Jasa Perusahaan</th>
+						<th class="text-center">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,6 +54,11 @@
 							<td><?= indo_currency($data->pajak_tax) ?></td>
 							<td><?= indo_currency($data->lab) ?></td>
 							<td><?= indo_currency($data->jasa_perushaan) ?></td>
+							<td class="text-center">
+								<a href="<?= site_url('oprasional/del/' . $data->pengurusan_id) ?>" class="btn btn-danger" onclick="return confirm('Apakah Yakin ? Transaksi Ini akan dihapus secara permanen!')">
+									<i class=" fa fa-trash"></i>
+								</a>
+							</td>
 						</tr>
 					<?php } ?>
 				</tbody>

@@ -4,7 +4,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Min Page</title>
+	<title>Main Page | CBK
+	</title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" href="<?= base_url('assets') ?>/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets') ?>/bower_components/font-awesome/css/font-awesome.min.css">
@@ -132,7 +133,7 @@
 						</ul>
 					</li>
 					<!--  -->
-					<li class="treeview <?= $this->uri->segment(1) == 'oprasional' || $this->uri->segment(1) == 'pembayaran' || $this->uri->segment(1) == 'stock_out' || $this->uri->segment(1) == 'stock_in' ? 'active' : null ?>">
+					<li class="treeview <?= $this->uri->segment(1) == 'cash_in_and_out' || $this->uri->segment(1) == 'oprasional' || $this->uri->segment(1) == 'pembayaran' || $this->uri->segment(1) == 'stock_out' || $this->uri->segment(1) == 'stock_in' ? 'active' : null ?>">
 						<a href="#">
 							<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
 							<span class="pull-right-container">
@@ -143,6 +144,11 @@
 							<li <?= $this->uri->segment(1) == 'oprasional' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('oprasional') ?>">
 									<i class="fa fa-circle-o"></i> Biaya Pengurusan
+								</a>
+							</li>
+							<li <?= $this->uri->segment(1) == 'cash_in_and_out' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('cash_in_and_out') ?>">
+									<i class="fa fa-circle-o"></i> Cash In Cash Out
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'pembayaran' ? 'class="active"' : null ?>>
@@ -164,7 +170,7 @@
 						</ul>
 					</li>
 
-					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_oprasional' || $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
+					<li class="treeview reeview <?= $this->uri->segment(1) == 'lap_cash_in_and_out' || $this->uri->segment(1) == 'lap_oprasional' || $this->uri->segment(1) == 'lap_invoice' ? 'active' : null ?>">
 						<a href="#">
 							<i class="fa fa-line-chart"></i> <span>Laporan</span>
 							<span class="pull-right-container">
@@ -172,6 +178,11 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
+							<li <?= $this->uri->segment(1) == 'lap_cash_in_and_out' ? 'class="active"' : null ?>>
+								<a href="<?= site_url('lap_cash_in_and_out') ?>">
+									<i class="fa fa-circle-o"></i> Cash In Cash Out
+								</a>
+							</li>
 							<li <?= $this->uri->segment(1) == 'lap_invoice' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('lap_invoice') ?>">
 									<i class="fa fa-circle-o"></i> Invoice

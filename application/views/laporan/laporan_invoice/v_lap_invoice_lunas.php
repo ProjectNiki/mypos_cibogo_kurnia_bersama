@@ -8,7 +8,7 @@ date_default_timezone_set("Asia/Bangkok");
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<title>Laporan Pengeluaran_<?= date('Y-m-d') ?></title>
+	<title>Laporan Invoice_<?= date('Y-m-d') ?></title>
 	<style>
 		.line-title {
 			border: 0;
@@ -75,6 +75,8 @@ date_default_timezone_set("Asia/Bangkok");
 			<tr>
 				<th class="text-center">#</th>
 				<th class="text-center">Nama Items</th>
+				<th class="text-center">Sub Katagori</th>
+				<th class="text-center">Katagori</th>
 				<th class="text-center">Qty</th>
 				<th class="text-center">Price (Rp)</th>
 				<th class="text-center">Total</th>
@@ -86,6 +88,8 @@ date_default_timezone_set("Asia/Bangkok");
 				<tr>
 					<td class="text-center"><?= $no++ ?></td>
 					<td><?= $data->name_items ?></td>
+					<td><?= $data->name_sub_categories ?></td>
+					<td><?= $data->name_categories ?></td>
 					<td class="text-center"><?= $data->pembayaran_qty ?></td>
 					<td><?= indo_currency($data->harga_pembayaran) ?></td>
 					<td><?= indo_currency($data->pembayaran_qty * $data->harga_pembayaran) ?></td>
@@ -94,7 +98,7 @@ date_default_timezone_set("Asia/Bangkok");
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="4" class="text-right">
+				<td colspan="6" class="text-right">
 					<b>Grand Total</b>
 				</td>
 				<td colspan="1" style="text-align: left;">

@@ -8,7 +8,7 @@ date_default_timezone_set("Asia/Bangkok");
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<title>Laporan Invoice Down Payment<?= date('Y-m-d') ?></title>
+	<title>Laporan Invoice_<?= date('Y-m-d') ?></title>
 	<style>
 		.line-title {
 			border: 0;
@@ -23,7 +23,7 @@ date_default_timezone_set("Asia/Bangkok");
 	</style>
 </head>
 
-<body style="background-image: url('<?= base_url('assets') ?>/dist/img/lunas.png'); background-repeat: no-repeat; background-position: center;">
+<body>
 	<img src="<?= base_url('assets') ?>/dist/img/logo_pt.png" alt="" style="position: absolute; width: 90px; height: auto;">
 	<table class="table_header" style="width: 100%;">
 		<tr>
@@ -66,10 +66,10 @@ date_default_timezone_set("Asia/Bangkok");
 		</tr>
 	</table>
 	<div class="text-center">
-		<h3>INVOICE : <?= $row->invoice . '' . $row->no_urut_invoice ?></h3>
+		<h3>INVOICE : <?= $row->invoice_pembayaran . '' . $row->no_urut_invoice ?></h3>
 		<hr width="35%">
 	</div>
-	Print On : <?= date('Y-m-d H:i:s'); ?>
+	<u>Data Pembelian</u>
 	<table class="table table-bordered table-responsive" style="padding-top: 7px;">
 		<thead>
 			<tr>
@@ -84,7 +84,7 @@ date_default_timezone_set("Asia/Bangkok");
 		</thead>
 		<tbody>
 			<?php $no = 1; ?>
-			<?php foreach ($result as $key => $data) { ?>
+			<?php foreach ($result_data as $key => $data) { ?>
 				<tr>
 					<td class="text-center"><?= $no++ ?></td>
 					<td><?= $data->name_items ?></td>
@@ -102,11 +102,64 @@ date_default_timezone_set("Asia/Bangkok");
 					<b>Grand Total</b>
 				</td>
 				<td colspan="1" style="text-align: left;">
-					<?= indo_currency($row->total_price) ?>
+					<?= indo_currency($row_data->total_price) ?>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
+	<u>Rincian Down Payment</u>
+	<table class="table table-bordered table-responsive" style="padding-top: 7px;">
+		<thead>
+			<tr>
+				<th class="text-center">#</th>
+				<th class="text-center">ID Down Payment</th>
+				<th class="text-center">Price (Rp)</th>
+				<th class="text-center">Admin</th>
+				<th class="text-center">Tanggal Dp</th>
+				<th class="text-center">Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php $no = 1; ?>
+			<?php foreach ($result as $key => $data) { ?>
+				<tr>
+					<td class="text-center"><?= $no++ ?></td>
+					<td class="text-center"><?= $data->down_payment_id ?></td>
+					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+					<td class="text-center"><?= $data->nama ?></td>
+					<td class="text-center"><?= $data->created_dp ?></td>
+					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+				</tr>
+			<?php } ?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5" class="text-right">
+					<b>Jumlah Terbayar</b>
+				</td>
+				<td colspan="1" class="text-left">
+					<?= indo_currency($get_sum_dp->result_dp) ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" class="text-right">
+					<b>Jumlah Transaksi</b>
+				</td>
+				<td colspan="1" class="text-left">
+					<?= indo_currency($get_sum_dp->total_price) ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" class="text-right">
+					<b>Sisa Pembayaran</b>
+				</td>
+				<td colspan="1" class="text-left">
+					<?= indo_currency($get_sum_dp->total_price - $get_sum_dp->result_dp) ?>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	Print On : <?= date('Y-m-d H:i:s'); ?>
 </body>
 
 </html>

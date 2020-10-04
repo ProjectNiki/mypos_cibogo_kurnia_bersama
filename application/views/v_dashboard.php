@@ -33,7 +33,7 @@ date_default_timezone_set("Asia/Bangkok");
 							<p>Pendapatan Bulan : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
-							<i class="fa fa-doll``ar"></i>
+							<i class="fa fa-dollar"></i>
 						</div>
 					</div>
 				</div>
@@ -46,6 +46,33 @@ date_default_timezone_set("Asia/Bangkok");
 						</div>
 						<div class="icon">
 							<i class="fa fa-users"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--  -->
+			<div class="row">
+				<div class="col-lg-6 col-xs-6">
+					<div class="small-box bg-red">
+						<div class="inner">
+							<h3><?= indo_currency($get_out_sum->grand_total_out) ?></h3>
+
+							<p>Pengeluaran Bulan : <b><?= date('F') ?></b> </p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-dollar"></i>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xs-6">
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3><?= indo_currency($get_in_sum->grand_total_in) ?></h3>
+
+							<p>Pendapatan Bulan : <b><?= date('F') ?></b> </p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-dollar"></i>
 						</div>
 					</div>
 				</div>

@@ -68,7 +68,7 @@ class Oprasional_m extends CI_Model
 		$params['invoice']			= $post['no_urut_invoice'];
 		$params['fee_oprasional']   = str_replace(".", "", $post['fee_oprasional']);
 		$params['oprasional']    	= str_replace(".", "", $post['oprasional']);
-		$params['pajak_tax']     	= str_replace(".", "", $post['fee_oprasional']);
+		$params['pajak_tax']     	= str_replace(".", "", $post['pajak_tax']);
 		$params['lab']     			= str_replace(".", "", $post['lab']);
 		$params['jasa_perushaan']   = str_replace(".", "", $post['jasa_perushaan']);
 		$params['date']				= $post['date'];
@@ -83,5 +83,11 @@ class Oprasional_m extends CI_Model
 
 		$this->db->where('invoice', $post['invoice']);
 		$this->db->update('pembayaran', $params);
+	}
+
+	public function del($post)
+	{
+		$this->db->where('pengurusan_id', $post);
+		$this->db->delete('biaya_pengurusan');
 	}
 }

@@ -25,6 +25,8 @@ class Lap_invoice_m extends CI_Model
 		$this->db->from('pembayaran');
 		$this->db->join('pembayaran_detail', 'pembayaran_detail.pembayaran_id = pembayaran.pembayaran_id');
 		$this->db->join('items', 'items.items_id = pembayaran_detail.items_id');
+		$this->db->join('sub_categories', 'sub_categories.sub_categories_id = items.sub_categories_id');
+		$this->db->join('categories', 'categories.categories_id = sub_categories.categories_id');
 		$this->db->join('customers', 'customers.customers_id = pembayaran.customers_id');
 		$this->db->join('user', 'user.user_id = pembayaran.user_id');
 

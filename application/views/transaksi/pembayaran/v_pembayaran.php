@@ -16,6 +16,7 @@
 </section>
 
 <section class="content">
+	<?= $this->session->flashdata('message'); ?>
 	<div class="box box-primary">
 		<div class="box-header">
 			<h4>Data Pembayaran

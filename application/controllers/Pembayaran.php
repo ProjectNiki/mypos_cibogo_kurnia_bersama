@@ -8,7 +8,7 @@ class Pembayaran extends CI_Controller
 	{
 		parent::__construct();
 		check_not_login();
-		$this->load->model(['Customers_m', 'Items_m', 'Pembayaran_m']);
+		$this->load->model(['Customers_m', 'Items_m', 'Pembayaran_m', 'Lap_invoice_m']);
 	}
 
 	public function index()
@@ -20,6 +20,29 @@ class Pembayaran extends CI_Controller
 		];
 
 		$this->template->load('v_template', 'transaksi/pembayaran/v_pembayaran', $data);
+	}
+
+	public function cetak_dp($id)
+	{
+		$tgl = date('Y-m-d H:i:s');
+
+		$row_dp = $this->Lap_invoice_m->get_dp($id)->row();
+		$result_dp = $this->Lap_invoice_m->get_dp($id)->result();
+		$get_sum_dp = $this->Lap_invoice_m->get_sum_dp($id)->row();
+		$row_preview_dp = $this->Lap_invoice_m->get_lunas($id)->row();
+		$result_preview_dp = $this->Lap_invoice_m->get_lunas($id)->result();
+
+
+		$data_dp = [
+			'row' => $row_dp,
+			'result' => $result_dp,
+			'get_sum_dp' => $get_sum_dp,
+			'row_data' => $row_preview_dp,
+			'result_data' => $result_preview_dp
+		];
+
+		$html = $this->load->view('transaksi/pembayaran/v_cetak_dp', $data_dp, true);
+		$this->fungsi->PdfGenerator($html, 'Lap_Invoice_' . $tgl, 'A4', 'landscape');
 	}
 
 	public function preview($id)
@@ -86,10 +109,11 @@ class Pembayaran extends CI_Controller
 
 	public function update_status_down_payment($id)
 	{
+
 		$this->Pembayaran_m->update_status_down_payment($id);
 
 		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger"><strong>Success!</strong> Data berhasil dihapus </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success"><strong>Success!</strong> Data berhasil diupdate </div>');
 			redirect('pembayaran');
 		}
 	}
