@@ -75,7 +75,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="alert alert-success">
-					<center><b>Laporan Cash In Cash Out</b></center>
+					<center><b>Laporan Cash In & Cash Out</b></center>
 				</div>
 			</div>
 			<div class="modal-body">

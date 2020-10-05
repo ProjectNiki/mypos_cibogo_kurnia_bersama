@@ -44,6 +44,6 @@ class Lap_cash_in_and_out extends CI_Controller
 
 
 		$html = $this->load->view('laporan/laporan_cash_in_and_out/v_result_laporan_cash_in_and_out', $data, true);
-		$this->fungsi->PdfGenerator($html, 'Laporan_cash_in_and_out' . $tgl, 'A4', 'landscape');
+		$this->fungsi->PdfGenerator($html, 'Laporan_cash_in_&_out_' . $tgl, 'A4', 'landscape');
 	}
 }
