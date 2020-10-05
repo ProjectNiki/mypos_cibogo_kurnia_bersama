@@ -1,6 +1,6 @@
 <section class="content-header">
-	<h1>Data Cash In Cash Out
-		<small>Cash In Cash Out</small>
+	<h1>Data Cash In & Cash Out
+		<small>Cash In & Cash Out</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
@@ -12,7 +12,7 @@
 			Transaksi
 		</li>
 		<li class="active">
-			Cash In Stock Out
+			Cash In & Cash Out
 		</li>
 	</ol>
 </section>
@@ -21,7 +21,7 @@
 	<?= $this->session->flashdata('message'); ?>
 	<div class="box box-primary">
 		<div class="box-header">
-			<h4>Data Cash In Cash Out
+			<h4>Data Cash In & Cash Out
 				<div class="pull-right">
 					<div class="pull-right">
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button>

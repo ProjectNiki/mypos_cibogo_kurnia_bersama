@@ -53,11 +53,11 @@ date_default_timezone_set("Asia/Bangkok");
 			<!--  -->
 			<div class="row">
 				<div class="col-lg-6 col-xs-6">
-					<div class="small-box bg-red">
+					<div class="small-box bg-green">
 						<div class="inner">
-							<h3><?= indo_currency($get_out_sum->grand_total_out) ?></h3>
+							<h3><?= indo_currency($get_in_sum->grand_total_in) ?></h3>
 
-							<p>Cash Out : <b><?= date('F') ?></b> </p>
+							<p>Cash In : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
 							<i class="fa fa-dollar"></i>
@@ -65,11 +65,11 @@ date_default_timezone_set("Asia/Bangkok");
 					</div>
 				</div>
 				<div class="col-lg-6 col-xs-6">
-					<div class="small-box bg-green">
+					<div class="small-box bg-red">
 						<div class="inner">
-							<h3><?= indo_currency($get_in_sum->grand_total_in) ?></h3>
+							<h3><?= indo_currency($get_out_sum->grand_total_out) ?></h3>
 
-							<p>Cash In : <b><?= date('F') ?></b> </p>
+							<p>Cash Out : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
 							<i class="fa fa-dollar"></i>
