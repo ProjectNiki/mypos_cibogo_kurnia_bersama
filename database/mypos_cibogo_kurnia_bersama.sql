@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Okt 2020 pada 09.51
+-- Waktu pembuatan: 05 Okt 2020 pada 08.42
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -93,7 +93,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`categories_id`, `name_categories`, `created`, `updated`, `user_created`, `user_updated`) VALUES
-(1, 'Pakain Jadi', '2020-10-02 19:36:19', NULL, 1, NULL),
+(1, 'Pakain Jadi', '2020-10-02 19:36:19', '2020-10-04 23:59:14', 1, 1),
 (2, 'Aksesoris', '2020-10-02 19:36:23', NULL, 1, NULL),
 (3, 'Bahan', '2020-10-02 19:36:28', NULL, 1, NULL),
 (4, 'Mesin', '2020-10-02 19:36:33', NULL, 1, NULL);
@@ -278,7 +278,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `nama`, `email`, `alamat`, `password`, `is_active`, `level`, `in`, `log`, `ip`) VALUES
-(1, 'Pak. Dayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-10-04 12:26:43', '2020-10-03 01:29:17', '127.0.0.1'),
+(1, 'Pak. Dayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-10-05 13:24:23', '2020-10-04 23:59:23', '::1'),
 (2, 'Pak. Lucky', 'lucky@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1'),
 (3, 'Ika', 'ika@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1');
 
