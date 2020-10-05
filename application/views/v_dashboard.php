@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Bangkok");
 		<div class="box-body">
 			<div class="row">
 				<div class="col-lg-6 col-xs-6">
-					<div class="small-box bg-green">
+					<div class="small-box bg-yellow">
 						<div class="inner">
 							<h3>
 								<?php foreach ($pendapatan as $row => $data) { ?>
@@ -30,7 +30,7 @@ date_default_timezone_set("Asia/Bangkok");
 									<?php } ?>
 								<?php } ?>
 							</h3>
-							<p>Pendapatan Bulan : <b><?= date('F') ?></b> </p>
+							<p>Pendapatan Perusahaan : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
 							<i class="fa fa-dollar"></i>
@@ -57,7 +57,7 @@ date_default_timezone_set("Asia/Bangkok");
 						<div class="inner">
 							<h3><?= indo_currency($get_out_sum->grand_total_out) ?></h3>
 
-							<p>Pengeluaran Bulan : <b><?= date('F') ?></b> </p>
+							<p>Cash Out : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
 							<i class="fa fa-dollar"></i>
@@ -69,7 +69,7 @@ date_default_timezone_set("Asia/Bangkok");
 						<div class="inner">
 							<h3><?= indo_currency($get_in_sum->grand_total_in) ?></h3>
 
-							<p>Pendapatan Bulan : <b><?= date('F') ?></b> </p>
+							<p>Cash In : <b><?= date('F') ?></b> </p>
 						</div>
 						<div class="icon">
 							<i class="fa fa-dollar"></i>

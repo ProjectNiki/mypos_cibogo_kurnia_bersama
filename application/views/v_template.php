@@ -148,7 +148,7 @@
 							</li>
 							<li <?= $this->uri->segment(1) == 'cash_in_and_out' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('cash_in_and_out') ?>">
-									<i class="fa fa-circle-o"></i> Cash In Cash Out
+									<i class="fa fa-circle-o"></i> Cash In & Cash Out
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'pembayaran' ? 'class="active"' : null ?>>
@@ -180,7 +180,7 @@
 						<ul class="treeview-menu">
 							<li <?= $this->uri->segment(1) == 'lap_cash_in_and_out' ? 'class="active"' : null ?>>
 								<a href="<?= site_url('lap_cash_in_and_out') ?>">
-									<i class="fa fa-circle-o"></i> Cash In Cash Out
+									<i class="fa fa-circle-o"></i> Cash In & Cash Out
 								</a>
 							</li>
 							<li <?= $this->uri->segment(1) == 'lap_invoice' ? 'class="active"' : null ?>>
