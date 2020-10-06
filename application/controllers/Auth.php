@@ -21,7 +21,7 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 
 		if ($this->form_validation->run() == FALSE) {
-			// check_already_login();
+			check_already_login();
 
 			$this->load->view('v_login');
 		} else {
