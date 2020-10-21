@@ -43,6 +43,36 @@ class Cash_in_and_out_m extends CI_Model
 		$this->db->insert('cash_in_cash_out', $params);
 	}
 
+
+	public function edit_in($post)
+	{
+		$params['date']			= $post['date'];
+		$params['type'] 		= $post['type_in'];
+		$params['pj'] 			= $post['nama'];
+		$params['payment']		= $post['payment_in'];
+		$params['total']      	= str_replace(".", "", $post['total_in']);
+		$params['noted']	 	= $post['noted'];
+		$params['updated']      = date('Y-m-d H:i:s');
+
+		$this->db->where('cico_id', $post['cico_id']);
+		$this->db->update('cash_in_cash_out', $params);
+	}
+
+	public function edit_out($post)
+	{
+		$params['date']			= $post['date'];
+		$params['type'] 		= $post['type_out'];
+		$params['pj'] 			= $post['pic'];
+		$params['payment']		= $post['payment_out'];
+		$params['total']      	= str_replace(".", "", $post['total_out']);
+		$params['noted']	 	= $post['noted'];
+		$params['updated']      = date('Y-m-d H:i:s');
+
+		$this->db->where('cico_id', $post['cico_id']);
+		$this->db->update('cash_in_cash_out', $params);
+	}
+
+
 	public function del($id)
 	{
 		$this->db->where('cico_id', $id);

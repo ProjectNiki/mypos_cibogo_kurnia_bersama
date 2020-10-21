@@ -4,7 +4,7 @@ $uniqid = uniqid();
 ?>
 
 <section class="content-header">
-	<h1>Data Pembayaran <small>Pembayaran</small></h1>
+	<h1>Data Pembayaran <small>Pembayaran Down Payment</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('Dashboard') ?>">
@@ -15,7 +15,7 @@ $uniqid = uniqid();
 			Transaksi
 		</li>
 		<li class="active">
-			Pembayaran
+			Pembayaran Down Payment
 		</li>
 	</ol>
 </section>
@@ -103,7 +103,7 @@ $uniqid = uniqid();
 								<th class="text-center">#</th>
 								<th class="text-center">Product Item</th>
 								<th class="text-center">Price (Rp)</th>
-								<th class="text-center">Qty</th>
+								<th class="text-center">Stock</th>
 								<th class="text-center" style="width: 10%;">Total</th>
 							</tr>
 						</thead>
@@ -114,7 +114,9 @@ $uniqid = uniqid();
 									<td class="text-center"><?= $no++ ?></td>
 									<td><?= $data->name_items ?></td>
 									<td><?= indo_currency($data->harga_pembayaran)  ?></td>
-									<td class="text-center"><?= indo_qty($data->pembayaran_qty) ?></td>
+									<td class="text-center">
+										<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_kg) . '/' . $data->type_qty : indo_qty($data->qty) . '/' . $data->type_qty ?>
+									</td>
 									<td id="total"><?= indo_currency($data->harga_pembayaran * $data->pembayaran_qty) ?></td>
 								</tr>
 							<?php } ?>
@@ -160,6 +162,20 @@ $uniqid = uniqid();
 							</tr>
 							<tr>
 								<td style="vertical-align: top; width: 29%">
+									<label for="">Payment</label>
+								</td>
+								<td>
+									<div class="form-group">
+										<select name="type" id="" name="" class="form-control select2" style="width: 100%;" disabled>
+											<option value=""> --Pilih-- </option>
+											<option value="1">Cash</option>
+											<option value="2">Debit</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; width: 29%">
 									<label for="cash">Cash</label>
 								</td>
 								<td>
@@ -176,6 +192,20 @@ $uniqid = uniqid();
 								<td>
 									<div class="form-group">
 										<input type="text" name="down_payment" onkeyup="splitInDots(this)" id="down_payment" min="0" class="form-control" placeholder="Down Payment">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top; width: 29%">
+									<label for="">Payment</label>
+								</td>
+								<td>
+									<div class="form-group">
+										<select name="type" id="payment" name="payment" class="form-control select2" style="width: 100%;">
+											<option value=""> --Pilih-- </option>
+											<option value="1">Cash</option>
+											<option value="2">Debit</option>
+										</select>
 									</div>
 								</td>
 							</tr>
@@ -253,7 +283,7 @@ $uniqid = uniqid();
 		<div class="col-md-3">
 			<div class="box">
 				<div class="box-body">
-					<button id="cancel_payment" class="btn btn-warning" style="width: 100%;">
+					<button id="cancel_payment" class="btn btn-warning" style="width: 100%;" onclick="location.reload();">
 						<i class="fa fa-refresh"></i>
 					</button>
 					<hr style="width: 70%;">
@@ -303,6 +333,7 @@ $uniqid = uniqid();
 		var down_payment = $('#down_payment').val()
 		var down_payment_id = $('#down_payment_id').val()
 		var grandtotal = $('#grand_total').val()
+		var payment = $('#payment').val()
 		var cash = $('#cash').val()
 		var invoice = $('#invoice').val()
 		var status = $('#status').val()
@@ -337,6 +368,7 @@ $uniqid = uniqid();
 						'down_payment_id': down_payment_id,
 						'grandtotal': grandtotal,
 						'cash': cash,
+						'payment': payment,
 						'noted': noted,
 						'invoice': invoice,
 						'date': date

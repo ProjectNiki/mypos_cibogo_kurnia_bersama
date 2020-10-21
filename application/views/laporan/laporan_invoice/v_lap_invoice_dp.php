@@ -76,6 +76,7 @@ date_default_timezone_set("Asia/Bangkok");
 				<th class="text-center">#</th>
 				<th class="text-center">ID Down Payment</th>
 				<th class="text-center">Price (Rp)</th>
+				<th class="text-center">Payment</th>
 				<th class="text-center">Admin</th>
 				<th class="text-center">Tanggal Dp</th>
 				<th class="text-center">Total</th>
@@ -88,6 +89,7 @@ date_default_timezone_set("Asia/Bangkok");
 					<td class="text-center"><?= $no++ ?></td>
 					<td class="text-center"><?= $data->down_payment_id ?></td>
 					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+					<td class="text-center"><?= $data->payment_dp == 1 ? 'Cash' : 'Debit' ?></td>
 					<td class="text-center"><?= $data->nama ?></td>
 					<td class="text-center"><?= $data->created_dp ?></td>
 					<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
@@ -96,7 +98,7 @@ date_default_timezone_set("Asia/Bangkok");
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5" class="text-right">
+				<td colspan="6" class="text-right">
 					<b>Jumlah Terbayar</b>
 				</td>
 				<td colspan="1" class="text-left">
@@ -104,7 +106,7 @@ date_default_timezone_set("Asia/Bangkok");
 				</td>
 			</tr>
 			<tr>
-				<td colspan="5" class="text-right">
+				<td colspan="6" class="text-right">
 					<b>Jumlah Transaksi</b>
 				</td>
 				<td colspan="1" class="text-left">
@@ -112,7 +114,7 @@ date_default_timezone_set("Asia/Bangkok");
 				</td>
 			</tr>
 			<tr>
-				<td colspan="5" class="text-right">
+				<td colspan="6" class="text-right">
 					<b>Sisa Pembayaran</b>
 				</td>
 				<td colspan="1" class="text-left">

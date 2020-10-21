@@ -26,8 +26,7 @@
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="#"><b>My</b>POS</a>
-			<h4>Cibogo Kurnia Bersama</h4>
+			<h4><b>CIBOGO KURNIA BERSAMA</b</h4>
 		</div>
 		<div class="login-box-body">
 			<br />

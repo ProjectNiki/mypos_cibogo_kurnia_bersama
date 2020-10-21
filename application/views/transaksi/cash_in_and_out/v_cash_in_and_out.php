@@ -66,6 +66,9 @@
 							<td><?= indo_currency($data->total) ?></td>
 							<td><?= $data->noted ?></td>
 							<td class="text-center">
+								<a href="<?= site_url('cash_in_and_out/edit/' . $data->cico_id . '/' . $data->type) ?>" class="btn btn-success">
+									<i class="fa fa-edit"></i>
+								</a>
 								<a href="<?= site_url('cash_in_and_out/del/' . $data->cico_id) ?>" class="btn btn-danger" onclick="return confirm('Apakah Yakin ? Transaksi Ini akan dihapus secara permanen!')">
 									<i class="fa fa-trash"></i>
 								</a>

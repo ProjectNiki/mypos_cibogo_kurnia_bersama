@@ -28,6 +28,27 @@ class Stock_out_m extends CI_Model
 		$this->db->insert('stock_out', $params);
 	}
 
+	public function add_kg($post)
+	{
+		$params['items_id']     	= $post['items_id'];
+		$params['type']         	= 'Out';
+		$params['detail']       	= $post['detail'];
+		$params['date']         	= $post['date'];
+		$params['qty_stock_out_kg']   = str_replace(",", "", $post['qty_stock_out']);
+		$params['user_created'] 	= $this->session->userdata('user_id');
+
+		$this->db->insert('stock_out', $params);
+	}
+
+	public function update_stock_out_item_kg($post)
+	{
+		$qty    = str_replace(",", "", $post['qty_stock_out']);
+		$id     = $post['items_id'];
+
+		$sql    = "UPDATE items SET qty_items_kg = qty_items_kg - '$qty' WHERE items_id = '$id' ";
+		$this->db->query($sql);
+	}
+
 	public function update_stock_out_item($post)
 
 	{
@@ -37,6 +58,21 @@ class Stock_out_m extends CI_Model
 
 		$sql    = "UPDATE items SET qty_items = qty_items - '$qty' WHERE items_id = '$id' ";
 		$this->db->query($sql);
+	}
+
+	public function del_stock_out_item_kg($data)
+	{
+		$qty    = $data['qty_stock_out_kg'];
+		$id     = $data['items_id'];
+
+		$sql    = "UPDATE items SET qty_items_kg = qty_items_kg + '$qty' WHERE items_id = '$id' ";
+		$this->db->query($sql);
+	}
+
+	public function del_stock_out_kg($id)
+	{
+		$this->db->where('stock_out_id', $id);
+		$this->db->delete('stock_out');
 	}
 
 	public function del_stock_out_item($data)

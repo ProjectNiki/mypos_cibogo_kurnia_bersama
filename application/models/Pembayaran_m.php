@@ -139,6 +139,8 @@ class Pembayaran_m extends CI_Model
 			'items_id'   		=> $post['items_id'],
 			'harga_items'     	=> $post['harga_items'],
 			'qty'       		=> $post['qty'],
+			'type_qty'       	=> $post['type_qty'],
+			'qty_kg'      		=> str_replace(",", "", $post['qty']),
 			'total'     		=> ($post['harga_items'] * $post['qty']),
 			'user_id'   		=> $this->session->userdata('user_id')
 		);
@@ -174,6 +176,7 @@ class Pembayaran_m extends CI_Model
 			'total_price' => $post['subtotal'],
 			'cash' => str_replace(".", "", $post['cash']),
 			'status' => $post['status'],
+			'payment' => $post['payment'],
 			'date' => $post['date'],
 			'user_id' => $this->session->userdata('user_id')
 		);
@@ -192,6 +195,7 @@ class Pembayaran_m extends CI_Model
 			'invoice' => $post['invoice_ai'],
 			'down_payment' => str_replace(".", "", $post['down_payment']),
 			'down_payment_id' => $post['down_payment_id'],
+			'payment_dp' => $post['payment'],
 			'user_id' => $this->session->userdata('user_id')
 		);
 
@@ -204,6 +208,7 @@ class Pembayaran_m extends CI_Model
 			'invoice' => $post['invoice'],
 			'down_payment' => str_replace(".", "", $post['down_payment']),
 			'down_payment_id' => $post['down_payment_id'],
+			'payment_dp' => $post['payment'],
 			'user_id' => $this->session->userdata('user_id')
 		);
 

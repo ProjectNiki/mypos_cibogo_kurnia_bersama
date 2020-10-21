@@ -77,7 +77,7 @@ date_default_timezone_set("Asia/Bangkok");
 				<th class="text-center">Nama Items</th>
 				<th class="text-center">Sub Katagori</th>
 				<th class="text-center">Katagori</th>
-				<th class="text-center">Qty</th>
+				<th class="text-center">Satuan</th>
 				<th class="text-center">Price (Rp)</th>
 				<th class="text-center">Total</th>
 			</tr>
@@ -90,9 +90,11 @@ date_default_timezone_set("Asia/Bangkok");
 					<td><?= $data->name_items ?></td>
 					<td><?= $data->name_sub_categories ?></td>
 					<td><?= $data->name_categories ?></td>
-					<td class="text-center"><?= $data->pembayaran_qty ?></td>
+					<td class="text-center">
+						<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_kg) . '/' . $data->type_qty : indo_qty($data->qty) . '/' . $data->type_qty ?>
+					</td>
 					<td><?= indo_currency($data->harga_pembayaran) ?></td>
-					<td><?= indo_currency($data->pembayaran_qty * $data->harga_pembayaran) ?></td>
+					<td><?= indo_currency($data->total) ?></td>
 				</tr>
 			<?php } ?>
 		</tbody>

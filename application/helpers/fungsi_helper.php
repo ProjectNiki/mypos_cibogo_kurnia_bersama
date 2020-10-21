@@ -44,6 +44,13 @@ function indo_currency($nominal)
 	return $result;
 }
 
+function indo_kg($nominal)
+{
+	$result = number_format($nominal, 2, '.', ',');
+
+	return $result;
+}
+
 function indo_qty($nominal)
 {
 	$result = number_format($nominal, 0, ',', '.');

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Main Page | CBK
+	<title>Cibogo Kurnia Bersama
 	</title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" href="<?= base_url('assets') ?>/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -30,9 +30,9 @@
 	<div class="wrapper">
 
 		<header class="main-header">
-			<a href="<?= base_url('assets') ?>/index2.html" class="logo">
+			<a href="#" class="logo">
 				<span class="logo-mini"><b>C</b>KB</span>
-				<span class="logo-lg"><b>My Pos</b></span>
+				<span class="logo-lg"><b>Finance CKB</b></span>
 			</a>
 			<nav class="navbar navbar-static-top">
 				<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -46,12 +46,12 @@
 					<ul class="nav navbar-nav">
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="<?= base_url('assets') ?>/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+								<img src="<?= base_url('assets') ?>/dist/img/logo_pt.png" class="user-image" alt="User Image">
 								<span class="hidden-xs"><?= ucfirst($this->fungsi->user_login()->nama); ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="user-header">
-									<img src="<?= base_url('assets') ?>/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+									<img src="<?= base_url('assets') ?>/dist/img/logo_pt.png" class="img-circle" alt="User Image">
 									<p>
 										<?= ucfirst($this->fungsi->user_login()->nama); ?>
 										<small><?= ucfirst($this->fungsi->user_login()->email); ?></small>
@@ -76,7 +76,7 @@
 			<section class="sidebar">
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="<?= base_url('assets') ?>/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+						<img src="<?= base_url('assets') ?>/dist/img/logo_pt.png" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
 						<p><?= ucfirst($this->fungsi->user_login()->nama); ?></p>

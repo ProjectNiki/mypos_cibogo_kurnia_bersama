@@ -91,6 +91,7 @@
 						<th class="text-center">#</th>
 						<th class="text-center">ID Down Payment</th>
 						<th class="text-center">Price (Rp)</th>
+						<th class="text-center">Payment</th>
 						<th class="text-center">Note</th>
 						<th class="text-center">A/N</th>
 						<th class="text-center">Tanggal Dp</th>
@@ -104,6 +105,7 @@
 							<td class="text-center"><?= $no++ ?></td>
 							<td class="text-center"><?= $data->down_payment_id ?></td>
 							<td class="text-left"><?= indo_currency($data->down_payment) ?></td>
+							<td class="text-center"><?= $data->payment_dp == 1 ? 'Cash' : 'Debit' ?></td>
 							<?php if ($data->noted == NULL) { ?>
 								<td class="text-center">
 									-
@@ -121,7 +123,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="6" class="text-right">
+						<td colspan="7" class="text-right">
 							<b>Jumlah Terbayar</b>
 						</td>
 						<td colspan="1" class="text-left">
@@ -129,7 +131,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6" class="text-right">
+						<td colspan="7" class="text-right">
 							<b>Jumlah Transaksi</b>
 						</td>
 						<td colspan="1" class="text-left">
@@ -137,7 +139,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6" class="text-right">
+						<td colspan="7" class="text-right">
 							<b>Sisa Pembayaran</b>
 						</td>
 						<td colspan="1" class="text-left">

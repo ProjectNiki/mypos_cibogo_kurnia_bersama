@@ -33,10 +33,11 @@
 				<thead>
 					<tr>
 						<th>#</th>
+						<th class="text-center">ID Items</th>
 						<th class="text-center">Nama Items</th>
 						<th class="text-center">Kategori</th>
 						<th class="text-center">Sub Kategori</th>
-						<th class="text-center">Qty</th>
+						<th class="text-center">Satuan</th>
 						<th class="text-center">Harga (Rp)</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -46,12 +47,16 @@
 					<?php foreach ($row as $key => $data) { ?>
 						<tr>
 							<td class="text-center"><?= $no++ ?></td>
+							<td class="text-center"><?= $data->items_key ?></td>
 							<td><?= $data->name_items ?></td>
 							<td><?= $data->name_categories ?></td>
 							<td><?= $data->name_sub_categories ?></td>
-							<td class="text-center"><?= indo_qty($data->qty_items)  ?></td>
+							<td class="text-center"><?= $data->type_qty == 'Kg' ? indo_kg($data->qty_items_kg) . '/' . $data->type_qty : indo_qty($data->qty_items) . '/' . $data->type_qty ?></td>
 							<td><?= indo_currency($data->harga_items) ?></td>
 							<td class="text-center">
+								<a href="<?= site_url('items/edit/' . $data->items_id . '/' . $data->type_qty) ?>" class="btn btn-success">
+									<i class=" fa fa-edit"></i>
+								</a>
 								<a href="<?= site_url('items/del/' . $data->items_id) ?>" class="btn btn-danger" onclick="return confirm('Apakah yakin ? Data <?= $data->name_items ?> akan dihapus secara permanen')">
 									<i class="fa fa-trash"></i>
 								</a>

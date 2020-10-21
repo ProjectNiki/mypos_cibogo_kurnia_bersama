@@ -5,7 +5,9 @@
 			<td class="text-center"><?= $no++ ?></td>
 			<td><?= $data->name_items ?></td>
 			<td><?= indo_currency($data->cart_price)  ?></td>
-			<td class="text-center"><?= $data->qty ?></td>
+			<td class="text-center">
+				<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_kg) . '/' . $data->type_qty : indo_qty($data->qty) . '/' . $data->type_qty ?>
+			</td>
 			<td id="total" style="display:none;"><?= $data->total ?></td>
 			<td><?= indo_currency($data->total) ?></td>
 			<td class="text-center">

@@ -157,6 +157,7 @@ class Pembayaran extends CI_Controller
 		if (isset($_POST['add_cart'])) {
 
 			$items_id    	= $this->input->post('items_id');
+
 			$check_cart 	= $this->Pembayaran_m->get_cart(['cart.items_id' => $items_id]);
 
 			if ($check_cart->num_rows() > 0) {
@@ -177,6 +178,7 @@ class Pembayaran extends CI_Controller
 		// process payment
 		if (isset($_POST['process_payment'])) {
 
+
 			if ($post['status'] == 2) {
 				$this->Pembayaran_m->add_pembayaran_dp($post);
 			}
@@ -191,6 +193,8 @@ class Pembayaran extends CI_Controller
 					'items_id' => $value->items_id,
 					'harga_items'   => $value->harga_items,
 					'qty'     => $value->qty,
+					'type_qty'     => $value->type_qty,
+					'qty_kg'     => $value->qty_kg,
 					'total' => $value->total,
 				));
 			}

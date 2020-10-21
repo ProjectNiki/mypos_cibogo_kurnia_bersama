@@ -20,11 +20,6 @@
 	<div class="box box-primary">
 		<div class="box-header">
 			<h4>Data Laporan Pengurusan
-				<div class="pull-right">
-					<a href="<?= site_url('oprasional/add') ?>" class="btn btn-primary">
-						<i class="fa fa-plus"></i>
-					</a>
-				</div>
 			</h4>
 		</div>
 		<div class="box-body table-responsive">
@@ -32,9 +27,8 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">No Invoice</th>
-						<th class="text-center">Tanggal</th>
-						<th class="text-center">Admin</th>
+						<th class="text-center">ID Biaya Pengurusan</th>
+						<th class="text-center">Prusahaan</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -43,11 +37,10 @@
 					<?php foreach ($row as $key => $data) { ?>
 						<tr>
 							<td class="text-center"><?= $no++; ?></td>
-							<td class="text-center"><?= $data->invoice_pembayaran . '' . $data->invoice ?></td>
-							<td class="text-center"><?= indo_date($data->created) ?></td>
-							<td class="text-center"><?= $data->nama ?></td>
+							<td class="text-center"><?= $data->bp_key ?></td>
+							<td class="text-center"><?= $data->pt_customers ?></td>
 							<td class="text-center">
-								<a href=" <?= site_url('lap_oprasional/cetak_lap_oprasional/' . $data->pembayaran_id) ?>" class="btn btn-success" target="_blank">
+								<a href=" <?= site_url('lap_oprasional/cetak_lap_oprasional/' . $data->bp_key) ?>" class="btn btn-success" target="_blank">
 									<i class="glyphicon glyphicon-print"></i>
 								</a>
 							</td>

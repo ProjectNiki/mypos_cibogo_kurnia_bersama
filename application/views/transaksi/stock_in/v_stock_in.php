@@ -21,9 +21,7 @@
 		<div class="box-header">
 			<h4>Stock In
 				<div class="pull-right">
-					<a href="<?= site_url('stock_in/stock_in_add') ?>" class="btn btn-primary">
-						<i class="fa fa-plus"></i>
-					</a>
+					<button type="button" class="btn btn-primary cetak" data-toggle="modal" title="Cetak"><i class="fa fa-plus"></i></button>
 				</div>
 			</h4>
 		</div>
@@ -33,7 +31,7 @@
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">Nama Items</th>
-						<th class="text-center">Qty</th>
+						<th class="text-center">Satuan</th>
 						<th class="text-center">Tanggal</th>
 						<th class="text-center">Detail</th>
 						<th class="text-center">Admin</th>
@@ -46,12 +44,14 @@
 						<tr>
 							<td class="text-center"><?= $no++; ?></td>
 							<td><?= $data->name_items ?></td>
-							<td class="text-center"><?= indo_qty($data->qty_stock_in) ?></td>
+							<td class="text-center">
+								<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_stock_in_kg) . '/' . $data->type_qty : indo_qty($data->qty_stock_in) . '/' . $data->type_qty ?>
+							</td>
 							<td class="text-center"><?= indo_date($data->date); ?></td>
 							<td><?= $data->detail ?></td>
 							<td class="text-center"><?= $data->nama ?></td>
 							<td class="text-center">
-								<a href="<?= site_url('Stock_in/del/' . $data->stock_in_id . '/' . $data->items_id) ?>" class="btn btn-danger" onclick="return confirm('Data <?= $data->name_items ?> akan dihapus secara permanen, apakah anda yakin  ?');">
+								<a href="<?= site_url('Stock_in/del/' . $data->stock_in_id . '/' . $data->items_id .'/'. $data->type_qty) ?>" class="btn btn-danger" onclick="return confirm('Data <?= $data->name_items ?> akan dihapus secara permanen, apakah anda yakin  ?');">
 									<i class="fa fa-trash"></i>
 								</a>
 							</td>
@@ -62,3 +62,42 @@
 		</div>
 	</div>
 </section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog  modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="exampleModalLabel">Stock In</h4>
+			</div>
+			<div class="modal-body">
+				<form method="POST" action="<?= site_url('stock_in/add') ?>">
+					<div class="form-group">
+						<label for="type">Satuan <i class="text-danger">*</i></label>
+						<select name="type" id="type" class="form-control select2" style="width: 100%;">
+							<option value=""> --Pilih-- </option>
+							<option value="kg">Kg</option>
+							<option value="pcs">pcs</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-danger " data-toggle="tooltip" title="Back" onclick="location.reload();" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i></button>
+						<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$(".cetak").click(function() {
+			$("#exampleModal").modal({
+				backdrop: 'static',
+				keyboard: false
+			});
+		});
+	});
+</script>

@@ -14,7 +14,7 @@ class Items extends CI_Controller
 
 	public function index()
 	{
-		$data['row'] = $this->Items_m->get()->result();
+		$data['row'] = $this->Items_m->get_item()->result();
 		$this->template->load('v_template', 'master/items/v_items', $data);
 	}
 
@@ -36,7 +36,7 @@ class Items extends CI_Controller
 		$this->form_validation->set_rules('categories_id', 'Categories Id', 'trim|required');
 		$this->form_validation->set_rules('sub_categories_id', 'Sub Categories Id', 'trim|required');
 		$this->form_validation->set_rules('harga_items', 'Harga Items', 'trim|required');
-		$this->form_validation->set_rules('qty_items', 'Qty Items', 'trim|required');
+		$this->form_validation->set_rules('type_qty', 'Satuan', 'trim|required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->template->load('v_template', 'master/items/v_items_add', $data);
@@ -52,12 +52,58 @@ class Items extends CI_Controller
 		}
 	}
 
+	public function edit($id)
+	{
+		$type_qty 		= $this->uri->segment(4);
+
+		$items 			= $this->Items_m->get($id)->row();
+		$categories 	= $this->Categories_m->get()->result();
+
+		$data  = [
+			'items' => $items,
+			'categories' => $categories
+		];
+
+		if ($type_qty == 'pcs') {
+			$this->template->load('v_template', 'master/items/v_items_edit_pcs', $data);
+		} else {
+			$this->template->load('v_template', 'master/items/v_items_edit_kg', $data);
+		}
+	}
+
+	public function process_edit_pcs()
+	{
+		$post = $this->input->post(NULL, TRUE);
+
+		$this->Items_m->edit_pcs($post);
+
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success"><strong>Success!</strong> Data berhasil disimpan</div>');
+			redirect('items');
+		}
+	}
+
+	public function process_edit_kg()
+	{
+		$post = $this->input->post(NULL, TRUE);
+
+		$this->Items_m->edit_kg($post);
+
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success"><strong>Success!</strong> Data berhasil disimpan</div>');
+			redirect('items');
+		}
+	}
+
+
 	function get_subkategori()
 	{
 		$id     = $this->input->post('id');
 		$data   = $this->Sub_categories_m->get_sub_categories($id)->result();
 		echo json_encode($data);
 	}
+
+
 
 
 	public function del($id)

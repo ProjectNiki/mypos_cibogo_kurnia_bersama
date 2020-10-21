@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Okt 2020 pada 08.42
+-- Waktu pembuatan: 13 Okt 2020 pada 22.37
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.8
 
@@ -24,19 +24,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `biaya_pengurusan`
+-- Struktur dari tabel `biaya_pengurusan_detail`
 --
 
-CREATE TABLE `biaya_pengurusan` (
-  `pengurusan_id` int(6) NOT NULL,
-  `invoice` varchar(50) DEFAULT NULL,
+CREATE TABLE `biaya_pengurusan_detail` (
+  `bpd_id` int(6) NOT NULL,
+  `bp_key` varchar(50) DEFAULT NULL,
+  `pt_customers` varchar(50) DEFAULT NULL,
   `fee_oprasional` bigint(20) DEFAULT NULL,
   `oprasional` bigint(20) DEFAULT NULL,
   `pajak_tax` bigint(20) DEFAULT NULL,
   `lab` bigint(20) DEFAULT NULL,
   `jasa_perushaan` bigint(20) DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `created` datetime DEFAULT current_timestamp(),
+  `created` time DEFAULT current_timestamp(),
+  `updated` datetime DEFAULT NULL,
   `user_id` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -50,7 +52,9 @@ CREATE TABLE `cart` (
   `cart_id` int(6) NOT NULL,
   `items_id` int(6) DEFAULT NULL,
   `harga_items` bigint(20) DEFAULT NULL,
+  `type_qty` varchar(3) DEFAULT NULL,
   `qty` bigint(20) DEFAULT NULL,
+  `qty_kg` double(20,2) DEFAULT NULL,
   `total` bigint(20) DEFAULT NULL,
   `user_id` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -70,6 +74,7 @@ CREATE TABLE `cash_in_cash_out` (
   `total` bigint(20) DEFAULT NULL,
   `noted` text DEFAULT NULL,
   `created` time DEFAULT current_timestamp(),
+  `updated` datetime DEFAULT NULL,
   `user_id` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -134,6 +139,8 @@ CREATE TABLE `items` (
   `sub_categories_id` int(6) DEFAULT NULL,
   `harga_items` bigint(20) DEFAULT NULL,
   `qty_items` bigint(20) DEFAULT NULL,
+  `qty_items_kg` double(20,2) DEFAULT NULL,
+  `type_qty` varchar(3) DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL,
   `user_created` int(1) DEFAULT NULL,
@@ -154,7 +161,7 @@ CREATE TABLE `pembayaran` (
   `total_price` bigint(20) DEFAULT NULL,
   `cash` bigint(20) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
-  `pembayaran_oprasional` int(1) DEFAULT NULL,
+  `payment` int(1) DEFAULT NULL,
   `lunas_down_payment` int(1) DEFAULT NULL,
   `noted` text DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -173,7 +180,9 @@ CREATE TABLE `pembayaran_detail` (
   `pembayaran_id` int(6) DEFAULT NULL,
   `items_id` int(128) DEFAULT NULL,
   `harga_items` bigint(20) DEFAULT NULL,
+  `type_qty` varchar(3) DEFAULT NULL,
   `qty` bigint(20) DEFAULT NULL,
+  `qty_kg` double(20,2) DEFAULT NULL,
   `total` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -183,6 +192,13 @@ CREATE TABLE `pembayaran_detail` (
 DELIMITER $$
 CREATE TRIGGER `stock_min` AFTER INSERT ON `pembayaran_detail` FOR EACH ROW BEGIN 
 	UPDATE items SET qty_items = qty_items - NEW.qty 
+    WHERE items_id = NEW.items_id;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stock_min_kg` AFTER INSERT ON `pembayaran_detail` FOR EACH ROW BEGIN 
+	UPDATE items SET qty_items_kg = qty_items_kg - NEW.qty_kg 
     WHERE items_id = NEW.items_id;
 END
 $$
@@ -199,6 +215,7 @@ CREATE TABLE `pembayaran_down_payment` (
   `invoice` varchar(50) DEFAULT NULL,
   `down_payment_id` varchar(128) DEFAULT NULL,
   `down_payment` bigint(20) DEFAULT NULL,
+  `payment_dp` int(2) DEFAULT NULL,
   `noted` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
   `user_id` int(2) DEFAULT NULL
@@ -215,6 +232,7 @@ CREATE TABLE `stock_in` (
   `items_id` int(6) DEFAULT NULL,
   `type` varchar(2) DEFAULT NULL,
   `qty_stock_in` bigint(20) DEFAULT NULL,
+  `qty_stock_in_kg` double(20,2) DEFAULT NULL,
   `date` date DEFAULT current_timestamp(),
   `detail` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
@@ -232,6 +250,7 @@ CREATE TABLE `stock_out` (
   `items_id` int(6) DEFAULT NULL,
   `type` varchar(3) DEFAULT NULL,
   `qty_stock_out` bigint(20) DEFAULT NULL,
+  `qty_stock_out_kg` double(20,2) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `detail` text DEFAULT NULL,
   `created` datetime DEFAULT current_timestamp(),
@@ -253,6 +272,15 @@ CREATE TABLE `sub_categories` (
   `user_created` int(1) DEFAULT NULL,
   `user_updated` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `sub_categories`
+--
+
+INSERT INTO `sub_categories` (`sub_categories_id`, `name_sub_categories`, `categories_id`, `created`, `updated`, `user_created`, `user_updated`) VALUES
+(1, 'Baju', 1, '2020-10-06 21:30:47', NULL, 1, NULL),
+(2, 'Celana', 1, '2020-10-10 01:58:47', NULL, 1, NULL),
+(3, 'Anting', 2, '2020-10-12 23:16:51', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -278,7 +306,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `nama`, `email`, `alamat`, `password`, `is_active`, `level`, `in`, `log`, `ip`) VALUES
-(1, 'Pak. Dayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-10-05 13:24:23', '2020-10-04 23:59:23', '::1'),
+(1, 'Ahmad Hidayat', 'dayat@gmail.com', 'Jakarta Timuur', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-10-13 23:15:30', '2020-10-11 23:04:39', '127.0.0.1'),
 (2, 'Pak. Lucky', 'lucky@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1'),
 (3, 'Ika', 'ika@gmail.com', 'Jakarta Selatan', '$2y$10$hRqpgjIMsdB5vPxeQUWZnubFz7q5qjJCPWPNOank0ERGI0dx/QU3O', '1', 1, '2020-09-26 23:03:47', '2020-09-27 00:40:25', '127.0.0.1');
 
@@ -287,10 +315,10 @@ INSERT INTO `user` (`user_id`, `nama`, `email`, `alamat`, `password`, `is_active
 --
 
 --
--- Indeks untuk tabel `biaya_pengurusan`
+-- Indeks untuk tabel `biaya_pengurusan_detail`
 --
-ALTER TABLE `biaya_pengurusan`
-  ADD PRIMARY KEY (`pengurusan_id`);
+ALTER TABLE `biaya_pengurusan_detail`
+  ADD PRIMARY KEY (`bpd_id`);
 
 --
 -- Indeks untuk tabel `cart`
@@ -377,10 +405,10 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `biaya_pengurusan`
+-- AUTO_INCREMENT untuk tabel `biaya_pengurusan_detail`
 --
-ALTER TABLE `biaya_pengurusan`
-  MODIFY `pengurusan_id` int(6) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `biaya_pengurusan_detail`
+  MODIFY `bpd_id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `cart`
@@ -446,7 +474,7 @@ ALTER TABLE `stock_out`
 -- AUTO_INCREMENT untuk tabel `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `sub_categories_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `sub_categories_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`

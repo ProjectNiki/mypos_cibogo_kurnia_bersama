@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Data Stock In <small>Stock In</small></h1>
+	<h1>Data Stock Out <small>Stock Out</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('dashboard') ?>">
@@ -10,8 +10,8 @@
 			Transaksi
 		</li>
 		<li>
-			<a href="<?= site_url('stock_in') ?>">
-				Stock In
+			<a href="<?= site_url('stock_out') ?>">
+				Stock Out
 			</a>
 		</li>
 		<li class="active">
@@ -23,9 +23,9 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header">
-			<h4>Add Stock In
+			<h4>Add Stock Out
 				<div class="pull-right">
-					<a href="<?= site_url('stock_in') ?>" class="btn btn-warning">
+					<a href="<?= site_url('stock_out') ?>" class="btn btn-warning">
 						<i class="fa fa-arrow-right"></i>
 					</a>
 				</div>
@@ -34,7 +34,7 @@
 		<div class="box-body">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<form action="<?= site_url('stock_in/stock_in_add')?> " method="POST">
+					<form action="<?= site_url('stock_out/stock_out_add_kg')?>" method="POST">
 						<div class="form-group">
 							<label for="">Tanggal <i class="text-danger">*</i></label>
 							<input type="date" name="date" id="date" class="form-control" value="<?= date('Y-m-d') ?>">
@@ -60,20 +60,20 @@
 						<?= form_error('name_items', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<!--  -->
-						<label for="qty_items">Initial Stock <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('qty_items') == true ? 'has-error' : null ?>">
+						<label for="qty_items_kg">Initial Stock <i class="text-danger">*</i></label>
+						<div class="input-group <?= form_error('qty_items_kg') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" id="qty_items" name="qty_items" class="form-control" placeholder="Qty Saat Ini" value="<?= set_value('qty_items') ?>" readonly>
+							<input type="text" id="qty_items_kg" name="qty_items_kg" class="form-control" placeholder="Qty Saat Ini" value="<?= set_value('qty_items_kg') ?>" readonly>
 						</div>
-						<?= form_error('qty_items', '<div class="text-danger">', '</div>'); ?>
+						<?= form_error('qty_items_kg', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<!--  -->
-						<label for="qty_stock_in">pcs <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('qty_stock_in') == true ? 'has-error' : null ?>">
+						<label for="qty_stock_out">Kg <i class="text-danger">* Perhatikan ( . ) padaa saat input Kg</i></label>
+						<div class="input-group <?= form_error('qty_stock_out') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" onkeyup="splitInDots(this)" id="qty_stock_in" name="qty_stock_in" class="form-control" placeholder="pcs" value="<?= set_value('qty_stock_in') ?>" autocomplete="off">
+							<input type="text" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="Kg Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_out') ?>" autocomplete="off">
 						</div>
-						<?= form_error('qty_stock_in', '<div class="text-danger">', '</div>'); ?>
+						<?= form_error('qty_stock_out', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<!--  -->
 						<div class="form-group <?= form_error('detail') == TRUE ? 'has-error' : null ?>">
@@ -114,20 +114,20 @@
 					<tbody>
 						<?php $no = 1; ?>
 						<?php foreach ($row as $key => $data) { ?>
-							<?php if($data->type_qty == 'pcs'){ ?>
-								<tr>
-									<td class="text-center"><?= $no++ ?></td>
-									<td><?= $data->name_items ?></td>
-									<td><?= indo_currency($data->harga_items) ?></td>
-									<td class="text-center">
-										<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_kg) . '/' . $data->type_qty : indo_qty($data->qty_items) . '/' . $data->type_qty ?>
-									</td>
-									<td class="text-center">
-										<button class="btn btn-success btn-sm" id="select" data-items_key="<?= $data->items_key ?>" data-items_id="<?= $data->items_id ?>" data-name_items="<?= $data->name_items ?>" data-qty_items="<?= $data->qty_items ?>">
-											<i class="fa fa-check"></i>
-										</button>
-									</td>
-								</tr>
+							<?php if($data->type_qty == 'Kg'){ ?>
+							<tr>
+								<td class="text-center"><?= $no++ ?></td>
+								<td><?= $data->name_items ?></td>
+								<td><?= indo_currency($data->harga_items) ?></td>
+								<td class="text-center">
+									<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_items_kg) . '/' . $data->type_qty : indo_qty($data->qty_items) . '/' . $data->type_qty ?>
+								</td>
+								<td class="text-center">
+									<button class="btn btn-success btn-sm" id="select" data-items_key="<?= $data->items_key ?>" data-items_id="<?= $data->items_id ?>" data-name_items="<?= $data->name_items ?>" data-qty_items_kg="<?= $data->qty_items_kg ?>">
+										<i class="fa fa-check"></i>
+									</button>
+								</td>
+							</tr>
 							<?php } ?>
 						<?php } ?>
 					</tbody>
@@ -144,30 +144,28 @@
 			$('#items_key').val($(this).data('items_key'));
 			$('#items_id').val($(this).data('items_id'));
 			$('#name_items').val($(this).data('name_items'));
-			$('#qty_items').val($(this).data('qty_items'));
+			$('#qty_items_kg').val($(this).data('qty_items_kg'));
 
 			$('#exampleModal').modal('hide');
 		});
 	});
 </script>
 
-<script type="text/javascript">
-	function reverseNumber(input) {
-		return [].map.call(input, function(x) {
-			return x;
-		}).reverse().join('');
-	}
+<script>
+	$(document).on('keyup mouseup', '#qty_stock_out', function() {
 
-	function plainNumber(number) {
-		return number.split('.').join('');
-	}
+		var qty_show = $('#qty_items_kg').val();
+		var qty_input = $('#qty_stock_out').val();
 
-	function splitInDots(input) {
-		var value = input.value,
-			plain = plainNumber(value),
-			reversed = reverseNumber(plain),
-			reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
-			normal = reverseNumber(reversedWithDots);
-		input.value = normal;
-	}
+		count = qty_show - qty_input;
+
+		console.log(count)
+
+		if (count < 0) {
+			alert('Qty Stock Out tidak boleh melebihi Initial Stock');
+			$(':input[type="submit"]').prop('disabled', true);
+		} else {
+			$(':input[type="submit"]').prop('disabled', false);
+		}
+	})
 </script>

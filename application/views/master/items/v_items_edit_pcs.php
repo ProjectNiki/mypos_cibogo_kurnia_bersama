@@ -1,5 +1,5 @@
 <section class="content-header">
-	<h1>Items <small>Add Items</small></h1>
+	<h1>Items <small>Edit Items</small></h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="<?= site_url('Dashboard') ?>">
@@ -15,17 +15,17 @@
 			</a>
 		</li>
 		<li class="active">
-			Add
+			Edit
 		</li>
 
 	</ol>
 </section>
 
 <section class="content">
-	<div class="box box-primary">
+	<div class="box box-success">
 		<div class="box-header">
 			<h4>
-				Add Items
+				Edit Items
 				<div class="pull-right">
 					<a href="<?= site_url('items') ?>" class="btn btn-warning">
 						<i class="fa fa-arrow-right"></i>
@@ -36,73 +36,56 @@
 		<div class="box-body">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<form action="" method="POST">
+					<form action="<?= site_url('items/process_edit_pcs'); ?>" method="POST">
+						<input type="hidden" name="items_id" value="<?= $items->items_id ?>">
 						<label for="">ID Items <i class="text-danger">*</i></label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-key"></i></span>
-							<input type="text" name="items_key" id="items_key" class="form-control" placeholder="ID Items" value="P_<?= sprintf("%04s", $row) ?>" readonly>
+							<input type="text" name="items_key" id="items_key" class="form-control" placeholder="ID Items" value="<?= $items->items_key ?>" readonly required>
 						</div>
 						<?= form_error('items_key', '<div class="text-danger">', '</div>'); ?>
 						<!--  -->
 						<br>
 						<label for="name_items">Nama Items <i class="text-danger">*</i></label>
-						<div class="input-group <?= form_error('name_items') == true ? 'has-error' : null ?>">
+						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-cogs" aria-hidden="true"></i></span>
-							<input type="text" id="name_items" name="name_items" class="form-control" value="<?= set_value('name_items') ?>" placeholder="Nama Items" autofocus autocomplete="off">
+							<input type="text" id="name_items" name="name_items" class="form-control" value="<?= $items->name_items ?>" placeholder="Nama Items" autocomplete="off" required>
 						</div>
-						<?= form_error('name_items', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<div class="form-group">
 							<label for="categories_id">Kategori <i class="text-danger">*</i></label>
-							<select name="categories_id" id="categories_id" class="form-control select2" style="width: 100%;">
+							<select name="categories_id" id="categories_id" class="form-control select2" style="width: 100%;" required>
 								<option value="">-- Pilih --</option>
+								<?php $level = $this->input->post('categories_id') ?? $items->categories_id ?>
 								<?php foreach ($categories as $key => $data) { ?>
-									<option value="<?= $data->categories_id ?>" <?= set_value('categories_id') == $data->categories_id ? "selected" : null ?>><?= $data->name_categories ?></option>
+									<option value="<?= $data->categories_id ?>" <?= $data->categories_id == $level ? 'selected' : null ?>><?= $data->name_categories ?></option>
 								<?php } ?>
 							</select>
-							<?= form_error('categories_id', '<div class="text-danger">', '</div>'); ?>
 						</div>
-						<!--  -->
 						<div class="form-group">
 							<label for="sub_categories_id">Sub Kategori <i class="text-danger">*</i></label>
-							<select name="sub_categories_id" id="sub_categories_id" class="form-control select2" style="width: 100%;">
-								<option value="">-- Pilih --</option>
+							<select name="sub_categories_id" id="sub_categories_id" class="form-control select2" style="width: 100%;" required>
+								<option value="<?= $items->sub_categories_id ?>"><?= $items->name_sub_categories ?></option>
 							</select>
-							<?= form_error('sub_categories_id', '<div class="text-danger">', '</div>'); ?>
 						</div>
 						<div>
 							<label for="harga_items">Harga <i class="text-danger">*</i></label>
 						</div>
-						<div class="input-group  <?= form_error('harga_items') == true ? 'has-error' : null ?>">
+						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-money"></i></span>
-							<input type="text" id="harga_items" onkeyup="splitInDots(this)" name="harga_items" class="form-control" placeholder="Harga Items" value="<?= set_value('harga_items') ?>" autocomplete="off">
+							<input type="text" id="harga_items" onkeyup="splitInDots(this)" name="harga_items" class="form-control" placeholder="Harga Items" value="<?= indo_qty($items->harga_items) ?>" autocomplete="off" required>
 						</div>
-						<?= form_error('harga_items', '<div class="text-danger">', '</div>'); ?>
-						<!--  -->
 						<br>
 						<div class="form-group">
 							<label for="type_qty">Satuan <i class="text-danger">*</i></label>
-							<select name="type_qty" id="type_qty" class="form-control select2" style="width: 100%;">
-								<option value="">-- Pilih --</option>
-								<option value="Kg">Kg</option>
-								<option value="pcs">pcs</option>
-							</select>
-							<?= form_error('type_qty', '<div class="text-danger">', '</div>'); ?>
+							<input type="text" name="type_qty" id="type_qty" class="form-control" value="<?= $items->type_qty ?>" readonly>
 						</div>
-						<div style="display: none;" id="qty_items_show">
+						<div>
 							<label for="qty_items">pcs <i class="text-danger">*</i></label>
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-								<input type="text" id="qty_items" onkeyup="splitInDots(this)" name="qty_items" class="form-control" placeholder="pcs" autocomplete="off">
+								<input type="text" id="qty_items" onkeyup="splitInDots(this)" name="qty_items" class="form-control" placeholder="pcs" value="<?= indo_qty($items->qty_items) ?>" autocomplete="off">
 							</div>
-						</div>
-						<div style="display: none;" id="qty_items_kg_show">
-							<label for="qty_items_kg">Kg <i class="text-danger">*</i></label>
-							<div class="input-group ">
-								<span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-								<input type="text" id="qty_items_kg" name="qty_items_kg" class="form-control" placeholder="Kg" autocomplete="off">
-							</div>
-							<small class="text-danger">* Perhatikan ( . ) padaa saat input Kg</small>
 						</div>
 						<br>
 						<div class="form-group">
@@ -164,23 +147,4 @@
 			normal = reverseNumber(reversedWithDots);
 		input.value = normal;
 	}
-</script>
-
-<script>
-	$(document).ready(function() {
-
-		$('#type_qty').on('change', function() {
-			if (this.value == 'Kg') {
-				$("#qty_items_kg_show").show();
-				$("#qty_items_show").hide();
-			} else if (this.value == 'pcs') {
-				$("#qty_items_kg_show").hide();
-				$("#qty_items_show").show();
-			} else {
-				$("#qty_items_kg_show").hide();
-				$("#qty_items_show").hide();
-			}
-		});
-
-	});
 </script>

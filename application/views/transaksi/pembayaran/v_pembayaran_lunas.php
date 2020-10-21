@@ -92,7 +92,8 @@
 						<th class="text-center">Nama Items</th>
 						<th class="text-center">Sub Katagori</th>
 						<th class="text-center">Katagori</th>
-						<th class="text-center">Qty</th>
+						<th class="text-center">Satuan</th>
+						<th class="text-center">Payment</th>
 						<th class="text-center">Price (Rp)</th>
 						<th class="text-center">Total</th>
 					</tr>
@@ -105,15 +106,18 @@
 							<td><?= $data->name_items ?></td>
 							<td><?= $data->name_sub_categories ?></td>
 							<td><?= $data->name_categories ?></td>
-							<td class="text-center"><?= $data->pembayaran_qty ?></td>
+							<td class="text-center">
+								<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_kg) . '/' . $data->type_qty : indo_qty($data->qty) . '/' . $data->type_qty ?>
+							</td>
+							<td class="text-center"><?= $data->payment == 1 ? 'Cash' : 'Debit' ?></td>
 							<td><?= indo_currency($data->harga_pembayaran) ?></td>
-							<td><?= indo_currency($data->pembayaran_qty * $data->harga_pembayaran) ?></td>
+							<td><?= indo_currency($data->total)  ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="6" class="text-right">
+						<td colspan="7" class="text-right">
 							<b>Grand Total</b>
 						</td>
 						<td colspan="1" style="text-align: left;">

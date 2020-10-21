@@ -83,8 +83,10 @@ $myOriginalDate = date("Y-m-d");
 							</td>
 							<td>
 								<div class="form-group input-group">
+									<input type="hidden" id="type_qty">
 									<input type="hidden" id="harga_items">
 									<input type="hidden" id="qty_items">
+									<input type="hidden" id="qty_items_kg">
 									<input type="hidden" id="items_id">
 									<input type="hidden" id="name_items">
 									<input type="text" id="items_key" class="form-control" autofocus readonly>
@@ -103,6 +105,8 @@ $myOriginalDate = date("Y-m-d");
 							<td>
 								<div class="form-group">
 									<input type="number" name="qty" id="qty" value="1" min="1" class="form-control" autocomplete="off">
+
+									<small style="color: red;">* Perhatikan ( . ) padaa saat input Kg </small>
 								</div>
 							</td>
 						</tr>
@@ -160,7 +164,7 @@ $myOriginalDate = date("Y-m-d");
 								<th class="text-center">#</th>
 								<th class="text-center">Product Item</th>
 								<th class="text-center">Price (Rp)</th>
-								<th class="text-center">Qty</th>
+								<th class="text-center">Satuan</th>
 								<th class="text-center" style="width: 10%;">Total</th>
 								<th class="text-center" style="width: 15%;">Action</th>
 							</tr>
@@ -212,11 +216,25 @@ $myOriginalDate = date("Y-m-d");
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width: 29%">
-								<label for="cash">Cash</label>
+								<label for="">Payment</label>
 							</td>
 							<td>
 								<div class="form-group">
-									<input type="text" id="cash" onkeyup="splitInDots(this)" name="cash" class="form-control" placeholder="Cash" autocomplete="off">
+									<select name="type" id="payment" name="payment" class="form-control select2" style="width: 100%;">
+										<option value=""> --Pilih-- </option>
+										<option value="1">Cash</option>
+										<option value="2">Debit</option>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 29%">
+								<label for="cash">Nominal</label>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" id="cash" onkeyup="splitInDots(this)" name="cash" class="form-control" placeholder="Uang yang dibayarkan" autocomplete="off">
 								</div>
 							</td>
 						</tr>
@@ -254,7 +272,7 @@ $myOriginalDate = date("Y-m-d");
 			<div class="col-md-3">
 				<div class="box">
 					<div class="box-body">
-						<button id="cancel_payment" class="btn btn-warning" style="width: 100%;">
+						<button id="cancel_payment" class="btn btn-warning" style="width: 100%;" onclick="location.reload();">
 							<i class="fa fa-refresh"></i>
 						</button>
 						<hr style="width: 70%;">
@@ -295,9 +313,9 @@ $myOriginalDate = date("Y-m-d");
 								<td><?= $data->items_key ?></td>
 								<td><?= $data->name_items ?></td>
 								<td><?= indo_currency($data->harga_items) ?></td>
-								<td class="text-center"><?= $data->qty_items ?></td>
+								<td class="text-center"><?= $data->type_qty == 'Kg' ? indo_kg($data->qty_items_kg) . '/' . $data->type_qty : indo_qty($data->qty_items) . '/' . $data->type_qty ?></td>
 								<td class="text-center">
-									<button class="btn btn-success btn-sm" id="select" data-items_key=<?= $data->items_key ?> data-name_items="<?= $data->name_items ?>" data-harga_items="<?= $data->harga_items ?>" data-items_id="<?= $data->items_id ?>" data-product="<?= $data->name_items ?>" data-item="<?= $data->items_id ?>" data-qty_items="<?= $data->qty_items ?>">
+									<button class="btn btn-success btn-sm" id="select" data-type_qty=<?= $data->type_qty ?> data-items_key=<?= $data->items_key ?> data-name_items="<?= $data->name_items ?>" data-harga_items="<?= $data->harga_items ?>" data-items_id="<?= $data->items_id ?>" data-product="<?= $data->name_items ?>" data-item="<?= $data->items_id ?>" data-qty_items="<?= $data->qty_items ?>" data-qty_items_kg="<?= $data->qty_items_kg ?>">
 										<i class="fa fa-check"></i>
 									</button>
 								</td>
@@ -360,6 +378,8 @@ $myOriginalDate = date("Y-m-d");
 			$('#harga_items').val($(this).data('harga_items'));
 			$('#name_items').val($(this).data('name_items'));
 			$('#qty_items').val($(this).data('qty_items'));
+			$('#qty_items_kg').val($(this).data('qty_items_kg'));
+			$('#type_qty').val($(this).data('type_qty'));
 			$('#items_key').val($(this).data('items_key'));
 			$('#exampleModal').modal('hide');
 		});
@@ -380,14 +400,15 @@ $myOriginalDate = date("Y-m-d");
 			var items_id = $('#items_id').val()
 			var harga_items = $('#harga_items').val()
 			var qty_items = $('#qty_items').val()
+			var qty_items_kg = $('#qty_items_kg').val()
+			var type_qty = $('#type_qty').val()
 			var qty = $('#qty').val()
+
+			console.log(qty_items_kg);
 
 			if (items_id == '') {
 				swal("Error!", "Product belum dipilih!", "error");
 				$('#items_id').focus();
-			} else if (qty_items < 1) {
-				swal("Error!", "Stock tidak mencukupi!", "error");
-				$('#items_id').val('')
 			} else {
 				$.ajax({
 					type: 'POST',
@@ -396,6 +417,8 @@ $myOriginalDate = date("Y-m-d");
 						'add_cart': true,
 						'items_id': items_id,
 						'harga_items': harga_items,
+						'qty_items_kg': qty_items_kg,
+						'type_qty': type_qty,
 						'qty': qty
 					},
 					dataType: 'json',
@@ -491,6 +514,7 @@ $myOriginalDate = date("Y-m-d");
 			var down_payment_id = $('#down_payment_id').val()
 			var grandtotal = $('#grand_total').val()
 			var cash = $('#cash').val()
+			var payment = $('#payment').val()
 			var change = $('#change').val()
 			var status = $('#status').val()
 			var date = $('#date').val()
@@ -508,7 +532,10 @@ $myOriginalDate = date("Y-m-d");
 				$('#customers_id').focus();
 			} else if (status == '') {
 				swal("Error!", "Data Status Pembayaran Belum Diinput!", "error");
-				$('#customers_id').focus();
+				$('#status').focus();
+			} else if (payment == '') {
+				swal("Error!", "Data Payment Belum Diinput!", "error");
+				$('#payment').focus();
 			} else {
 				if (confirm('Data akan disimpan, apakah yakin ?')) {
 					$.ajax({
@@ -522,6 +549,7 @@ $myOriginalDate = date("Y-m-d");
 							'down_payment_id': down_payment_id,
 							'grandtotal': grandtotal,
 							'cash': cash,
+							'payment': payment,
 							'change': change,
 							'status': status,
 							'noted': noted,
@@ -560,6 +588,22 @@ $myOriginalDate = date("Y-m-d");
 				$("#key_dp_hide").hide();
 			}
 		});
+
+
+
+		$('#type_qty').on('change', function() {
+			if (this.value == 'Kg') {
+				$("#qty_items_kg_show").show();
+				$("#qty_items_show").hide();
+			} else if (this.value == 'Qty') {
+				$("#qty_items_kg_show").hide();
+				$("#qty_items_show").show();
+			} else {
+				$("#qty_items_kg_show").hide();
+				$("#qty_items_show").hide();
+			}
+		});
+
 	});
 </script>
 

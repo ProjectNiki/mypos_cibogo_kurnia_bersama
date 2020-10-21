@@ -47,7 +47,7 @@ date_default_timezone_set("Asia/Bangkok");
 				<th class="text-center">#</th>
 				<th class="text-center">Tanggal</th>
 				<th class="text-center">Keterangan</th>
-				<th class="text-center">PIC</th>
+				<th class="text-center">Nama</th>
 				<th class="text-center">Type</th>
 				<th class="text-center">Payment</th>
 				<th class="text-center">Total (Rp)</th>
@@ -86,7 +86,7 @@ date_default_timezone_set("Asia/Bangkok");
 				<th class="text-center">#</th>
 				<th class="text-center">Tanggal</th>
 				<th class="text-center">Keterangan</th>
-				<th class="text-center">Nama</th>
+				<th class="text-center">PIC</th>
 				<th class="text-center">Type</th>
 				<th class="text-center">Payment</th>
 				<th class="text-center">Total (Rp)</th>

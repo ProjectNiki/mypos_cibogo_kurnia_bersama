@@ -34,23 +34,26 @@
 		<div class="box-body">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<form action="<?= site_url('oprasional/add') ?>" method="POST">
+					<form action="<?= site_url('oprasional/existing_update') ?>" method="POST">
 						<div class="form-group">
 							<label for="">Tanggal <i class="text-danger">*</i></label>
 							<input type="date" name="date" id="date" class="form-control" value="<?= date('Y-m-d') ?>">
 						</div>
 						<label for="">ID Biaya Pengurusan <i class="text-danger">*</i></label>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-key"></i></span>
-							<input type="text" name="bp_key" id="bp_key" class="form-control" placeholder="ID Bp" value="BP_<?= sprintf("%04s", $row) ?>" readonly>
+							<input type="text" id="bp_key" name="bp_key" value="<?= set_value('bp_key') ?>" class="form-control" readonly>
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
 						</div>
-						<?= form_error('bp_key', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<div class="form-group">
 							<label for="pt_customers">Perusahaan <i class="text-danger">*</i></label>
 							<div class="input-group <?= form_error('pt_customers') == TRUE ? 'has-error' : null ?>">
 								<span class="input-group-addon"><i class="fa fa-building"></i></span>
-								<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Perusahaan" value="<?= set_value('pt_customers') ?>" autocomplete="off" autofocus="true">
+								<input type="text" name="pt_customers" id="pt_customers" class="form-control" placeholder="Perusahaan" value="<?= set_value('pt_customers') ?>" autocomplete="off" readonly>
 							</div>
 							<?= form_error('pt_customers', '<div class="text-danger">', '</div>'); ?>
 						</div>
@@ -100,6 +103,59 @@
 		</div>
 	</div>
 </section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="exampleModalLabel">Items</h4>
+			</div>
+			<div class="modal-body table-responsive">
+				<table class="table table-bordered table-striped" id="datatable">
+					<thead>
+						<tr>
+							<th class="text-center">#</th>
+							<th class="text-center">ID Biaya Pengurusan</th>
+							<th class="text-center">Prushaan (Rp)</th>
+							<th class="text-center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php $no = 1; ?>
+						<?php foreach ($existing as $key => $data) { ?>
+								<tr>
+									<td class="text-center"><?= $no++ ?></td>
+									<td class="text-center"><?= $data->bp_key ?></td>
+									<td><?= $data->pt_customers ?></td>
+									<td class="text-center">
+										<button class="btn btn-success btn-sm" id="select" data-bp_key="<?= $data->bp_key ?>" data-pt_customers="<?= $data->pt_customers ?>">
+											<i class="fa fa-check"></i>
+										</button>
+									</td>
+								</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$(document).ready(function() {
+		$(document).on('click', '#select', function() {
+
+			$('#bp_key').val($(this).data('bp_key'));
+			$('#pt_customers').val($(this).data('pt_customers'));
+			
+			$('#exampleModal').modal('hide');
+		});
+	});
+</script>
+
+
 
 <script type="text/javascript">
 	function reverseNumber(input) {

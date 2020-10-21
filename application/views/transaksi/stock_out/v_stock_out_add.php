@@ -34,7 +34,7 @@
 		<div class="box-body">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<form action="" method="POST">
+					<form action="<?= site_url('stock_out/stock_out_add') ?>" method="POST">
 						<div class="form-group">
 							<label for="">Tanggal <i class="text-danger">*</i></label>
 							<input type="date" name="date" id="date" class="form-control" value="<?= date('Y-m-d') ?>">
@@ -63,15 +63,15 @@
 						<label for="qty_items">Initial Stock <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_items') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" id="qty_items" name="qty_items" class="form-control" placeholder="Qty Saat Ini" value="<?= set_value('qty_items') ?>" readonly>
+							<input type="text" id="qty_items" name="qty_items" class="form-control" placeholder="pcs Saat Ini" value="<?= set_value('qty_items') ?>" readonly>
 						</div>
 						<?= form_error('qty_items', '<div class="text-danger">', '</div>'); ?>
 						<br>
 						<!--  -->
-						<label for="qty_stock_out">Qty <i class="text-danger">*</i></label>
+						<label for="qty_stock_out">pcs <i class="text-danger">*</i></label>
 						<div class="input-group <?= form_error('qty_stock_out') == true ? 'has-error' : null ?>">
 							<span class="input-group-addon"><i class="fa fa-dropbox"></i></span>
-							<input type="text" onkeyup="splitInDots(this)" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="Qty Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_out') ?>" autocomplete="off">
+							<input type="text" onkeyup="splitInDots(this)" id="qty_stock_out" name="qty_stock_out" class="form-control" placeholder="pcs Keluar/Rusak/Hilang" value="<?= set_value('qty_stock_out') ?>" autocomplete="off">
 						</div>
 						<?= form_error('qty_stock_out', '<div class="text-danger">', '</div>'); ?>
 						<br>
@@ -107,24 +107,28 @@
 							<th class="text-center">#</th>
 							<th class="text-center">Nama Items</th>
 							<th class="text-center">Harga (Rp)</th>
-							<th class="text-center">Stock</th>
+							<th class="text-center">Satuan</th>
 							<th class="text-center">Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php $no = 1; ?>
 						<?php foreach ($row as $key => $data) { ?>
+							<?php if($data->type_qty == 'pcs'){ ?>
 							<tr>
 								<td class="text-center"><?= $no++ ?></td>
 								<td><?= $data->name_items ?></td>
 								<td><?= indo_currency($data->harga_items) ?></td>
-								<td class="text-center"><?= indo_qty($data->qty_items) ?></td>
+								<td class="text-center">
+										<?= $data->type_qty == 'Kg' ? indo_kg($data->qty_kg) . '/' . $data->type_qty : indo_qty($data->qty_items) . '/' . $data->type_qty ?>
+									</td>
 								<td class="text-center">
 									<button class="btn btn-success btn-sm" id="select" data-items_key="<?= $data->items_key ?>" data-items_id="<?= $data->items_id ?>" data-name_items="<?= $data->name_items ?>" data-qty_items="<?= $data->qty_items ?>">
 										<i class="fa fa-check"></i>
 									</button>
 								</td>
 							</tr>
+							<?php } ?>
 						<?php } ?>
 					</tbody>
 				</table>

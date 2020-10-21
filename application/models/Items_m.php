@@ -18,6 +18,21 @@ class Items_m extends CI_Model
 		return $post;
 	}
 
+	public function get_item($id = NULL)
+	{
+		$this->db->select('*');
+		$this->db->from('items');
+		$this->db->join('categories', 'categories.categories_id = items.categories_id');
+		$this->db->join('sub_categories', 'sub_categories.sub_categories_id = items.sub_categories_id');
+		if ($id != NULL) {
+			$this->db->where('items_id', $id);
+		}
+		$this->db->order_by('items.items_key', 'ASC');
+
+		$post = $this->db->get();
+		return $post;
+	}
+
 	public function ai_code()
 	{
 		$query = $this->db->query("SELECT MAX(items_key) as items_key from items");
@@ -34,9 +49,44 @@ class Items_m extends CI_Model
 		$params['sub_categories_id']    = $post['sub_categories_id'];
 		$params['harga_items']      	= str_replace(".", "", $post['harga_items']);
 		$params['qty_items']      		= str_replace(".", "", $post['qty_items']);
+		$params['qty_items_kg']      	= str_replace(",", "", $post['qty_items_kg']);
+		$params['type_qty']    			= $post['type_qty'];
+
 		$params['user_created']      	= $this->session->userdata('user_id');
 
 		$this->db->insert('items', $params);
+	}
+
+	public function edit_kg($post)
+	{
+		$params['name_items']      		= $post['name_items'];
+		$params['categories_id']      	= $post['categories_id'];
+		$params['sub_categories_id']    = $post['sub_categories_id'];
+		$params['harga_items']      	= str_replace(".", "", $post['harga_items']);
+		$params['qty_items_kg']      	= str_replace(",", "", $post['qty_items_kg']);
+
+		$params['type_qty']    			= $post['type_qty'];
+		$params['user_updated']      	= $this->session->userdata('user_id');
+		$params['updated']              = date('Y-m-d H:i:s');
+
+		$this->db->where('items_id', $post['items_id']);
+		$this->db->update('items', $params);
+	}
+
+	public function edit_pcs($post)
+	{
+		$params['name_items']      		= $post['name_items'];
+		$params['categories_id']      	= $post['categories_id'];
+		$params['sub_categories_id']    = $post['sub_categories_id'];
+		$params['harga_items']      	= str_replace(".", "", $post['harga_items']);
+		$params['qty_items']      		= str_replace(".", "", $post['qty_items']);
+
+		$params['type_qty']    			= $post['type_qty'];
+		$params['user_updated']      	= $this->session->userdata('user_id');
+		$params['updated']              = date('Y-m-d H:i:s');
+
+		$this->db->where('items_id', $post['items_id']);
+		$this->db->update('items', $params);
 	}
 
 	public function del_stock_in($id)

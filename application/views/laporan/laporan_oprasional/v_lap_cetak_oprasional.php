@@ -23,7 +23,7 @@ date_default_timezone_set("Asia/Bangkok");
 	</style>
 </head>
 
-<body style="background-image: url('<?= base_url('assets') ?>/dist/img/lunas.png'); background-repeat: no-repeat; background-position: center;">
+<body>
 	<img src="<?= base_url('assets') ?>/dist/img/logo_pt.png" alt="" style="position: absolute; width: 90px; height: auto;">
 	<table class="table_header" style="width: 100%;">
 		<tr>
@@ -39,41 +39,18 @@ date_default_timezone_set("Asia/Bangkok");
 		</tr>
 	</table>
 	<hr class="line-title">
-	<table style="width:100%">
-		<tr>
-			<th style="width:70%;"><u>Customer</u></th>
-			<th style="width:30%"><u>Admin</u></th>
-		</tr>
-		<tr>
-			<td>
-				<?= $row->name_customers ?>
-			</td>
-			<td>
-				<?= $row->nama ?>
-			</td>
-		</tr>
-		<tr>
-			<td><?= $row->pt_customers ?></td>
-			<td>
-				<?= $row->created_pengurusan ?>
-			</td>
-		</tr>
-		<tr>
-			<td><?= $row->phone_customers ?></td>
-		</tr>
-		<tr>
-			<td><?= $row->address_customers ?></td>
-		</tr>
-	</table>
 	<div class="text-center">
-		<h3>INVOICE : <?= $row->invoice_pembayaran . '' . $row->no_urut_invoice ?> </h3>
-		<hr width="35%">
+		<h3><?= $row->bp_key ?></h3>
+		<hr width="20%">
 	</div>
-	Print On : <?= date('Y-m-d H:i:s'); ?>
-	<table class="table table-bordered table-responsive">
+	<b>Perusahaan</b> : <?= $row->pt_customers ?>
+	<br>
+	<table class="table table-bordered table-responsive" style="padding-top: 10px;">
 		<thead>
 			<tr>
 				<th class="text-center">#</th>
+				<th class="text-center">Tanggal</th>
+				<th class="text-center">Admin</th>
 				<th class="text-center">Fee (Rp)</th>
 				<th class="text-center">Oprasional (Rp)</th>
 				<th class="text-center">Pajak/tax (Rp)</th>
@@ -82,36 +59,56 @@ date_default_timezone_set("Asia/Bangkok");
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="text-center">1</td>
-				<td>
-					<?= indo_currency($row_sum->sum_fee) ?>
-				</td>
-				<td>
-					<?= indo_currency($row_sum->sum_oprasional) ?>
-				</td>
-				<td>
-					<?= indo_currency($row_sum->sum_pajak) ?>
-				</td>
-				<td>
-					<?= indo_currency($row_sum->sum_lab) ?>
-				</td>
-				<td>
-					<?= indo_currency($row_sum->sum_jasa_perushaan) ?>
-				</td>
-			</tr>
+			<?php $no = 1; ?>
+			<?php foreach ($result as $key => $data) { ?>
+				<tr>
+					<td class="text-center"><?= $no++ ?></td>
+					<td class="text-center"><?= indo_date($data->date) . ' ' . $data->created ?></td>
+					<td class="text-left"><?= $data->nama ?></td>
+					<td class="text-left"><?= indo_currency($data->fee_oprasional) ?></td>
+					<td class="text-left"><?= indo_currency($data->oprasional) ?></td>
+					<td class="text-left"><?= indo_currency($data->pajak_tax) ?></td>
+					<td class="text-left"><?= indo_currency($data->lab) ?></td>
+					<td class="text-left"><?= indo_currency($data->jasa_perushaan) ?></td>
+				</tr>
+			<?php } ?>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5" class="text-right">
+				<td colspan="3" class="text-right">
 					<b>Grand Total</b>
 				</td>
 				<td colspan="1" style="text-align: left;">
+					<?= indo_currency($row_sum->sum_fee) ?>
+				</td>
+				<td colspan="1" style="text-align: left;">
+					<?= indo_currency($row_sum->sum_oprasional) ?>
+				</td>
+				<td colspan="1" style="text-align: left;">
+					<?= indo_currency($row_sum->sum_pajak) ?>
+				</td>
+				<td colspan="1" style="text-align: left;">
+					<?= indo_currency($row_sum->sum_lab) ?>
+				</td>
+				<td colspan="1" style="text-align: left;">
+					<?= indo_currency($row_sum->sum_jasa_perushaan) ?>
+				</td>
+			</tr>
+		</tfoot>
+		<tfoot>
+			<tr>
+				<td colspan="8" class="text-center">
+					<b>Total Keseluruhan</b>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="8" style="text-align: center;">
 					<?= indo_currency($row_sum->sum_fee + $row_sum->sum_oprasional + $row_sum->sum_pajak + $row_sum->sum_lab + $row_sum->sum_jasa_perushaan) ?>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
+	Print On : <?= date('Y-m-d H:i:s'); ?>
 </body>
 
 </html>
